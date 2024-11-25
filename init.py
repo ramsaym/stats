@@ -13,5 +13,5 @@ import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 
-train_all = pd.read_csv('train.csv')
+train_all = pd.read_csv('titanic_data/train.csv')
 print(train_all.head())
