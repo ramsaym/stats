@@ -37,7 +37,7 @@ for i in range(sampling_rows):
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
     #print(X_train.shape[0])
     sampling_results['seed'][i] = i
-    sampling_results['train_survive']][i] = sum(y_train == 1) / X_train.shape[0]
+    sampling_results['train_survive'][i] = sum(y_train == 1) / X_train.shape[0]
     sampling_results['train_die'][i] = sum(y_train == 0) / X_train.shape[0]
     sampling_results['val_survive'][i] = sum(y_val == 1) / X_val.shape[0]
     sampling_results['val_die'][i] = sum(y_val == 0) / X_val.shape[0]
