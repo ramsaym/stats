@@ -46,3 +46,8 @@ for i in range(sampling_rows):
 #######################
 # VIEW AND SAVE RESULTS
 #######################
+
+
+sampling_results.quantile([0, 1])
+print(sampling_results)    
+sampling_results.to_csv('../python_sampling_results_' + str(sampling_rows) + '.csv', index = False)
