@@ -82,4 +82,5 @@ p.set(xlabel = 'Survival % Difference between Training and Validation data',
 #p.set_yticklabels(np.arange(0, 22, step = 2))
 sns.despine()
 #p.xticks(np.arange(0, 0.2, step = 0.02))
-plt.show()
+#plt.show()
+plt.savefig("seaborn_plot.png")
