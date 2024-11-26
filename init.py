@@ -74,7 +74,7 @@ plt.show()
 
 # p = sns.distplot(sr.survive_diff, norm_hist = True, bins = 19, kde = False, 
 #                  hist_kws = dict(edgecolor = "black"), label = "TEST")
-sns.histplot(data=sr, x="survive_diff",bins=19,hue="species")
+sns.histplot(data=sr, x="survive_diff",bins=19)
 
 p.set(xlabel = 'Survival % Difference between Training and Validation data', 
       ylabel = '% of Data Splits')
