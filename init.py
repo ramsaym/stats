@@ -19,7 +19,7 @@ print(train_all.head())
 # TEST RANDOM SEEDS FOR SAMPLING
 ################################
 
-sampling_rows = 200000
+sampling_rows = 200
 
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), 
                                 columns = ['seed', 'train_survive', 'train_die', 'val_survive', 'val_die'])
@@ -30,7 +30,7 @@ y = train_all.Survived
 
 for i in range(sampling_rows):
     
-    if i % 10000 == 0: print(i)
+    if i % 10 == 0: print(i)
     
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i,stratify = y)
     #print(X_train.shape[0])
