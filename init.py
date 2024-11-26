@@ -72,8 +72,10 @@ plt.ylabel('% of Data Splits', fontsize = 14)
 plt.style.use(plt.style.available[11])  # 0, 11, 12, 13, 14, 15, 16
 plt.show()
 
-p = sns.distplot(sr.survive_diff, norm_hist = True, bins = 19, kde = False, 
-                 hist_kws = dict(edgecolor = "black"), label = "TEST")
+# p = sns.distplot(sr.survive_diff, norm_hist = True, bins = 19, kde = False, 
+#                  hist_kws = dict(edgecolor = "black"), label = "TEST")
+sns.histplot(data=sr, x="survive_diff",bins=19,hue="species")
+
 p.set(xlabel = 'Survival % Difference between Training and Validation data', 
       ylabel = '% of Data Splits')
 #p.set_xticklabels(np.arange(0, 0.2, step = 0.0))
