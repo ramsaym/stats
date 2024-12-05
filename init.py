@@ -31,18 +31,19 @@ ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 print(ftrain.head())
 X = ftrain.drop('Crop 1.23_RootC', axis = 1)
 y = ftrain['Crop 1.23_RootC']
+print(y.head())
 
 for i in range(sampling_rows):
     
     if i % 10 == 0: print(i)
     
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i,stratify = y)
-    #print(X_train.shape[0])
-    sampling_results.loc[i,'seed'] = i
-    sampling_results.loc[i,'train_survive'] = sum(y_train == 1) / X_train.shape[0]
-    sampling_results.loc[i,'train_die'] = sum(y_train == 0) / X_train.shape[0]
-    sampling_results.loc[i,'val_survive'] = sum(y_val == 1) / X_val.shape[0]
-    sampling_results.loc[i,'val_die'] = sum(y_val == 0) / X_val.shape[0]
+    # X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i,stratify = y)
+    # #print(X_train.shape[0])
+    # sampling_results.loc[i,'seed'] = i
+    # sampling_results.loc[i,'train_survive'] = sum(y_train == 1) / X_train.shape[0]
+    # sampling_results.loc[i,'train_die'] = sum(y_train == 0) / X_train.shape[0]
+    # sampling_results.loc[i,'val_survive'] = sum(y_val == 1) / X_val.shape[0]
+    # sampling_results.loc[i,'val_die'] = sum(y_val == 0) / X_val.shape[0]
 
 
 #######################
