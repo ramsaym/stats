@@ -27,7 +27,7 @@ sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows),
 
 # Split up dependent and independent variables
 #filter
-ftrain = train_all[train_all['Crop 1.23_RootC' > 0]]
+ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 X = ftrain.drop('Crop 1.23_RootC', axis = 1)
 y = ftrain['Crop 1.23_RootC']
 
