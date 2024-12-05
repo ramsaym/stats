@@ -26,8 +26,10 @@ sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows),
                                 columns = ['seed', 'train_survive', 'train_die', 'val_survive', 'val_die'])
 
 # Split up dependent and independent variables
-X = train_all.drop('Crop 1.23_RootC', axis = 1)
-y = train_all['Crop 1.23_RootC']
+#filter
+ftrain = train_all[train_all['Crop 1.23_RootC' > 0]]
+X = ftrain.drop('Crop 1.23_RootC', axis = 1)
+y = ftrain['Crop 1.23_RootC']
 
 for i in range(sampling_rows):
     
