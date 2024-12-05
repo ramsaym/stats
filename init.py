@@ -11,6 +11,7 @@ import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 from statistics import mean
+from tqdm import tqdm
 
 
 #train_all = pd.read_csv('titanic_data/train.csv')
@@ -35,18 +36,16 @@ print(ftrain.head())
 X = ftrain.drop('Crop 1.23_RootC', axis = 1)
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 print(y.head())
+with tqdm(total=len(vals[0])) as pbar2:
+    for i in range(sampling_rows):
+        if i % 10 == 0: pbar2.update(10)
 
-for i in range(sampling_rows):
-    
-    if i % 10 == 0: print(i)
-    
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
-    sampling_results.loc[i,'seed'] = i
-    sampling_results.loc[i,'rootc_train'] = sum(y_train) / X_train.shape[0]
-    sampling_results.loc[i,'rootc_max'] = max(y_train)
-    sampling_results.loc[i,'rootc_val'] = sum(y_val) / X_val.shape[0]
-    sampling_results.loc[i,'rootc_max'] = max(y_val)
-
+        X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
+        sampling_results.loc[i,'seed'] = i
+        sampling_results.loc[i,'rootc_train'] = sum(y_train) / X_train.shape[0]
+        sampling_results.loc[i,'rootc_max'] = max(y_train)
+        sampling_results.loc[i,'rootc_val'] = sum(y_val) / X_val.shape[0]
+        sampling_results.loc[i,'rootc_max'] = max(y_val)
 
 #######################
 # VIEW AND SAVE RESULTS
