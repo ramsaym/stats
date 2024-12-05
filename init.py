@@ -56,7 +56,7 @@ sampling_results.quantile([0, 1])
 print(sampling_results.head())    
 sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
 
-sr = pd.read_csv('../_sampling_results_200000.csv')
+sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
 
 # Compute change in survival % between training and validation set
 sr['survive_diff'] = abs(sr.train_survive - sr.val_survive)
