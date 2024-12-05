@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 
 #train_all = pd.read_csv('titanic_data/train.csv')
-train_all = pd.read_csv("C:\Users\john\OneDrive\Documents\GitHub\stats\dndc_data\randomSet_1_dndc.csv")
+train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
 print(train_all.head())
 
 
