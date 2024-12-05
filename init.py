@@ -31,7 +31,7 @@ ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 print(ftrain.head())
 #print(ftrain['ttv\(123\)','x1','y1','Crop 1.23_RootC'].head())
 X = ftrain.drop('Crop 1.23_RootC', axis = 1)
-y = ftrain[['Crop 1.23_RootC']]
+y = ftrain['Crop 1.23_RootC'].astype('int64')
 print(y.head())
 
 for i in range(sampling_rows):
