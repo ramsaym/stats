@@ -11,7 +11,8 @@ import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 
-train_all = pd.read_csv('titanic_data/train.csv')
+#train_all = pd.read_csv('titanic_data/train.csv')
+train_all = pd.read_csv("C:\Users\john\OneDrive\Documents\GitHub\stats\dndc_data\randomSet_1_dndc.csv")
 print(train_all.head())
 
 
@@ -25,8 +26,8 @@ sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows),
                                 columns = ['seed', 'train_survive', 'train_die', 'val_survive', 'val_die'])
 
 # Split up dependent and independent variables
-X = train_all.drop('Survived', axis = 1)
-y = train_all.Survived
+X = train_all.drop('Crop 1.23_RootC', axis = 1)
+y = train_all['Crop 1.23_RootC']
 
 for i in range(sampling_rows):
     
