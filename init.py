@@ -13,7 +13,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 
 #train_all = pd.read_csv('titanic_data/train.csv')
 train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
-print(train_all.head())
+
 
 
 ################################
@@ -28,6 +28,7 @@ sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows),
 # Split up dependent and independent variables
 #filter
 ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
+print(ftrain.head())
 X = ftrain.drop('Crop 1.23_RootC', axis = 1)
 y = ftrain['Crop 1.23_RootC']
 
