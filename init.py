@@ -41,9 +41,6 @@ for i in range(sampling_rows):
     if i % 10 == 0: print(i)
     
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
-    print(y_train)
-    print(X_train)
-    #print(X_train.shape[0])
     sampling_results.loc[i,'seed'] = i
     sampling_results.loc[i,'rootc_train'] = sum(y_train) / X_train.shape[0]
     sampling_results.loc[i,'rootc_max'] = max(y_train)
