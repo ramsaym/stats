@@ -10,6 +10,8 @@ import matplotlib.ticker as mtick
 import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
+from statistics import mean
+
 
 #train_all = pd.read_csv('titanic_data/train.csv')
 train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
@@ -43,10 +45,10 @@ for i in range(sampling_rows):
     print(X_train)
     #print(X_train.shape[0])
     sampling_results.loc[i,'seed'] = i
-    sampling_results.loc[i,'train_survive'] = sum(y_train == 1) / X_train.shape[0]
-    sampling_results.loc[i,'train_die'] = sum(y_train == 0) / X_train.shape[0]
-    sampling_results.loc[i,'val_survive'] = sum(y_val == 1) / X_val.shape[0]
-    sampling_results.loc[i,'val_die'] = sum(y_val == 0) / X_val.shape[0]
+    sampling_results.loc[i,'rootc_train'] = sum(y_train) / X_train.shape[0]
+    sampling_results.loc[i,'rootc_max'] = max(y_train)
+    sampling_results.loc[i,'rootc_val'] = sum(y_val) / X_val.shape[0]
+    sampling_results.loc[i,'rootc_max'] = max(y_val)
 
 
 #######################
@@ -54,7 +56,7 @@ for i in range(sampling_rows):
 #######################
 
 
-sampling_results.quantile([0, 1])
+#sampling_results.quantile([0, 1])
 print(sampling_results.head())    
 sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
 
