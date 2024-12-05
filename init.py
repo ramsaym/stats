@@ -39,12 +39,12 @@ for i in range(sampling_rows):
     if i % 10 == 0: print(i)
     
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
-    # #print(X_train.shape[0])
-    # sampling_results.loc[i,'seed'] = i
-    # sampling_results.loc[i,'train_survive'] = sum(y_train == 1) / X_train.shape[0]
-    # sampling_results.loc[i,'train_die'] = sum(y_train == 0) / X_train.shape[0]
-    # sampling_results.loc[i,'val_survive'] = sum(y_val == 1) / X_val.shape[0]
-    # sampling_results.loc[i,'val_die'] = sum(y_val == 0) / X_val.shape[0]
+    #print(X_train.shape[0])
+    sampling_results.loc[i,'seed'] = i
+    sampling_results.loc[i,'train_survive'] = sum(y_train == 1) / X_train.shape[0]
+    sampling_results.loc[i,'train_die'] = sum(y_train == 0) / X_train.shape[0]
+    sampling_results.loc[i,'val_survive'] = sum(y_val == 1) / X_val.shape[0]
+    sampling_results.loc[i,'val_die'] = sum(y_val == 0) / X_val.shape[0]
 
 
 #######################
@@ -54,9 +54,9 @@ for i in range(sampling_rows):
 
 sampling_results.quantile([0, 1])
 print(sampling_results.head())    
-sampling_results.to_csv('../python_sampling_results_' + str(sampling_rows) + '.csv', index = False)
+sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
 
-sr = pd.read_csv('../python_sampling_results_200000.csv')
+sr = pd.read_csv('../_sampling_results_200000.csv')
 
 # Compute change in survival % between training and validation set
 sr['survive_diff'] = abs(sr.train_survive - sr.val_survive)
