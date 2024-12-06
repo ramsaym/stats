@@ -49,7 +49,7 @@ def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=1):
 
 
 
-def rfe(X,y):
+def rfe(X,y,randseed=1):
     from sklearn.datasets import make_classification
     from sklearn.feature_selection import RFECV
     from sklearn.linear_model import LogisticRegression
@@ -67,7 +67,7 @@ def rfe(X,y):
     #     random_state=0,
     # )
     min_features_to_select = 1  # Minimum number of features to consider
-    clf = LogisticRegression()
+    rf = RandomForestClassifier(random_state=randseed)
     cv = StratifiedKFold(5)
 
     rfecv = RFECV(

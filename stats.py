@@ -30,7 +30,7 @@ ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 X = ftrain.drop('Crop 1.23_RootC', axis = 1) # Split up dependent and independent variables
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 identifier='rootc'
-columnsofinterest=['x1','y1','Crop 1.23_RootC','SOC10-20cm','Microbe','Humads','Humus',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
+columnsofinterest=['x1','y1','Crop 1.23_RootC','Resistant litter','SOC10-20cm ','SOC30-40cm ','SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm) ',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
 VERBOSE=True
 SAMPLE=False
 #####CONFIG######################################################
@@ -56,11 +56,13 @@ if SAMPLE:
     print(sr.head())
 
 
+###APP0 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
+from rf import randomforestClassify, rfe
+rfe(X,y)
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-from rf import randomforestClassify, rfe
 randomforestClassify(X_train,y_train,X_val,y_val,ftrain.keys())
-rfe(X,y)
+
 
 
 
