@@ -14,7 +14,7 @@ import time
 def randomforest(X_train,y_train,X_test,y_test,keys,randseed=0):
     # creating a RF classifier
     rf = RandomForestClassifier(random_state=randseed)  
-    feature_names = [f"feature {keys[i]}" for i in range(X_test.shape[1])]
+    feature_names = [f"{keys[i]}" for i in range(X_test.shape[1])]
     # Training the model on the training dataset
     # fit function is used to train the model using the training sets as parameters
     rf.fit(X_train, y_train)
@@ -29,7 +29,7 @@ def randomforest(X_train,y_train,X_test,y_test,keys,randseed=0):
 
     print(f"Elapsed time to compute the importances: {elapsed_time:.3f} seconds")
     forest_importances = pd.Series(importances, index=feature_names)
-    print(keys)
+    print("---FEATURE IMPORTANCE")
     print(forest_importances )
 
     # fig, ax = plt.subplots()
