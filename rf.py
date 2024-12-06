@@ -75,9 +75,7 @@ def rfe(X,y,randseed=1):
     rfecv = RFECV(
         estimator=rfr,
         step=1,
-        cv=cv,
-        min_features_to_select=min_features_to_select,
-        n_jobs=2,
+        cv=cv
     )
     rfecv.fit(X, y)
 
