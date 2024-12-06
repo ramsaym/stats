@@ -14,7 +14,7 @@ import time
 def randomforest(X_train,y_train,X_test,y_test,keys,randseed=0):
     # creating a RF classifier
     rf = RandomForestClassifier(random_state=randseed)  
-    feature_names = [f"feature {i}" for i in range(X_test.shape[1])]
+    feature_names = [f"feature {keys[i]}" for i in range(X_test.shape[1])]
     # Training the model on the training dataset
     # fit function is used to train the model using the training sets as parameters
     rf.fit(X_train, y_train)
