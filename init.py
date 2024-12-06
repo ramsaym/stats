@@ -19,8 +19,8 @@ import sys
 #################################################################
 name_of_script = sys.argv[0]
 datafile = sys.argv[1]
-datacolumn = sys.argv[2]
-analysisType = sys.argv[3]
+# datacolumn = sys.argv[2]
+# analysisType = sys.argv[3]
 train_all = pd.read_csv(datafile)
 #train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
 sampling_rows = 200
