@@ -10,6 +10,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 from sklearn.datasets import make_classification
 from sklearn.feature_selection import RFECV
 from sklearn.model_selection import StratifiedKFold
+from sklearn.preprocessing import MinMaxScaler
 from statistics import mean
 from tqdm import tqdm
 import time
@@ -59,11 +60,11 @@ def rfe(X,y,randseed=1):
     rfr = RandomForestRegressor()
     # rf = RandomForestClassifier(random_state=randseed)
     cv = StratifiedKFold(5)
-
+    X_norm = MinMaxScaler().fit_transform(X)
     #rfecv = RFECV(estimator=rfr,step=1,cv=cv)
-    rfecv = RFECV(estimator=rfr, step=5, min_features_to_select = 10)
+    rfecv = RFECV(estimator=rfr, step=5, min_features_to_select = 3)
 
-    rfecv.fit(X, y)
+    rfecv.fit(X_norm, y)
 
     print(f"Optimal number of features: {rfecv.n_features_}")
     cv_results = pd.DataFrame(rfecv.cv_results_)
