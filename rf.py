@@ -11,7 +11,7 @@ from tqdm import tqdm
 import time
 
 
-def randomforest(X_train,y_train,X_test,y_test,randseed=0):
+def randomforest(X_train,y_train,X_test,y_test,keys,randseed=0):
     # creating a RF classifier
     rf = RandomForestClassifier(random_state=randseed)  
     feature_names = [f"feature {i}" for i in range(X_test.shape[1])]
@@ -20,7 +20,7 @@ def randomforest(X_train,y_train,X_test,y_test,randseed=0):
     rf.fit(X_train, y_train)
     # performing predictions on the test dataset
     y_pred = rf.predict(X_test)
-    feature_important = rf.feature_importances_
+
 
     start_time = time.time()
     importances = rf.feature_importances_
@@ -29,6 +29,7 @@ def randomforest(X_train,y_train,X_test,y_test,randseed=0):
 
     print(f"Elapsed time to compute the importances: {elapsed_time:.3f} seconds")
     forest_importances = pd.Series(importances, index=feature_names)
+    print(keys)
     print(forest_importances )
 
     # fig, ax = plt.subplots()

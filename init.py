@@ -17,15 +17,10 @@ from tqdm import tqdm
 
 #train_all = pd.read_csv('titanic_data/train.csv')
 train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
-
-
-
 ################################
 # TEST RANDOM SEEDS FOR SAMPLING
 ################################
-
 sampling_rows = 200
-
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), 
                                 columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 
@@ -40,7 +35,6 @@ print(y.head())
 with tqdm(total=sampling_rows) as pbar2:
     for i in range(sampling_rows):
         if i % 10 == 0: pbar2.update(10)
-
         X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
         sampling_results.loc[i,'seed'] = i
         sampling_results.loc[i,'rootc_train'] = sum(y_train) / X_train.shape[0]
@@ -50,7 +44,7 @@ with tqdm(total=sampling_rows) as pbar2:
 
 
 from rf import randomforest
-randomforest(X_train,y_train,X_val,y_val)
+randomforest(X_train,y_train,X_val,y_val,ftrain.keys())
 #######################
 # VIEW AND SAVE RESULTS
 #######################
@@ -58,7 +52,7 @@ randomforest(X_train,y_train,X_val,y_val)
 
 #sampling_results.quantile([0, 1])
    
-# sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
+sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
 
 # sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
 
