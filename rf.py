@@ -29,7 +29,7 @@ def randomforest(X_train,y_train,X_test,y_test):
     
     # using metrics module for accuracy calculation
     print("ACCURACY OF THE MODEL:", metrics.accuracy_score(y_test, y_pred))
-    print("Precision OF THE MODEL:", metrics.precision_score(y_test, y_pred))
-    print("Precision OF THE MODEL:", metrics.recall_score(y_test, y_pred))
+    #print("Precision OF THE MODEL:", metrics.precision_score(y_test, y_pred))
+    #print("Precision OF THE MODEL:", metrics.recall_score(y_test, y_pred))
 
   
