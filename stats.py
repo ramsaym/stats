@@ -32,24 +32,27 @@ y = ftrain['Crop 1.23_RootC'].astype('int64')
 identifier='rootc'
 columnsofinterest=['x1','y1','Crop 1.23_RootC','SOC10-20cm','Microbe','Humads','Humus',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
 VERBOSE=True
+SAMPLE=False
 #####CONFIG######################################################
 ################################################################
 if VERBOSE: print(ftrain.loc[:,columnsofinterest].head())
 
+if SAMPLE:
+    print(f"SAMPLING FOR SEED SENSTIVITY: {sampling_rows} iterations")
+    ####PROCESS#####################################################
+    ################################################################
+    with tqdm(total=sampling_rows) as pbar2:
+        for i in range(sampling_rows):
+            if i % 10 == 0: pbar2.update(10)
+            X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
+            sampling_results.loc[i,'seed'] = i
+            sampling_results.loc[i,f'{identifier}_train'] = sum(y_train) / X_train.shape[0]
+            sampling_results.loc[i,f'{identifier}_max'] = max(y_train)
+            sampling_results.loc[i,f'{identifier}_val'] = sum(y_val) / X_val.shape[0]
+            sampling_results.loc[i,f'{identifier}_max'] = max(y_val)
 
-####PROCESS#####################################################
-################################################################
-with tqdm(total=sampling_rows) as pbar2:
-    for i in range(sampling_rows):
-        if i % 10 == 0: pbar2.update(10)
-        X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
-        sampling_results.loc[i,'seed'] = i
-        sampling_results.loc[i,f'{identifier}_train'] = sum(y_train) / X_train.shape[0]
-        sampling_results.loc[i,f'{identifier}_max'] = max(y_train)
-        sampling_results.loc[i,f'{identifier}_val'] = sum(y_val) / X_val.shape[0]
-        sampling_results.loc[i,f'{identifier}_max'] = max(y_val)
 
-
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 123)
 from rf import randomforest
 randomforest(X_train,y_train,X_val,y_val,ftrain.keys())
 
