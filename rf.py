@@ -11,7 +11,7 @@ from tqdm import tqdm
 import time
 
 
-def randomforest(X_train,y_train,X_test,y_test,keys,randseed=123):
+def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=123):
     # creating a RF classifier
     rf = RandomForestClassifier(random_state=randseed)  
     feature_names = [f"{keys[i]}" for i in range(X_test.shape[1])]

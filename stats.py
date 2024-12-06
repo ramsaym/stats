@@ -51,10 +51,15 @@ if SAMPLE:
             sampling_results.loc[i,f'{identifier}_val'] = sum(y_val) / X_val.shape[0]
             sampling_results.loc[i,f'{identifier}_max'] = max(y_val)
 
+    sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
+    sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
+    print(sr.head())
 
+
+###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 123)
-from rf import randomforest
-randomforest(X_train,y_train,X_val,y_val,ftrain.keys())
+from rf import randomforestClassify
+randomforestClassify(X_train,y_train,X_val,y_val,ftrain.keys())
 
 
 
@@ -62,10 +67,7 @@ randomforest(X_train,y_train,X_val,y_val,ftrain.keys())
 # VIEW AND SAVE RESULTS
 #######################
 #sampling_results.quantile([0, 1])
-sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
 
-sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
-print(sr.head())
 
 # # Compute change in survival % between training and validation set
 # sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
