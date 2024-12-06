@@ -32,8 +32,7 @@ y = ftrain['Crop 1.23_RootC'].astype('int64')
 identifier='rootc'
 columnsofinterest=['x1','y1','Crop 1.23_RootC','Resistant litter','SOC10-20cm','SOC30-40cm',
                    'SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm)',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
-columnsInX=['Resistant litter','SOC10-20cm','SOC30-40cm',
-                   'SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm)',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)','_nitrification_0-10cm']
+columnsInX=['Resistant litter','Labile litter','SOC10-20cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)','Humidity(%)']
 VERBOSE=True
 SAMPLE=False
 #####CONFIG######################################################
