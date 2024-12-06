@@ -60,11 +60,9 @@ def rfe(X,y,randseed=1):
     # rf = RandomForestClassifier(random_state=randseed)
     cv = StratifiedKFold(5)
 
-    rfecv = RFECV(
-        estimator=rfr,
-        step=1,
-        cv=cv
-    )
+    #rfecv = RFECV(estimator=rfr,step=1,cv=cv)
+    rfecv = RFECV(estimator=rfr, step=5, min_features_to_select = 10)
+
     rfecv.fit(X, y)
 
     print(f"Optimal number of features: {rfecv.n_features_}")
