@@ -61,7 +61,8 @@ randomforest(X_train,y_train,X_val,y_val,ftrain.keys())
 #sampling_results.quantile([0, 1])
 sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
 
-# sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
+sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
+print(sr.head())
 
 # # Compute change in survival % between training and validation set
 # sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
