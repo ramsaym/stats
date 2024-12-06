@@ -30,7 +30,8 @@ ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 X = ftrain.drop('Crop 1.23_RootC', axis = 1) # Split up dependent and independent variables
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 identifier='rootc'
-columnsofinterest=['x1','y1','Crop 1.23_RootC','Resistant litter','SOC10-20cm ','SOC30-40cm ','SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm) ',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
+columnsofinterest=['x1','y1','Crop 1.23_RootC','Resistant litter','SOC10-20cm','SOC30-40cm',
+                   'SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm)',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
 VERBOSE=True
 SAMPLE=False
 #####CONFIG######################################################
