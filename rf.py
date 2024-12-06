@@ -24,7 +24,7 @@ def randomforest(X_train,y_train,X_test,y_test,randseed=0):
 
     start_time = time.time()
     importances = rf.feature_importances_
-    std = np.std([tree.feature_importances_ for tree in rf.estimators_], axis=0)
+    std = np.std([importances for tree in rf.estimators_], axis=0)
     elapsed_time = time.time() - start_time
 
     print(f"Elapsed time to compute the importances: {elapsed_time:.3f} seconds")
