@@ -53,16 +53,15 @@ with tqdm(total=sampling_rows) as pbar2:
 
 
 #sampling_results.quantile([0, 1])
-print(sampling_results.head())    
+   
 sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
 
 sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
 
 # Compute change in survival % between training and validation set
 sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
-
+print(sampling_results.head()) 
 # Plot
-
 fig, axs = plt.subplots(1, 1)
 axs.hist(sr['train-val-diff'], bins = np.arange(0, 0.2, step = 0.01), density = True, edgecolor = 'black', align = 'right')
 
