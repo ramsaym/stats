@@ -12,12 +12,17 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 from statistics import mean
 from tqdm import tqdm
+import sys
 
 
 #####CONFIG######################################################
 #################################################################
-#train_all = pd.read_csv('titanic_data/train.csv')
-train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
+name_of_script = sys.argv[0]
+datafile = sys.argv[1]
+datacolumn = sys.argv[2]
+analysisType = sys.argv[3]
+train_all = pd.read_csv(datafile)
+#train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
 sampling_rows = 200
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
