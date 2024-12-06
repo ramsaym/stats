@@ -71,7 +71,7 @@ def rfe(X,y,randseed=1):
     cv = StratifiedKFold(5)
 
     rfecv = RFECV(
-        estimator=clf,
+        estimator=rf,
         step=1,
         cv=cv,
         scoring="accuracy",
