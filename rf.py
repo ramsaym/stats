@@ -5,7 +5,11 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import accuracy_score, precision_score, recall_score
+from sklearn.datasets import make_classification
+from sklearn.feature_selection import RFECV
+from sklearn.model_selection import StratifiedKFold
 from statistics import mean
 from tqdm import tqdm
 import time
@@ -50,10 +54,7 @@ def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=1):
 
 
 def rfe(X,y,randseed=1):
-    from sklearn.datasets import make_classification
-    from sklearn.feature_selection import RFECV
-    from sklearn.linear_model import LogisticRegression
-    from sklearn.model_selection import StratifiedKFold
+
 
     # X, y = make_classification(
     #     n_samples=500,
@@ -67,11 +68,12 @@ def rfe(X,y,randseed=1):
     #     random_state=0,
     # )
     min_features_to_select = 1  # Minimum number of features to consider
-    rf = RandomForestClassifier(random_state=randseed)
+    rfr = RandomForestRegressor()
+    # rf = RandomForestClassifier(random_state=randseed)
     cv = StratifiedKFold(5)
 
     rfecv = RFECV(
-        estimator=rf,
+        estimator=rfr,
         step=1,
         cv=cv,
         scoring="accuracy",
@@ -81,6 +83,8 @@ def rfe(X,y,randseed=1):
     rfecv.fit(X, y)
 
     print(f"Optimal number of features: {rfecv.n_features_}")
+    cv_results = pd.DataFrame(rfecv.cv_results_)
+    print(cv_results.head())
 
 
 
