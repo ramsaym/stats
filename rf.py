@@ -30,7 +30,7 @@ def randomforest(X_train,y_train,X_test,y_test,keys,randseed=0):
     print(f"Elapsed time to compute the importances: {elapsed_time:.3f} seconds")
     forest_importances = pd.Series(importances, index=feature_names)
     print("---FEATURE IMPORTANCE")
-    print(forest_importances.sort_values(descending=True) )
+    print(forest_importances.sort_values(ascending=False) )
 
     # fig, ax = plt.subplots()
     # forest_importances.plot.bar(yerr=std, ax=ax)
