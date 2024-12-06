@@ -21,7 +21,7 @@ train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
 sampling_rows = 200
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-print(ftrain.keys())
+#print(ftrain.keys())
 X = ftrain.drop('Crop 1.23_RootC', axis = 1) # Split up dependent and independent variables
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 identifier='rootc'
