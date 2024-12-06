@@ -59,7 +59,7 @@ sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', i
 sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
 
 # Compute change in survival % between training and validation set
-sr['train-val-diff'] = abs(sr['rootc_train'] - sr'rootc_val'])
+sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
 
 # Plot
 
