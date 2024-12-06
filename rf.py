@@ -11,6 +11,7 @@ from sklearn.datasets import make_classification
 from sklearn.feature_selection import RFECV
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.svm import SVR
 from statistics import mean
 from tqdm import tqdm
 import time
@@ -57,12 +58,13 @@ def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=1):
 def rfe(X,y,randseed=1):
 
     min_features_to_select = 1  # Minimum number of features to consider
-    rfr = RandomForestRegressor()
+    #rfr = RandomForestRegressor()
+    estimator = SVR(kernel="linear")
     # rf = RandomForestClassifier(random_state=randseed)
     cv = StratifiedKFold(5)
     X_norm = MinMaxScaler().fit_transform(X)
     #rfecv = RFECV(estimator=rfr,step=1,cv=cv)
-    rfecv = RFECV(estimator=rfr, step=5, min_features_to_select = 3)
+    rfecv = RFECV(estimator, step=1, min_features_to_select = 3)
 
     rfecv.fit(X_norm, y)
 
