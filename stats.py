@@ -58,8 +58,9 @@ if SAMPLE:
 
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-from rf import randomforestClassify
+from rf import randomforestClassify, rfe
 randomforestClassify(X_train,y_train,X_val,y_val,ftrain.keys())
+rfe()
 
 
 

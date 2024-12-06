@@ -1,0 +1,1 @@
+scp -i C:\Users\john\.ssh\google_compute_engine  Matt@35.203.2.80:/home/Matt/stats/stats/featImportance_rootC.png C:\Users\john\OneDrive\Documents\GitHub\stats\dndc_data

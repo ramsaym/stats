@@ -46,4 +46,44 @@ def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=1):
     #print("Precision OF THE MODEL:", metrics.precision_score(y_test, y_pred))
     #print("Precision OF THE MODEL:", metrics.recall_score(y_test, y_pred))
 
+
+
+
+def rfe():
+    from sklearn.datasets import make_classification
+
+    X, y = make_classification(
+        n_samples=500,
+        n_features=15,
+        n_informative=3,
+        n_redundant=2,
+        n_repeated=0,
+        n_classes=8,
+        n_clusters_per_class=1,
+        class_sep=0.8,
+        random_state=0,
+    )
+
+    from sklearn.feature_selection import RFECV
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.model_selection import StratifiedKFold
+
+    min_features_to_select = 1  # Minimum number of features to consider
+    clf = LogisticRegression()
+    cv = StratifiedKFold(5)
+
+    rfecv = RFECV(
+        estimator=clf,
+        step=1,
+        cv=cv,
+        scoring="accuracy",
+        min_features_to_select=min_features_to_select,
+        n_jobs=2,
+    )
+    rfecv.fit(X, y)
+
+    print(f"Optimal number of features: {rfecv.n_features_}")
+
+
+
   
