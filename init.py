@@ -14,44 +14,45 @@ from statistics import mean
 from tqdm import tqdm
 
 
-
+#####CONFIG######################################################
+#################################################################
 #train_all = pd.read_csv('titanic_data/train.csv')
 train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
-################################
-# TEST RANDOM SEEDS FOR SAMPLING
-################################
 sampling_rows = 200
-sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), 
-                                columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
-
-# Split up dependent and independent variables
-#filter
+sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-print(ftrain.head().loc[:,1:10])
-#print(ftrain['ttv\(123\)','x1','y1','Crop 1.23_RootC'].head())
-X = ftrain.drop('Crop 1.23_RootC', axis = 1)
+X = ftrain.drop('Crop 1.23_RootC', axis = 1) # Split up dependent and independent variables
 y = ftrain['Crop 1.23_RootC'].astype('int64')
-#print(y.head())
+identifier='rootc'
+columnsofinterest=['x1','y1','Crop 1.7_LAI ','Crop 1.12_TotalCropN ','Crop 1.21_LeafC' ,'Crop 1.25_LeafN ','Crop 1.23_RootC']
+VERBOSE=True
+#####CONFIG######################################################
+################################################################
+if VERBOSE: print(ftrain.loc[:,columnsofinterest].head())
+
+
+####PROCESS#####################################################
+################################################################
 with tqdm(total=sampling_rows) as pbar2:
     for i in range(sampling_rows):
         if i % 10 == 0: pbar2.update(10)
         X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
         sampling_results.loc[i,'seed'] = i
-        sampling_results.loc[i,'rootc_train'] = sum(y_train) / X_train.shape[0]
-        sampling_results.loc[i,'rootc_max'] = max(y_train)
-        sampling_results.loc[i,'rootc_val'] = sum(y_val) / X_val.shape[0]
-        sampling_results.loc[i,'rootc_max'] = max(y_val)
+        sampling_results.loc[i,f'{identifier}_train'] = sum(y_train) / X_train.shape[0]
+        sampling_results.loc[i,f'{identifier}_max'] = max(y_train)
+        sampling_results.loc[i,f'{identifier}_val'] = sum(y_val) / X_val.shape[0]
+        sampling_results.loc[i,f'{identifier}_max'] = max(y_val)
 
 
 from rf import randomforest
 randomforest(X_train,y_train,X_val,y_val,ftrain.keys())
+
+
+
 #######################
 # VIEW AND SAVE RESULTS
 #######################
-
-
 #sampling_results.quantile([0, 1])
-   
 sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
 
 # sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
