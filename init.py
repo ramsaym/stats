@@ -64,7 +64,7 @@ sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
 # Plot
 
 fig, axs = plt.subplots(1, 1)
-axs.hist(sr.survive_diff, bins = np.arange(0, 0.2, step = 0.01), density = True, edgecolor = 'black', align = 'right')
+axs.hist(sr['train-val-diff'], bins = np.arange(0, 0.2, step = 0.01), density = True, edgecolor = 'black', align = 'right')
 
 axs.set_facecolor((242/255, 242/255, 242/255))
 plt.xticks(np.arange(0.02, 0.22, step = 0.02))
