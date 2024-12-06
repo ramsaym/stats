@@ -25,7 +25,7 @@ print(ftrain.keys())
 X = ftrain.drop('Crop 1.23_RootC', axis = 1) # Split up dependent and independent variables
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 identifier='rootc'
-columnsofinterest=['x1','y1','Crop 1.7_LAI ','Crop 1.12_TotalCropN ','Crop 1.21_LeafC' ,'Crop 1.25_LeafN ','Crop 1.23_RootC']
+columnsofinterest=['x1','y1','Crop 1.7_LAI','Crop 1.12_TotalCropN','Crop 1.21_LeafC' ,'Crop 1.25_LeafN','Crop 1.23_RootC']
 VERBOSE=True
 #####CONFIG######################################################
 ################################################################
