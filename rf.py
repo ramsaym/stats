@@ -32,11 +32,13 @@ def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=1):
     print("---FEATURE IMPORTANCE")
     print(forest_importances.loc[lambda x: x >0].sort_values(ascending=False) )
 
-    # fig, ax = plt.subplots()
-    # forest_importances.plot.bar(yerr=std, ax=ax)
-    # ax.set_title("Feature importances using MDI")
-    # ax.set_ylabel("Mean decrease in impurity")
-    # fig.tight_layout()
+    fig, ax = plt.subplots()
+    forest_importances.plot.bar(yerr=std, ax=ax)
+    ax.set_title("Feature importances using MDI")
+    ax.set_ylabel("Mean decrease in impurity")
+    fig.tight_layout()
+    plt.show()
+    plt.savefig(f"featImportance_rootC.png")
     # metrics are used to find accuracy or error
     from sklearn import metrics      
     # using metrics module for accuracy calculation
