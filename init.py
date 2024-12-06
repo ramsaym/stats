@@ -31,7 +31,7 @@ print(ftrain.head())
 #print(ftrain['ttv\(123\)','x1','y1','Crop 1.23_RootC'].head())
 X = ftrain.drop('Crop 1.23_RootC', axis = 1)
 y = ftrain['Crop 1.23_RootC'].astype('int64')
-print(y.head())
+#print(y.head())
 with tqdm(total=sampling_rows) as pbar2:
     for i in range(sampling_rows):
         if i % 10 == 0: pbar2.update(10)
