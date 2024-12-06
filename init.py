@@ -26,7 +26,7 @@ train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
 sampling_rows = 200
 
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), 
-                                columns = ['seed', 'train_survive', 'train_die', 'val_survive', 'val_die'])
+                                columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 
 # Split up dependent and independent variables
 #filter
