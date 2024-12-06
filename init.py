@@ -59,7 +59,7 @@ sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', i
 sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
 
 # Compute change in survival % between training and validation set
-sr['survive_diff'] = abs(sr.train_survive - sr.val_survive)
+sr['train-val-diff'] = abs(sr['rootc_train'] - sr'rootc_val'])
 
 # Plot
 
@@ -73,16 +73,16 @@ axs.xaxis.set_major_formatter(mtick.PercentFormatter(xmax = 1, decimals = 0))
 axs.yaxis.set_major_formatter(mtick.PercentFormatter(xmax = 100, decimals = 0))
 
 plt.text(x = 0.11, y = 20, s = "Total Data Splits: 200K", fontsize = 13)
-plt.xlabel('Survival % Difference: Training vs. Validation data', fontsize = 13)
+plt.xlabel('% Difference: Training vs. Validation data', fontsize = 13)
 plt.ylabel('% of Data Splits', fontsize = 14)
 plt.style.use(plt.style.available[11])  # 0, 11, 12, 13, 14, 15, 16
 plt.show()
 
 # p = sns.distplot(sr.survive_diff, norm_hist = True, bins = 19, kde = False, 
 #                  hist_kws = dict(edgecolor = "black"), label = "TEST")
-p = sns.histplot(data=sr, x="survive_diff",bins=19)
+p = sns.histplot(data=sr, x="train-val-diff",bins=19)
 
-p.set(xlabel = 'Survival % Difference between Training and Validation data', 
+p.set(xlabel = '% Difference between Training and Validation data', 
       ylabel = '% of Data Splits')
 #p.set_xticklabels(np.arange(0, 0.2, step = 0.0))
 #p.set_yticklabels(np.arange(0, 22, step = 2))
