@@ -14,6 +14,7 @@ from statistics import mean
 from tqdm import tqdm
 
 
+
 #train_all = pd.read_csv('titanic_data/train.csv')
 train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
 
@@ -47,6 +48,9 @@ with tqdm(total=sampling_rows) as pbar2:
         sampling_results.loc[i,'rootc_val'] = sum(y_val) / X_val.shape[0]
         sampling_results.loc[i,'rootc_max'] = max(y_val)
 
+
+from rf import randomforest
+randomforest(X_train,y_train,X_val,y_val)
 #######################
 # VIEW AND SAVE RESULTS
 #######################
@@ -54,38 +58,38 @@ with tqdm(total=sampling_rows) as pbar2:
 
 #sampling_results.quantile([0, 1])
    
-sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
+# sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
 
-sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
+# sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
 
-# Compute change in survival % between training and validation set
-sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
-print(sampling_results.head()) 
-# Plot
-fig, axs = plt.subplots(1, 1)
-axs.hist(sr['train-val-diff'], bins = np.arange(0, 0.2, step = 0.01), density = True, edgecolor = 'black', align = 'right')
+# # Compute change in survival % between training and validation set
+# sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
+# print(sampling_results.head()) 
+# # Plot
+# fig, axs = plt.subplots(1, 1)
+# axs.hist(sr['train-val-diff'], bins = np.arange(0, 0.2, step = 0.01), density = True, edgecolor = 'black', align = 'right')
 
-axs.set_facecolor((242/255, 242/255, 242/255))
-plt.xticks(np.arange(0.02, 0.22, step = 0.02))
-plt.yticks(np.arange(2, 24, step = 2))
-axs.xaxis.set_major_formatter(mtick.PercentFormatter(xmax = 1, decimals = 0))
-axs.yaxis.set_major_formatter(mtick.PercentFormatter(xmax = 100, decimals = 0))
+# axs.set_facecolor((242/255, 242/255, 242/255))
+# plt.xticks(np.arange(0.02, 0.22, step = 0.02))
+# plt.yticks(np.arange(2, 24, step = 2))
+# axs.xaxis.set_major_formatter(mtick.PercentFormatter(xmax = 1, decimals = 0))
+# axs.yaxis.set_major_formatter(mtick.PercentFormatter(xmax = 100, decimals = 0))
 
-plt.text(x = 0.11, y = 20, s = "Total Data Splits: 200K", fontsize = 13)
-plt.xlabel('% Difference: Training vs. Validation data', fontsize = 13)
-plt.ylabel('% of Data Splits', fontsize = 14)
-plt.style.use(plt.style.available[11])  # 0, 11, 12, 13, 14, 15, 16
-plt.show()
+# plt.text(x = 0.11, y = 20, s = "Total Data Splits: 200K", fontsize = 13)
+# plt.xlabel('% Difference: Training vs. Validation data', fontsize = 13)
+# plt.ylabel('% of Data Splits', fontsize = 14)
+# plt.style.use(plt.style.available[11])  # 0, 11, 12, 13, 14, 15, 16
+# plt.show()
 
-# p = sns.distplot(sr.survive_diff, norm_hist = True, bins = 19, kde = False, 
-#                  hist_kws = dict(edgecolor = "black"), label = "TEST")
-p = sns.histplot(data=sr, x="train-val-diff",bins=19)
+# # p = sns.distplot(sr.survive_diff, norm_hist = True, bins = 19, kde = False, 
+# #                  hist_kws = dict(edgecolor = "black"), label = "TEST")
+# p = sns.histplot(data=sr, x="train-val-diff",bins=19)
 
-p.set(xlabel = '% Difference between Training and Validation data', 
-      ylabel = '% of Data Splits')
-#p.set_xticklabels(np.arange(0, 0.2, step = 0.0))
-#p.set_yticklabels(np.arange(0, 22, step = 2))
-sns.despine()
-#p.xticks(np.arange(0, 0.2, step = 0.02))
-#plt.show()
-plt.savefig("seaborn_plot.png")
+# p.set(xlabel = '% Difference between Training and Validation data', 
+#       ylabel = '% of Data Splits')
+# #p.set_xticklabels(np.arange(0, 0.2, step = 0.0))
+# #p.set_yticklabels(np.arange(0, 22, step = 2))
+# sns.despine()
+# #p.xticks(np.arange(0, 0.2, step = 0.02))
+# #plt.show()
+# plt.savefig("seaborn_plot.png")
