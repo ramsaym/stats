@@ -59,10 +59,12 @@ if SAMPLE:
 
 ###APP0 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 from rf import randomforestClassify, rfe
-rfe(X,y)
+rfe(X['x1','y1','Resistant litter','SOC10-20cm','SOC30-40cm',
+                   'SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm)',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)'],y)
+
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
-X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-randomforestClassify(X_train,y_train,X_val,y_val,ftrain.keys())
+# X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
+# randomforestClassify(X_train,y_train,X_val,y_val,ftrain.keys())
 
 
 
