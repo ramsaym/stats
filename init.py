@@ -28,7 +28,7 @@ columnsofinterest=['x1','y1','Crop 1.7_LAI ','Crop 1.12_TotalCropN ','Crop 1.21_
 VERBOSE=True
 #####CONFIG######################################################
 ################################################################
-if VERBOSE: print(ftrain.loc[:,[columnsofinterest].head())
+if VERBOSE: print(ftrain.loc[:,[columnsofinterest]].head())
 
 
 ####PROCESS#####################################################
