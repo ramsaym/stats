@@ -38,7 +38,7 @@ columnsInXJasp=['Resistant litter','Labile litter','SOC50-60cm',"Radiation(MJ/m2
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 if FOCUS:
     #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
-    X = ftrain[[columnsofinterest]].drop('Crop 1.23_RootC', axis = 1) 
+    X = ftrain[columnsofinterest].drop('Crop 1.23_RootC', axis = 1) 
     
 else:
     #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
