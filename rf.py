@@ -17,7 +17,7 @@ from tqdm import tqdm
 import time
 
 
-def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=1):
+def rfClassify(X_train, y_train,X_test,randseed):
     # creating a RF classifier
     rf = RandomForestClassifier(random_state=randseed)  
     feature_names = [f"{keys[i]}" for i in range(X_test.shape[1])]
@@ -26,17 +26,18 @@ def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=1):
     rf.fit(X_train, y_train)
     # performing predictions on the test dataset
     y_pred = rf.predict(X_test)
-
-
-    start_time = time.time()
     importances = rf.feature_importances_
     std = np.std([importances for tree in rf.estimators_], axis=0)
-    elapsed_time = time.time() - start_time
-
-    print(f"Elapsed time to compute the importances: {elapsed_time:.3f} seconds")
     forest_importances = pd.Series(importances, index=feature_names)
-    print("---FEATURE IMPORTANCE")
-    print(forest_importances.loc[lambda x: x >0].sort_values(ascending=False) )
+    return y_pred, forest_importances
+
+
+def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",thresholdSig=.01,randseed=1):
+   
+    y_pred, forest_importances = rfClassify(X_train, y_train,X_test,randseed)
+    print(f"---FEATURE IMPORTANCE USING {thresholdSig} THRESHOLD")
+    featureShortList = forest_importances.loc[lambda x: x >thresholdSig].sort_values(ascending=False)
+    print(featureShortList)
 
     fig, ax = plt.subplots()
     forest_importances.plot.bar(yerr=std, ax=ax)
@@ -44,7 +45,7 @@ def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=1):
     ax.set_ylabel("Mean decrease in impurity")
     fig.tight_layout()
     plt.show()
-    plt.savefig(f"featImportance_rootC.png")
+    plt.savefig(f"featImportance_{identifier}.png")
     # metrics are used to find accuracy or error
     from sklearn import metrics      
     # using metrics module for accuracy calculation
@@ -54,7 +55,7 @@ def randomforestClassify(X_train,y_train,X_test,y_test,keys,randseed=1):
 
 
 
-
+#this does not work and times out everytime.
 def rfe(X,y,randseed=1):
 
     min_features_to_select = 1  # Minimum number of features to consider
