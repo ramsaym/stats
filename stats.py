@@ -62,7 +62,14 @@ if SAMPLE:
 from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys())
+feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys())
+if (r2>.95):
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
+    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys())
+print(feats.keys())
+print(f"R^2:{r2}")
+
+
 
 
 
