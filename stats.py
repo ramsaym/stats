@@ -19,6 +19,10 @@ import sys
 #################################################################
 name_of_script = sys.argv[0]
 datafile = sys.argv[1]
+try:
+    FOCUS = sys.argv[2]
+except:
+    FOCUS = False
 # datacolumn = sys.argv[2]
 # analysisType = sys.argv[3]
 train_all = pd.read_csv(datafile)
@@ -26,19 +30,27 @@ train_all = pd.read_csv(datafile)
 sampling_rows = 200
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-#print(ftrain.keys())
-X = ftrain.drop('Crop 1.23_RootC', axis = 1) # Split up dependent and independent variables
+#It makes sense to reduce this after a few runs
+if FOCUS:
+    columnsofinterest=['x1','y1','Crop 1.23_RootC','Resistant litter','SOC10-20cm','SOC30-40cm',
+                        'SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm)',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
+    #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
+    X = ftrain.loc[:,columnsofinterest].drop('Crop 1.23_RootC', axis = 1) 
+else:
+    #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
+    X = ftrain.drop('Crop 1.23_RootC', axis = 1) # Split up dependent and independent variables
+    
+
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 identifier='rootc'
-# columnsofinterest=['x1','y1','Crop 1.23_RootC','Resistant litter','SOC10-20cm','SOC30-40cm',
-#                    'SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm)',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
+
 # columnsInX=['Resistant litter','Labile litter','SOC10-20cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)','Humidity(%)']
 columnsInXJasp=['Resistant litter','Labile litter','SOC50-60cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Humidity(%)']
 VERBOSE=True
 SAMPLE=False
 #####CONFIG######################################################
 ################################################################
-if VERBOSE: print(ftrain.loc[:,columnsInXJasp].head())
+if VERBOSE: print(ftrain.loc[:,columnsofinterest].head())
 
 if SAMPLE:
     print(f"SAMPLING FOR SEED SENSTIVITY: {sampling_rows} iterations")
@@ -63,13 +75,13 @@ if SAMPLE:
 from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys())
+feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys(),identifier="rootC",thresholdSig=.02)
 print(feats.keys())
 print(f"1-R^2:{r2}")
 if (r2>.95):
     X = ftrain[feats.keys()]
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys())
+    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys(),identifier="rootC",thresholdSig=.03)
     print(feats.keys())
     print(f"2-R^2:{r2}")
 
