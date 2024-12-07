@@ -59,12 +59,10 @@ if SAMPLE:
 
 
 ###APP0 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
-from rf import randomforestClassify, rfe
-#rfe(X[columnsInX],y)
-
+from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-randomforestClassify(X_train,y_train,X_val,y_val,ftrain.keys())
+randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys())
 
 
 
