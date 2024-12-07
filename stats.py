@@ -46,18 +46,18 @@ else:
     
 VERBOSE=True
 SAMPLE=False
-if VERBOSE: print(X.head())
-
 identifier='rootc'
 
 #####CONFIG######################################################
 ################################################################
+
+####PROCESS#####################################################
+#################################################################
 if VERBOSE: print(ftrain.loc[:,columnsofinterest].head())
 
 if SAMPLE:
     print(f"SAMPLING FOR SEED SENSTIVITY: {sampling_rows} iterations")
-    ####PROCESS#####################################################
-    ################################################################
+    
     with tqdm(total=sampling_rows) as pbar2:
         for i in range(sampling_rows):
             if i % 10 == 0: pbar2.update(10)
@@ -73,7 +73,7 @@ if SAMPLE:
     print(sr.head())
 
 
-###APP0 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
+###APP0######################################## - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
@@ -83,9 +83,10 @@ print(f"1-R^2:{r2}")
 if (r2>.95):
     X = ftrain[feats.keys()]
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier="rootC",thresholdSig=.03)
+    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier="rootC",thresholdSig=.03)
     print(feats.keys())
     print(f"2-R^2:{r2}")
+###APP0######################################## 
 
 
 
