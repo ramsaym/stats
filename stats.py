@@ -30,15 +30,15 @@ ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 X = ftrain.drop('Crop 1.23_RootC', axis = 1) # Split up dependent and independent variables
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 identifier='rootc'
-columnsofinterest=['x1','y1','Crop 1.23_RootC','Resistant litter','SOC10-20cm','SOC30-40cm',
-                   'SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm)',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
-columnsInX=['Resistant litter','Labile litter','SOC10-20cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)','Humidity(%)']
+# columnsofinterest=['x1','y1','Crop 1.23_RootC','Resistant litter','SOC10-20cm','SOC30-40cm',
+#                    'SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm)',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
+# columnsInX=['Resistant litter','Labile litter','SOC10-20cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)','Humidity(%)']
 columnsInXJasp=['Resistant litter','Labile litter','SOC50-60cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Humidity(%)']
 VERBOSE=True
 SAMPLE=False
 #####CONFIG######################################################
 ################################################################
-if VERBOSE: print(ftrain.loc[:,columnsofinterest].head())
+if VERBOSE: print(ftrain.loc[:,columnsInXJasp].head())
 
 if SAMPLE:
     print(f"SAMPLING FOR SEED SENSTIVITY: {sampling_rows} iterations")

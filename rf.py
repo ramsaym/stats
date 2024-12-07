@@ -31,7 +31,7 @@ def rfClassify(X_train, y_train,X_test,keys,randseed):
     return y_predictions, forest_importances, std
 
 
-def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",thresholdSig=.01,randseed=1,PLOT=True,METRICS=True):
+def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",thresholdSig=.02,randseed=1,PLOT=True,METRICS=True):
    
     y_predictions, forest_importances, std = rfClassify(X_train, y_train,X_test,keys,randseed)
     print(f"---FEATURE IMPORTANCE USING {thresholdSig} THRESHOLD")
