@@ -33,6 +33,7 @@ ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 #It makes sense to reduce this after a few runs
 columnsofinterest=['Crop 1.23_RootC','Resistant litter','Labile litter','SOC10-20cm','SOC50-60cm','Microbe',
                    'Humads','Humus','DayPET_Crop(mm)','Radiation(MJ/m2/d)','Prec.(mm)','Temp.(C)','WindSpeed(m/s)','Humidity(%)']
+columnsInXJasp=['Resistant litter','Labile litter','SOC50-60cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Humidity(%)']
 if FOCUS:
     #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
     X = ftrain.loc[:,columnsofinterest].drop('Crop 1.23_RootC', axis = 1) 
@@ -40,14 +41,12 @@ else:
     #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
     X = ftrain.drop('Crop 1.23_RootC', axis = 1) # Split up dependent and independent variables
     
-
+VERBOSE=True
+SAMPLE=False
+if VERBOSE: print(X.head())
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 identifier='rootc'
 
-# columnsInX=['Resistant litter','Labile litter','SOC10-20cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)','Humidity(%)']
-columnsInXJasp=['Resistant litter','Labile litter','SOC50-60cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Humidity(%)']
-VERBOSE=True
-SAMPLE=False
 #####CONFIG######################################################
 ################################################################
 if VERBOSE: print(ftrain.loc[:,columnsofinterest].head())
