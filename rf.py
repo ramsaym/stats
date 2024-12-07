@@ -17,7 +17,7 @@ from tqdm import tqdm
 import time
 
 
-def rfClassify(X_train, y_train,X_test,randseed):
+def rfClassify(X_train, y_train,X_test,keys,randseed):
     # creating a RF classifier
     rf = RandomForestClassifier(random_state=randseed)  
     feature_names = [f"{keys[i]}" for i in range(X_test.shape[1])]
@@ -34,7 +34,7 @@ def rfClassify(X_train, y_train,X_test,randseed):
 
 def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",thresholdSig=.01,randseed=1):
    
-    y_pred, forest_importances = rfClassify(X_train, y_train,X_test,randseed)
+    y_pred, forest_importances = rfClassify(X_train, y_train,X_test,keys,randseed)
     print(f"---FEATURE IMPORTANCE USING {thresholdSig} THRESHOLD")
     featureShortList = forest_importances.loc[lambda x: x >thresholdSig].sort_values(ascending=False)
     print(featureShortList)
