@@ -83,7 +83,7 @@ print(f"1-R^2:{r2}")
 if (r2>.95):
     X = ftrain[feats.keys()]
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier="rootC",thresholdSig=.03)
+    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier="rootC",thresholdSig=.06)
     print(feats.keys())
     print(f"2-R^2:{r2}")
 ###APP0######################################## 
