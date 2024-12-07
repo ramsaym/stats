@@ -33,6 +33,7 @@ identifier='rootc'
 columnsofinterest=['x1','y1','Crop 1.23_RootC','Resistant litter','SOC10-20cm','SOC30-40cm',
                    'SOC50-60cm','Microbe','Humads','Humus','DayPET_Crop(mm)',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)']
 columnsInX=['Resistant litter','Labile litter','SOC10-20cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Temp.(C)','Humidity(%)']
+columnsInXJasp=['Resistant litter','Labile litter','SOC50-60cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Humidity(%)']
 VERBOSE=True
 SAMPLE=False
 #####CONFIG######################################################
@@ -63,11 +64,14 @@ from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
 feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys())
+print(feats.keys())
+print(f"1-R^2:{r2}")
 if (r2>.95):
+    X = ftrain[feats.keys()]
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
     feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,ftrain.keys())
-print(feats.keys())
-print(f"R^2:{r2}")
+    print(feats.keys())
+    print(f"2-R^2:{r2}")
 
 
 
