@@ -29,12 +29,12 @@ def rfClassify(X_train, y_train,X_test,keys,randseed):
     importances = rf.feature_importances_
     std = np.std([importances for tree in rf.estimators_], axis=0)
     forest_importances = pd.Series(importances, index=feature_names)
-    return y_pred, forest_importances
+    return y_pred, forest_importances, std
 
 
 def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",thresholdSig=.01,randseed=1):
    
-    y_pred, forest_importances = rfClassify(X_train, y_train,X_test,keys,randseed)
+    y_pred, forest_importances, std = rfClassify(X_train, y_train,X_test,keys,randseed)
     print(f"---FEATURE IMPORTANCE USING {thresholdSig} THRESHOLD")
     featureShortList = forest_importances.loc[lambda x: x >thresholdSig].sort_values(ascending=False)
     print(featureShortList)
