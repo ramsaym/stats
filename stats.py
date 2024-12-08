@@ -13,6 +13,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 from statistics import mean
 from tqdm import tqdm
 import sys
+import json
 
 
 #CALL:
@@ -36,6 +37,16 @@ try:
 except:
     TH1 = False
     TH2 = False 
+try:
+    CFKEY = sys.argv[6]
+    with open(CFKEY + '_stats_config.json', 'r') as config_file:
+        configData = json.load(config_file)
+    columnsofinterest  = configData["columnsofinterest"]
+except:
+    CFKEY = False 
+    columnsofinterest  = False
+
+
 print(f"---SETTING UP - HANDLING CALL FOR {datafile} focus={FOCUS} and column={COL}")
 # datacolumn = sys.argv[2]
 # analysisType = sys.argv[3]
@@ -45,15 +56,13 @@ sampling_rows = 200
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 #It makes sense to reduce this after a few runs
-columnsofinterest=['Crop 1.23_RootC','Resistant litter','Labile litter','SOC10-20cm','SOC50-60cm','Microbe',
-                   'Humads','Humus','DayPET_Crop(mm)','Radiation(MJ/m2/d)','Prec.(mm)','Temp.(C)','WindSpeed(m/s)','Humidity(%)']
-columnsInXJasp=['Resistant litter','Labile litter','SOC50-60cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Humidity(%)']
+
 
 print(f"---SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 if FOCUS:
     #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
-    X = ftrain[columnsofinterest].drop('Crop 1.23_RootC', axis = 1) 
+    X = ftrain[].drop('Crop 1.23_RootC', axis = 1) 
     
 else:
     #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
@@ -67,7 +76,8 @@ SAMPLE=False
 ####PROCESS#####################################################
 #################################################################
 print(f"---ANALYZING FOR PREDICTORS OF {COL}")
-if VERBOSE: print(ftrain.loc[:,columnsofinterest].head())
+if VERBOSE: 
+    if columnsofinterest: print(ftrain.loc[:,columnsofinterest].head())
 
 if SAMPLE:
     print(f"SAMPLING FOR SEED SENSTIVITY: {sampling_rows} iterations")
