@@ -36,6 +36,10 @@ def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",th
     y_predictions, forest_importances, std = rfClassify(X_train, y_train,X_test,keys,randseed)
     print(f"---FEATURE IMPORTANCE USING {thresholdSig} THRESHOLD")
     featureCount = forest_importances.shape[0]
+    quantiles = forest_importances.iloc[:,1].quantile([0.25, 0.5, 0.75])
+    print(f"---CALCULATING QUANTILES")
+    print(quantiles)
+    
     featureShortList = forest_importances.loc[lambda x: x >float(thresholdSig)].sort_values(ascending=False)
     print(featureShortList)
 
