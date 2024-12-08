@@ -41,7 +41,7 @@ try:
     CFKEY = sys.argv[6]
     with open(CFKEY + '_stats_config.json', 'r') as config_file:
         configData = json.load(config_file)
-    columnsofinterest  = configData["columnsofinterest"]
+    columnsofinterest  = configData["columnsMeasurable"]
 except:
     CFKEY = False 
     columnsofinterest  = False
