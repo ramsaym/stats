@@ -80,4 +80,16 @@ def rfe(X,y,randseed=1):
 
 
 
-  
+def sampleAcrossSeeds(sampling_results,sampling_rows):
+    with tqdm(total=sampling_rows) as pbar2:
+        for i in range(sampling_rows):
+            if i % 10 == 0: pbar2.update(10)
+            X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
+            sampling_results.loc[i,'seed'] = i
+            sampling_results.loc[i,f'{COL}_train'] = sum(y_train) / X_train.shape[0]
+            sampling_results.loc[i,f'{COL}_max'] = max(y_train)
+            sampling_results.loc[i,f'{COL}_val'] = sum(y_val) / X_val.shape[0]
+            sampling_results.loc[i,f'{COL}_max'] = max(y_val)
+    sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
+    sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
+    print(sr.head())

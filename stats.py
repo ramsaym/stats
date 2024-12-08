@@ -22,7 +22,12 @@ import json
 #####PARAMS######################################################
 #################################################################
 name_of_script = sys.argv[0]
-datafile = sys.argv[1]
+try: 
+    datafile = sys.argv[1]
+    train_all = pd.read_csv(datafile)
+except:
+    print("!! NO DATAFILE SPECIFIED ---")
+    exit(0)
 try:
     FOCUS = sys.argv[2]
 except:
@@ -40,7 +45,7 @@ except:
 try:
     CFKEY = sys.argv[6]
     cfg = f'{CFKEY}_stats_config.json'
-    print(f"--LOOKING FOR CONFIG FILE {cfg}")
+    print(f"-LOOKING FOR CONFIG FILE {cfg}")
     with open(cfg, 'r') as config_file:
         configData = json.load(config_file)
     columnsofinterest  = configData["columnsMeasurable"]
@@ -50,9 +55,10 @@ except:
 
 #####SETUP######################################################
 #################################################################
-print(f"---SETTING UP - HANDLING CALL FOR {datafile} focus={FOCUS} and column={COL}")
-train_all = pd.read_csv(datafile)
+print(f"--SETTING UP - HANDLING CALL FOR {datafile} focus={FOCUS} and column={COL}")
 sampling_rows = 200
+VERBOSE=True
+SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 #It makes sense to reduce this after a few runs
@@ -60,7 +66,7 @@ ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 
 print(f"---SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
-print(f"---FOCUS:{FOCUS}, COI: {columnsofinterest} ")
+print(f"----FOCUS:{FOCUS}, COI: {columnsofinterest} ")
 if FOCUS and columnsofinterest is not False:
     #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
     X = ftrain[columnsofinterest].drop('Crop 1.23_RootC', axis = 1) 
@@ -69,35 +75,22 @@ else:
     #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
     X = ftrain.drop(['Crop 1.23_RootC','x1','y1'], axis = 1) # Split up dependent and independent variables
     
-VERBOSE=True
-SAMPLE=False
+
 
 
 ####PROCESS#####################################################
 #################################################################
-print(f"---ANALYZING FOR PREDICTORS OF {COL}")
+print(f"-----ANALYZING PREDICTORS OF {COL}")
 if VERBOSE: 
     if columnsofinterest: print(ftrain.loc[:,columnsofinterest].head())
 
 if SAMPLE:
+    from rf import sampleAcrossSeeds
     print(f"SAMPLING FOR SEED SENSTIVITY: {sampling_rows} iterations")
-    
-    with tqdm(total=sampling_rows) as pbar2:
-        for i in range(sampling_rows):
-            if i % 10 == 0: pbar2.update(10)
-            X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
-            sampling_results.loc[i,'seed'] = i
-            sampling_results.loc[i,f'{COL}_train'] = sum(y_train) / X_train.shape[0]
-            sampling_results.loc[i,f'{COL}_max'] = max(y_train)
-            sampling_results.loc[i,f'{COL}_val'] = sum(y_val) / X_val.shape[0]
-            sampling_results.loc[i,f'{COL}_max'] = max(y_val)
+    sampleAcrossSeeds(sampling_results,sampling_rows)
 
-    sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
-    sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
-    print(sr.head())
-
-
-###APP0######################################## - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
+###APP0 - Feature Selection: TRAIN AND CLASSIFY WITH RF RETURN FEAT IMPRTNC BY QUANTILE RANK ################
+#############################################################################################################
 from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
@@ -110,7 +103,6 @@ if (r2>.95):
     feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
     print(feats.keys())
     print(f"2-R^2:{r2}")
-###APP0######################################## 
 
 
 
