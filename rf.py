@@ -35,7 +35,8 @@ def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",th
    
     y_predictions, forest_importances, std = rfClassify(X_train, y_train,X_test,keys,randseed)
     print(f"---FEATURE IMPORTANCE USING {thresholdSig} THRESHOLD")
-    featureShortList = forest_importances.loc[lambda x: x >int(thresholdSig)].sort_values(ascending=False)
+    featureCount = forest_importances.shape[0]
+    featureShortList = forest_importances.loc[lambda x: x >float(thresholdSig)].sort_values(ascending=False)
     print(featureShortList)
 
     if PLOT:
