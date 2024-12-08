@@ -15,6 +15,9 @@ from tqdm import tqdm
 import sys
 
 
+#CALL:
+#python3 ./stats.py "dndc_data/biogeodb.csv" True 'Crop 1.23_RootC' .02 .04
+
 #####CONFIG######################################################
 #################################################################
 name_of_script = sys.argv[0]
@@ -23,6 +26,17 @@ try:
     FOCUS = sys.argv[2]
 except:
     FOCUS = False
+try:
+    COL = sys.argv[3]
+except:
+    COL = False
+try:
+    TH1 = sys.argv[4]
+    TH2 = sys.argv[5] 
+except:
+    TH1 = False
+    TH2 = False 
+print(f"---SETTING UP - HANDLING CALL FOR {datafile} focus={FOCUS} and column={COL}")
 # datacolumn = sys.argv[2]
 # analysisType = sys.argv[3]
 train_all = pd.read_csv(datafile)
@@ -35,6 +49,7 @@ columnsofinterest=['Crop 1.23_RootC','Resistant litter','Labile litter','SOC10-2
                    'Humads','Humus','DayPET_Crop(mm)','Radiation(MJ/m2/d)','Prec.(mm)','Temp.(C)','WindSpeed(m/s)','Humidity(%)']
 columnsInXJasp=['Resistant litter','Labile litter','SOC50-60cm',"Radiation(MJ/m2/d)",'Prec.(mm)','Humidity(%)']
 
+print(f"---SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 if FOCUS:
     #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
@@ -46,13 +61,12 @@ else:
     
 VERBOSE=True
 SAMPLE=False
-identifier='rootc'
-
 #####CONFIG######################################################
 ################################################################
 
 ####PROCESS#####################################################
 #################################################################
+print(f"---ANALYZING FOR PREDICTORS OF {COL}")
 if VERBOSE: print(ftrain.loc[:,columnsofinterest].head())
 
 if SAMPLE:
@@ -63,10 +77,10 @@ if SAMPLE:
             if i % 10 == 0: pbar2.update(10)
             X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = i)
             sampling_results.loc[i,'seed'] = i
-            sampling_results.loc[i,f'{identifier}_train'] = sum(y_train) / X_train.shape[0]
-            sampling_results.loc[i,f'{identifier}_max'] = max(y_train)
-            sampling_results.loc[i,f'{identifier}_val'] = sum(y_val) / X_val.shape[0]
-            sampling_results.loc[i,f'{identifier}_max'] = max(y_val)
+            sampling_results.loc[i,f'{COL}_train'] = sum(y_train) / X_train.shape[0]
+            sampling_results.loc[i,f'{COL}_max'] = max(y_train)
+            sampling_results.loc[i,f'{COL}_val'] = sum(y_val) / X_val.shape[0]
+            sampling_results.loc[i,f'{COL}_max'] = max(y_val)
 
     sampling_results.to_csv('../_sampling_results_' + str(sampling_rows) + '.csv', index = False)
     sr = pd.read_csv('../_sampling_results_'+ str(sampling_rows) + '.csv')
@@ -77,13 +91,13 @@ if SAMPLE:
 from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier="rootC",thresholdSig=.02)
+feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdSig=TH1)
 print(feats.keys())
 print(f"1-R^2:{r2}")
 if (r2>.95):
     X = ftrain[feats.keys()]
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier="rootC",thresholdSig=.06)
+    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdSig=TH2)
     print(feats.keys())
     print(f"2-R^2:{r2}")
 ###APP0######################################## 
