@@ -1,3 +1,4 @@
+{
 "setting1": [],
 "setting2": [],
 "meta-keyword": "dndc-database config",
@@ -5,3 +6,4 @@
                    "Humads","Humus","DayPET_Crop(mm)","Radiation(MJ/m2/d)","Prec.(mm)","Temp.(C)","WindSpeed(m/s)","Humidity(%)"],
 "columnsMeasurable":["Crop 1.23_RootC","SOC10-20cm","SOC50-60cm","Radiation(MJ/m2/d)","Prec.(mm)","Temp.(C)","WindSpeed(m/s)","Humidity(%)"],
 "columnsInXJasp":["Resistant litter","Labile litter","SOC50-60cm","Radiation(MJ/m2/d)","Prec.(mm)","Humidity(%)"]
+}
