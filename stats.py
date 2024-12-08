@@ -19,7 +19,7 @@ import json
 #CALL:
 #python3 ./stats.py "dndc_data/biogeodb.csv" True 'Crop 1.23_RootC' .02 .04
 
-#####CONFIG######################################################
+#####PARAMS######################################################
 #################################################################
 name_of_script = sys.argv[0]
 datafile = sys.argv[1]
@@ -46,12 +46,10 @@ except:
     CFKEY = False 
     columnsofinterest  = False
 
-
+#####SETUP######################################################
+#################################################################
 print(f"---SETTING UP - HANDLING CALL FOR {datafile} focus={FOCUS} and column={COL}")
-# datacolumn = sys.argv[2]
-# analysisType = sys.argv[3]
 train_all = pd.read_csv(datafile)
-#train_all = pd.read_csv("dndc_data/randomSet_1_dndc.csv")
 sampling_rows = 200
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
@@ -70,8 +68,7 @@ else:
     
 VERBOSE=True
 SAMPLE=False
-#####CONFIG######################################################
-################################################################
+
 
 ####PROCESS#####################################################
 #################################################################
