@@ -31,13 +31,13 @@ def rfClassify(X_train, y_train,X_test,keys,randseed):
     return y_predictions, forest_importances, std
 
 
-def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",thresholdQuant=.25,randseed=1,PLOT=True,METRICS=True):
+def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",thresholdQuant=0.25,randseed=1,PLOT=True,METRICS=True):
    
     y_predictions, forest_importances, std = rfClassify(X_train, y_train,X_test,keys,randseed)
     print(f"---FEATURE IMPORTANCE USING {thresholdQuant} qUANTILE THRESHOLD")
     featureCount = forest_importances.shape[0]
     print(f"---CALCULATING QUANTILES")
-    threshhold = forest_importances.quantile(0.5)
+    threshhold = forest_importances.quantile(thresholdQuant)
     
     
     featureShortList = forest_importances.loc[lambda x: x >float(threshhold)].sort_values(ascending=False)
