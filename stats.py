@@ -39,7 +39,9 @@ except:
     TH2 = False 
 try:
     CFKEY = sys.argv[6]
-    with open(CFKEY + '_stats_config.json', 'r') as config_file:
+    cfg = f'{CFKEY}_stats_config.json'
+    print(f"--LOOKING FOR CONFIG FILE {cfg}")
+    with open(cfg, 'r') as config_file:
         configData = json.load(config_file)
     columnsofinterest  = configData["columnsMeasurable"]
 except:
