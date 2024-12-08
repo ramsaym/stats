@@ -39,7 +39,7 @@ def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",th
     quantiles = forest_importances.quantile([0.25, 0.5, 0.75])
     print(f"---CALCULATING QUANTILES")
     print(quantiles)
-    threshhold = quantiles.loc["0.50""]
+    threshhold = quantiles.loc["0.50"]
     
     
     featureShortList = forest_importances.loc[lambda x: x >float(threshhold)].sort_values(ascending=False)
