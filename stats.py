@@ -87,7 +87,7 @@ else:
     X = ftrain.drop(excludeColumns, axis = 1) # Split up dependent and independent variables
     
 
-
+print(ftrain.loc[:,columnsofinterest].head())
 
 ####PROCESS#####################################################
 #################################################################
