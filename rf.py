@@ -32,29 +32,13 @@ def rfClassify(X_train, y_train,X_test,keys,randseed):
 
 
 def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",thresholdQuant=.25,randseed=1,PLOT=True,METRICS=True):
-   
     y_predictions, forest_importances, std = rfClassify(X_train, y_train,X_test,keys,randseed)
     featureCount = forest_importances.shape[0]
     threshhold = forest_importances.quantile(float(thresholdQuant))
-    
-    
     featureShortList = forest_importances.loc[lambda x: x >float(threshhold)].sort_values(ascending=False)
-    print(featureShortList)
-
-    if PLOT:
-        fig, ax = plt.subplots()
-        forest_importances.plot.bar(yerr=std, ax=ax)
-        ax.set_title("Feature importances using mean decrease in impurity (MDI)")
-        ax.set_ylabel("Mean decrease in impurity (MDI) ")
-        fig.tight_layout()
-        #plt.show()
-        #plt.savefig(f"featImportance_{identifier}.png")
-    
     ACCURACY = metrics.accuracy_score(y_test, y_predictions)
     R2 = metrics.r2_score(y_test, y_predictions)
-    print(F"ACCURACY OF THE MODEL: {ACCURACY}")
-
-    return featureShortList, ACCURACY, R2, plt
+    return featureShortList, ACCURACY, R2, forest_importances, std
 
 
 

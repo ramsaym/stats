@@ -99,7 +99,7 @@ X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_
 print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
 ##Setup to iteratate on. ~30seconds per run on large datasets
 ###########RUN 0##################
-feats, accuracy, r2, plt1 = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
+feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
 print(feats.keys())
 print(f"1-R^2:{r2}")
 ###########RUN 1##################
@@ -107,34 +107,42 @@ if (r2>.95):
     X = ftrain[feats.keys()]
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
     print(f"------- FEATURE IMPORTANCE USING {TH2} qUANTILE THRESHOLD")
-    feats, accuracy, r2, plt2 = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
+    feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
     print(feats.keys())
     print(f"2-R^2:{r2}")
 
 
 
-
+PLOT=True
 #######################
 # VIEW AND SAVE RESULTS
 #######################
-plt1.show()
-plt2.show()
-plt1.savefig(f"featImportance_{COL}-r0.png")
-plt2.savefig(f"featImportance_{COL}-r1.png")
-
-
-
-for ft in feats.keys():
-    X = X[str(ft)]
-    # size and color:
+if PLOT:
+    fig, ax = plt.subplots()
+    forest_importances.plot.bar(yerr=std, ax=ax)
+    ax.set_title("Feature importances using mean decrease in impurity (MDI)")
+    ax.set_ylabel("Mean decrease in impurity (MDI) ")
     sizes = np.random.uniform(15, 80, len(X))
     colors = np.random.uniform(15, 80, len(X))
-    fig, ax = plt.subplots()
-    ax.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
-    ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
-        ylim=(0, 8), yticks=np.arange(1, 8))
-    plt.show()
+    fig.tight_layout()
+    ax[0, 0].plot(X,y)
+    #plt.show()
+    #plt.savefig(f"featImportance_{identifier}.png")
+    i=0
+    for ft in feats.keys():
+        X = ftrain[ft]   
+        ax.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
+        ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
+            ylim=(0, 8), yticks=np.arange(1, 8))
+        #plt.show()
+        if i%2=0:
+            ax[0, i].plot(X,y)
+        else:
+            ax[i, 0].plot(X,y)
+        i+=1
 
+    plt.show()
+    plt.savefig(f"featImportance_{COL}.png")
 
 # # Compute change in survival % between training and validation set
 # sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
