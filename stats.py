@@ -60,7 +60,7 @@ try:
     excludeColumns = configData["excludeCloumns"]
     print(f"--      FOUND {len(columnsofinterest)} COLUMNS")
 except:
-    columnsofinterest  = ftrain.keys()
+    columnsofinterest  = ftrain.keys().toList()
     excludeColumns = []
 
 #####SETUP######################################################
