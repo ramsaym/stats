@@ -135,21 +135,13 @@ if PLOT:
             case 1:
                 ax1.scatter(X, y)
             case 2:
-                ax2.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
-                ax2.set(xlim=(0, 8), xticks=np.arange(1, 8),
-                    ylim=(0, 8), yticks=np.arange(1, 8))
+                ax2.scatter(X, y)
             case 3:
-                ax3.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
-                ax3.set(xlim=(0, 8), xticks=np.arange(1, 8),
-                    ylim=(0, 8), yticks=np.arange(1, 8))
+                ax3.scatter(X, y)
             case 4:
-                ax4.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
-                ax4.set(xlim=(0, 8), xticks=np.arange(1, 8),
-                    ylim=(0, 8), yticks=np.arange(1, 8))
+                ax4.scatter(X, y)
             case 5:
-                ax5.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
-                ax5.set(xlim=(0, 8), xticks=np.arange(1, 8),
-                    ylim=(0, 8), yticks=np.arange(1, 8))
+                ax5.scatter(X, y)
             case _:
                 print("!!---Axis Mapping Error")
         i+=1
