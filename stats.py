@@ -119,7 +119,7 @@ PLOT=True
 #######################
 if PLOT:
     #fig, ax0 = plt.subplots()
-    fig, ((ax0, ax1,ax2), (ax3, ax4, ax5)) = plt.subplots(3, 3)
+    fig, ((ax0, ax1,ax2), (ax3, ax4, ax5)) = plt.subplots(2, 3)
     forest_importances.plot.bar(yerr=std, ax=ax0)
     ax1.set_title("Feature importances using mean decrease in impurity (MDI)")
     ax1.set_ylabel("Mean decrease in impurity (MDI) ")

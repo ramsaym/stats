@@ -41,28 +41,7 @@ def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",th
     return featureShortList, ACCURACY, R2, forest_importances, std
 
 
-
-#this does not work and times out everytime.
-def rfe(X,y,randseed=1):
-
-    min_features_to_select = 1  # Minimum number of features to consider
-    #rfr = RandomForestRegressor()
-    estimator = SVR(kernel="linear")
-    # rf = RandomForestClassifier(random_state=randseed)
-    cv = StratifiedKFold(5)
-    X_norm = MinMaxScaler().fit_transform(X)
-    #rfecv = RFECV(estimator=rfr,step=1,cv=cv)
-    rfecv = RFECV(estimator, step=1, min_features_to_select = 3)
-
-    rfecv.fit(X_norm, y)
-
-    print(f"Optimal number of features: {rfecv.n_features_}")
-    cv_results = pd.DataFrame(rfecv.cv_results_)
-    print(cv_results.head())
-
-
-
-def sampleAcrossSeeds(sampling_results,sampling_rows):
+def sampleAcrossSeeds(sampling_results,sampling_rows,COL):
     with tqdm(total=sampling_rows) as pbar2:
         for i in range(sampling_rows):
             if i % 10 == 0: pbar2.update(10)
