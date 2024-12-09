@@ -38,7 +38,8 @@ try:
         configData = json.load(config_file)
     columnsofinterest  = configData["columnsofinterest"]
     excludeColumns = configData["columnsToExclude"]
-    print(f"--      FOUND {len(columnsofinterest)} COLUMNS")
+    print(f"--      FOUND {len(columnsofinterest)} COLUMNS OF INTEREST")
+    print(f"--      FOUND {ftrain.shape(1)} COLUMNS TOTAL")
 except:
     print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG: {cfg}")
     sys.exit(0)
@@ -53,24 +54,18 @@ SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
-print(f"-----   FOCUS:{FOCUS}, COI: {columnsofinterest} ")
-print(excludeColumns)
 if FOCUS =='y':  
     print("!--- FOCUS IS SET") 
-    X = ftrain[[columnsofinterest]].drop(excludeColumns, axis = 1) 
+    X = ftrain[columnsofinterest].drop(columns=excludeColumns) 
 else:   
-    X = ftrain.drop(excludeColumns, axis = 1) # Split up dependent and independent variables
+    X = ftrain.drop(columns=excludeColumns) # Split up dependent and independent variables
     
-
-print(ftrain.loc[:,columnsofinterest].head())
 
 ####PROCESS#####################################################
 #################################################################
 print(f"------  ANALYZING PREDICTORS OF {COL}")
-if VERBOSE is True: 
-    print(ftrain.loc[:,columnsofinterest].head())
-else:
-    print(ftrain.head())
+if VERBOSE: 
+    print(ftrain.loc[:,ftrain.keys().to_list()].head())
 
 if SAMPLE:
     from rf import sampleAcrossSeeds
