@@ -135,7 +135,7 @@ if PLOT:
         ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
             ylim=(0, 8), yticks=np.arange(1, 8))
         #plt.show()
-        if i%2=0:
+        if (i % 2 == 0):
             ax[0, i].plot(X,y)
         else:
             ax[i, 0].plot(X,y)
