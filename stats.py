@@ -55,7 +55,7 @@ print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 print(f"-----   FOCUS:{FOCUS}, COI: {columnsofinterest} ")
 print(excludeColumns)
-if FOCUS :
+if FOCUS=="y":
     X = ftrain[columnsofinterest].drop(excludeColumns, axis = 1) 
 else:
     #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
