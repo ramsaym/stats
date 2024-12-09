@@ -48,7 +48,7 @@ try:
     print(f"-       LOOKING FOR CONFIG FILE {cfg}")
     with open(cfg, 'r') as config_file:
         configData = json.load(config_file)
-    columnsofinterest  = configData["columnsMeasurable"]
+    columnsofinterest  = configData["columnsofinterest"]
     print(f"--      FOUND {len(columnsofinterest)} COLUMNS")
 except:
     CFKEY = False 
