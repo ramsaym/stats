@@ -122,6 +122,20 @@ plt2.show()
 plt1.savefig(f"featImportance_{COL}-r0.png")
 plt2.savefig(f"featImportance_{COL}-r1.png")
 
+
+
+for ft in feats.keys():
+    X = X[ft]
+    # size and color:
+    sizes = np.random.uniform(15, 80, len(x))
+    colors = np.random.uniform(15, 80, len(x))
+    fig, ax = plt.subplots()
+    ax.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
+    ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
+        ylim=(0, 8), yticks=np.arange(1, 8))
+    plt.show()
+
+
 # # Compute change in survival % between training and validation set
 # sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
 # print(sampling_results.head()) 

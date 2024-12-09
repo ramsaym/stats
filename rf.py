@@ -44,8 +44,8 @@ def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",th
     if PLOT:
         fig, ax = plt.subplots()
         forest_importances.plot.bar(yerr=std, ax=ax)
-        ax.set_title("Feature importances using MDI")
-        ax.set_ylabel("Mean decrease in impurity")
+        ax.set_title("Feature importances using mean decrease in impurity (MDI)")
+        ax.set_ylabel("Mean decrease in impurity (MDI) ")
         fig.tight_layout()
         #plt.show()
         #plt.savefig(f"featImportance_{identifier}.png")
