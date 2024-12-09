@@ -94,7 +94,7 @@ else:
 print(f"------  ANALYZING PREDICTORS OF {COL}")
 if VERBOSE is True: 
     print(f'verbosity: {VERBOSE}')
-    if columnsofinterest: print(ftrain.loc[:,columnsofinterest].head())
+    print(ftrain.loc[:,columnsofinterest].head())
 else:
     print(ftrain.head())
 
