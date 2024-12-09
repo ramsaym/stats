@@ -122,7 +122,7 @@ PLOT=True
 #######################
 if PLOT:
     #fig, ax0 = plt.subplots()
-    fig, ((ax0, ax1,ax2), (ax3, ax4, ax5)) = plt.subplots(2, 3)
+    fig, ((ax0, ax1,ax2,ax3), (ax4, ax5, ax6,ax7)) = plt.subplots(2, 3)
     forest_importances.plot.bar(yerr=std, ax=ax0)
     ax0.set_title("Feature importances using mean decrease in impurity (MDI)")
     ax0.set_ylabel("Mean decrease in impurity (MDI) ")
@@ -145,6 +145,10 @@ if PLOT:
                 ax4.scatter(X, y)
             case 5:
                 ax5.scatter(X, y)
+            case 6:
+                ax6.scatter(X, y)
+            case 7:
+                ax7.scatter(X, y)
             case _:
                 print("!!---Axis Mapping Error")
         i+=1
