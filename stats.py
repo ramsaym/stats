@@ -22,36 +22,16 @@ import json
 #####PARAMS######################################################
 #################################################################
 name_of_script = sys.argv[0]
-try: 
-    datafile = sys.argv[1]
-    train_all = pd.read_csv(datafile)
-    
-except:
-    print("!! NO DATAFILE SPECIFIED ---")
-    exit(0)
+
+datafile = sys.argv[1]
 try:
     FOCUS = sys.argv[2]
-except:
-    FOCUS = None
-try:
     COL = sys.argv[3]
-    
-except:
-    COL = False
-try:
     TH1 = sys.argv[4]
     TH2 = sys.argv[5] 
-except:
-    TH1 = False
-    TH2 = False 
-try:
     CFKEY = sys.argv[6] 
-except:
-    CFKEY = False 
-    columnsofinterest = False
-
-ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-try:
+    train_all = pd.read_csv(datafile)
+    ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
     cfg = f'{CFKEY}_stats_config.json'
     print(f"-       LOOKING FOR CONFIG FILE {cfg}")
     with open(cfg, 'r') as config_file:
@@ -60,8 +40,9 @@ try:
     excludeColumns = configData["columnsToExclude"]
     print(f"--      FOUND {len(columnsofinterest)} COLUMNS")
 except:
-    columnsofinterest  = ftrain.keys().to_list()
-    excludeColumns = []
+    print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG: {cfg}")
+    sys.exit(0)
+
 
 #####SETUP######################################################
 #################################################################
@@ -70,18 +51,12 @@ sampling_rows = 200
 VERBOSE=True
 SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
-
-#It makes sense to reduce this after a few runs
-
-
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 print(f"-----   FOCUS:{FOCUS}, COI: {columnsofinterest} ")
 print(excludeColumns)
-if FOCUS is not False:
-
+if FOCUS :
     X = ftrain[columnsofinterest].drop(excludeColumns, axis = 1) 
-    
 else:
     #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
     X = ftrain.drop(excludeColumns, axis = 1) # Split up dependent and independent variables
@@ -93,7 +68,6 @@ print(ftrain.loc[:,columnsofinterest].head())
 #################################################################
 print(f"------  ANALYZING PREDICTORS OF {COL}")
 if VERBOSE is True: 
-    print(f'verbosity: {VERBOSE}')
     print(ftrain.loc[:,columnsofinterest].head())
 else:
     print(ftrain.head())
@@ -120,7 +94,6 @@ if (r2>.95):
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
     print(f"------- FEATURE IMPORTANCE USING {TH2} qUANTILE THRESHOLD")
     feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
-    print(feats.keys())
     print(f"2-R^2:{r2}")
 
 
