@@ -118,29 +118,24 @@ PLOT=True
 # VIEW AND SAVE RESULTS
 #######################
 if PLOT:
-    fig, ax = plt.subplots()
+    fig, ax0 = plt.subplots()
     forest_importances.plot.bar(yerr=std, ax=ax)
-    ax.set_title("Feature importances using mean decrease in impurity (MDI)")
-    ax.set_ylabel("Mean decrease in impurity (MDI) ")
+    ax0.set_title("Feature importances using mean decrease in impurity (MDI)")
+    ax0.set_ylabel("Mean decrease in impurity (MDI) ")
     sizes = np.random.uniform(15, 80, len(X))
     colors = np.random.uniform(15, 80, len(X))
     fig.tight_layout()
-    ax[0, 0].plot(X,y)
     #plt.show()
     #plt.savefig(f"featImportance_{identifier}.png")
     i=0
+    axes=[]
+    fig0, ax = plt.subplots()
     for ft in feats.keys():
         X = ftrain[ft]   
         ax.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
         ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
             ylim=(0, 8), yticks=np.arange(1, 8))
-        #plt.show()
-        if (i % 2 == 0):
-            ax[0, i].plot(X,y)
-        else:
-            ax[i, 0].plot(X,y)
-        i+=1
-
+    
     plt.show()
     plt.savefig(f"featImportance_{COL}.png")
 
