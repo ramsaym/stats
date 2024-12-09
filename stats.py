@@ -57,7 +57,7 @@ print(f"-----   FOCUS:{FOCUS}, COI: {columnsofinterest} ")
 print(excludeColumns)
 if FOCUS =='y':  
     print("!--- FOCUS IS SET") 
-    X = ftrain[columnsofinterest].drop(excludeColumns, axis = 1) 
+    X = ftrain[[columnsofinterest]].drop(excludeColumns, axis = 1) 
 else:   
     X = ftrain.drop(excludeColumns, axis = 1) # Split up dependent and independent variables
     
