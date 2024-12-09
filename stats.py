@@ -121,14 +121,15 @@ if PLOT:
     #fig, ax0 = plt.subplots()
     fig, ((ax0, ax1,ax2), (ax3, ax4, ax5)) = plt.subplots(2, 3)
     forest_importances.plot.bar(yerr=std, ax=ax0)
-    ax1.set_title("Feature importances using mean decrease in impurity (MDI)")
-    ax1.set_ylabel("Mean decrease in impurity (MDI) ")
+    ax0.set_title("Feature importances using mean decrease in impurity (MDI)")
+    ax0.set_ylabel("Mean decrease in impurity (MDI) ")
     sizes = np.random.uniform(15, 80, len(X))
     colors = np.random.uniform(15, 80, len(X))
     fig.tight_layout()
     i=1
     for ft in feats.keys():
         X = ftrain[ft] 
+        print(X)
         #Use 5 remaining slots to fill with top four features. Returned as feats sorted by MDI from rf.py
         match i:
             case 1:
