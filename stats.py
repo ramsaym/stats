@@ -133,9 +133,7 @@ if PLOT:
         #Use 5 remaining slots to fill with top four features. Returned as feats sorted by MDI from rf.py
         match i:
             case 1:
-                ax1.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
-                ax1.set(xlim=(0, 8), xticks=np.arange(1, 8),
-                    ylim=(0, 8), yticks=np.arange(1, 8))
+                ax1.scatter(X, y)
             case 2:
                 ax2.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
                 ax2.set(xlim=(0, 8), xticks=np.arange(1, 8),
