@@ -25,6 +25,7 @@ name_of_script = sys.argv[0]
 try: 
     datafile = sys.argv[1]
     train_all = pd.read_csv(datafile)
+    
 except:
     print("!! NO DATAFILE SPECIFIED ---")
     exit(0)
@@ -34,6 +35,7 @@ except:
     FOCUS = False
 try:
     COL = sys.argv[3]
+    
 except:
     COL = False
 try:
@@ -43,7 +45,13 @@ except:
     TH1 = False
     TH2 = False 
 try:
-    CFKEY = sys.argv[6]
+    CFKEY = sys.argv[6] 
+except:
+    CFKEY = False 
+    columnsofinterest = False
+
+ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
+try:
     cfg = f'{CFKEY}_stats_config.json'
     print(f"-       LOOKING FOR CONFIG FILE {cfg}")
     with open(cfg, 'r') as config_file:
@@ -52,8 +60,8 @@ try:
     excludeColumns = configData["excludeCloumns"]
     print(f"--      FOUND {len(columnsofinterest)} COLUMNS")
 except:
-    CFKEY = False 
-    columnsofinterest = False
+    columnsofinterest  = ftrain.keys()
+    excludeColumns = []]
 
 #####SETUP######################################################
 #################################################################
@@ -62,7 +70,7 @@ sampling_rows = 200
 VERBOSE=True
 SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
-ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
+
 #It makes sense to reduce this after a few runs
 
 
