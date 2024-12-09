@@ -129,7 +129,7 @@ if PLOT:
     i=1
     for ft in feats.keys():
         X = ftrain[ft] 
-        print(X)
+        #print(X)
         #Use 5 remaining slots to fill with top four features. Returned as feats sorted by MDI from rf.py
         match i:
             case 1:

@@ -38,7 +38,7 @@ def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",th
     featureShortList = forest_importances.loc[lambda x: x >float(threshhold)].sort_values(ascending=False)
     ACCURACY = metrics.accuracy_score(y_test, y_predictions)
     R2 = metrics.r2_score(y_test, y_predictions)
-    return featureShortList, ACCURACY, R2, forest_importances, std
+    return featureShortList, ACCURACY, R2, forest_importances.sort_values(ascending=False), std
 
 
 def sampleAcrossSeeds(sampling_results,sampling_rows,COL):
