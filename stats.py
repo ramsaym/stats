@@ -57,7 +57,7 @@ try:
     with open(cfg, 'r') as config_file:
         configData = json.load(config_file)
     columnsofinterest  = configData["columnsofinterest"]
-    excludeColumns = configData["excludeCloumns"]
+    excludeColumns = configData["columnsToExclude"]
     print(f"--      FOUND {len(columnsofinterest)} COLUMNS")
 except:
     columnsofinterest  = ftrain.keys().to_list()
