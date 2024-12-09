@@ -5,5 +5,5 @@
 "columnsofinterest":["Crop 1.23_RootC","SOC10-20cm","SOC30-40cm","Resistant litter","Labile litter","Microbe",
                    "Humads","Humus","DayPET_Crop(mm)","Radiation(MJ/m2/d)","Prec.(mm)","Temp.(C)","WindSpeed(m/s)","Humidity(%)"],
 "columnsMeasurable":["Crop 1.23_RootC","Radiation(MJ/m2/d)","Prec.(mm)","Temp.(C)","WindSpeed(m/s)","Humidity(%)"],
-"columnsToExclude":["Crop 1.23_RootC","SOC10-20cm","SOC30-40cm"]
+"columnsToExclude":["Crop 1.23_RootC","SOC10-20cm","SOC30-40cm","SOC50-60cm","Humus","Humads"]
 }
