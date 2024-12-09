@@ -65,7 +65,7 @@ else:
 #################################################################
 print(f"------  ANALYZING PREDICTORS OF {COL}")
 if VERBOSE: 
-    print(ftrain.loc[:,ftrain.keys().to_list()].head())
+    print(ftrain.loc[:,X.keys().to_list()].head())
 
 if SAMPLE:
     from rf import sampleAcrossSeeds
