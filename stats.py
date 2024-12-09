@@ -32,7 +32,7 @@ except:
 try:
     FOCUS = sys.argv[2]
 except:
-    FOCUS = False
+    FOCUS = None
 try:
     COL = sys.argv[3]
     
@@ -77,10 +77,9 @@ sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = 
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 print(f"-----   FOCUS:{FOCUS}, COI: {columnsofinterest} ")
-if FOCUS is True:
-    if columnsofinterest is not False:
-        #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
-        X = ftrain[columnsofinterest].drop(excludeColumns, axis = 1) 
+if FOCUS is not None:
+    print(f'DRopping {excludeColumns}')
+    X = ftrain[columnsofinterest].drop(excludeColumns, axis = 1) 
     
 else:
     #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
