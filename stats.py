@@ -127,14 +127,32 @@ if PLOT:
     colors = np.random.uniform(15, 80, len(X))
     fig.tight_layout()
     i=1
-  
     for ft in feats.keys():
-        if (i<5):
-            globals()[f"ax{i}"] = i
-            X = ftrain[ft]   
-            ax2.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
-            ax2.set(xlim=(0, 8), xticks=np.arange(1, 8),
-                ylim=(0, 8), yticks=np.arange(1, 8))
+        X = ftrain[ft] 
+        #Use 5 remaining slots to fill with top four features. Returned as feats sorted by MDI from rf.py
+        match i:
+            case 1:
+                ax1.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
+                ax1.set(xlim=(0, 8), xticks=np.arange(1, 8),
+                    ylim=(0, 8), yticks=np.arange(1, 8))
+            case 2:
+                ax2.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
+                ax2.set(xlim=(0, 8), xticks=np.arange(1, 8),
+                    ylim=(0, 8), yticks=np.arange(1, 8))
+            case 3:
+                ax3.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
+                ax3.set(xlim=(0, 8), xticks=np.arange(1, 8),
+                    ylim=(0, 8), yticks=np.arange(1, 8))
+            case 4:
+                ax4.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
+                ax4.set(xlim=(0, 8), xticks=np.arange(1, 8),
+                    ylim=(0, 8), yticks=np.arange(1, 8))
+            case 5:
+                ax5.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
+                ax5.set(xlim=(0, 8), xticks=np.arange(1, 8),
+                    ylim=(0, 8), yticks=np.arange(1, 8))
+            case _:
+                print("!!---Axis Mapping Error")
         i+=1
     
     plt.show()
