@@ -61,7 +61,7 @@ try:
     print(f"--      FOUND {len(columnsofinterest)} COLUMNS")
 except:
     columnsofinterest  = ftrain.keys()
-    excludeColumns = []]
+    excludeColumns = []
 
 #####SETUP######################################################
 #################################################################
