@@ -83,8 +83,10 @@ else:
 ####PROCESS#####################################################
 #################################################################
 print(f"------  ANALYZING PREDICTORS OF {COL}")
-if VERBOSE: 
+if VERBOSE is True: 
     if columnsofinterest: print(ftrain.loc[:,columnsofinterest].head())
+else:
+    print(ftrain.head())
 
 if SAMPLE:
     from rf import sampleAcrossSeeds
@@ -100,7 +102,7 @@ print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
 ##Setup to iteratate on. ~30seconds per run on large datasets
 ###########RUN 0##################
 feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
-print(feats.keys())
+#print(feats.keys())
 print(f"1-R^2:{r2}")
 ###########RUN 1##################
 if (r2>.95):
