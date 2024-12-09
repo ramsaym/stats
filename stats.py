@@ -125,7 +125,7 @@ plt2.savefig(f"featImportance_{COL}-r1.png")
 
 
 for ft in feats.keys():
-    X = X[ft]
+    X = X[f'"ft"']
     # size and color:
     sizes = np.random.uniform(15, 80, len(X))
     colors = np.random.uniform(15, 80, len(X))
