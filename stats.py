@@ -77,6 +77,7 @@ sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = 
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 print(f"-----   FOCUS:{FOCUS}, COI: {columnsofinterest} ")
+print(excludeColumns)
 if FOCUS is not False:
 
     X = ftrain[columnsofinterest].drop(excludeColumns, axis = 1) 
