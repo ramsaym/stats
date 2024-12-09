@@ -118,23 +118,23 @@ PLOT=True
 # VIEW AND SAVE RESULTS
 #######################
 if PLOT:
-    fig, ax0 = plt.subplots()
-    forest_importances.plot.bar(yerr=std, ax=ax0)
-    ax0.set_title("Feature importances using mean decrease in impurity (MDI)")
-    ax0.set_ylabel("Mean decrease in impurity (MDI) ")
+    #fig, ax0 = plt.subplots()
+    fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 2)
+    forest_importances.plot.bar(yerr=std, ax=ax1)
+    ax1.set_title("Feature importances using mean decrease in impurity (MDI)")
+    ax1.set_ylabel("Mean decrease in impurity (MDI) ")
     sizes = np.random.uniform(15, 80, len(X))
     colors = np.random.uniform(15, 80, len(X))
     fig.tight_layout()
-    #plt.show()
-    #plt.savefig(f"featImportance_{identifier}.png")
-    i=0
-    axes=[]
-    fig0, ax = plt.subplots()
+    i=1
     for ft in feats.keys():
-        X = ftrain[ft]   
-        ax.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
-        ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
-            ylim=(0, 8), yticks=np.arange(1, 8))
+        if (i<5):
+            globals()[f"ax{i}"] = i
+            X = ftrain[ft]   
+            ax2.scatter(X, y, s=sizes, c=colors, vmin=0, vmax=100)
+            ax2.set(xlim=(0, 8), xticks=np.arange(1, 8),
+                ylim=(0, 8), yticks=np.arange(1, 8))
+        i+=1
     
     plt.show()
     plt.savefig(f"featImportance_{COL}.png")
