@@ -49,6 +49,7 @@ try:
     with open(cfg, 'r') as config_file:
         configData = json.load(config_file)
     columnsofinterest  = configData["columnsofinterest"]
+    excludeColumns = configData["excludeCloumns"]
     print(f"--      FOUND {len(columnsofinterest)} COLUMNS")
 except:
     CFKEY = False 
@@ -71,11 +72,11 @@ print(f"-----   FOCUS:{FOCUS}, COI: {columnsofinterest} ")
 if FOCUS is True:
     if columnsofinterest is not False:
         #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
-        X = ftrain[columnsofinterest].drop('Crop 1.23_RootC', axis = 1) 
+        X = ftrain[columnsofinterest].drop(excludeColumns, axis = 1) 
     
 else:
     #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
-    X = ftrain.drop(['Crop 1.23_RootC','x1','y1'], axis = 1) # Split up dependent and independent variables
+    X = ftrain.drop(excludeColumns, axis = 1) # Split up dependent and independent variables
     
 
 
