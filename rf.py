@@ -47,14 +47,14 @@ def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",th
         ax.set_title("Feature importances using MDI")
         ax.set_ylabel("Mean decrease in impurity")
         fig.tight_layout()
-        plt.show()
-        plt.savefig(f"featImportance_{identifier}.png")
+        #plt.show()
+        #plt.savefig(f"featImportance_{identifier}.png")
     
     ACCURACY = metrics.accuracy_score(y_test, y_predictions)
     R2 = metrics.r2_score(y_test, y_predictions)
     print(F"ACCURACY OF THE MODEL: {ACCURACY}")
 
-    return featureShortList, ACCURACY, R2
+    return featureShortList, ACCURACY, R2, plt
 
 
 

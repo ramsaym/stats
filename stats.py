@@ -68,9 +68,10 @@ ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 print(f"-----   FOCUS:{FOCUS}, COI: {columnsofinterest} ")
-if FOCUS and columnsofinterest is not False:
-    #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
-    X = ftrain[columnsofinterest].drop('Crop 1.23_RootC', axis = 1) 
+if FOCUS:
+    if columnsofinterest is not False:
+        #This takes on the columns specified by a list/array. Can be config ported. Split up dependent and independent variables
+        X = ftrain[columnsofinterest].drop('Crop 1.23_RootC', axis = 1) 
     
 else:
     #this takes all columns if FOCUS is false. Can be config ported.  #Split up dependent and independent variables
@@ -96,18 +97,19 @@ from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
 print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
-feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
+##Setup to iteratate on. ~30seconds per run on large datasets
+###########RUN 0##################
+feats, accuracy, r2, plt1 = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
 print(feats.keys())
 print(f"1-R^2:{r2}")
+###########RUN 1##################
 if (r2>.95):
     X = ftrain[feats.keys()]
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
     print(f"------- FEATURE IMPORTANCE USING {TH2} qUANTILE THRESHOLD")
-    feats, accuracy, r2 = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
+    feats, accuracy, r2, plt2 = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
     print(feats.keys())
     print(f"2-R^2:{r2}")
-
-
 
 
 
@@ -115,8 +117,10 @@ if (r2>.95):
 #######################
 # VIEW AND SAVE RESULTS
 #######################
-#sampling_results.quantile([0, 1])
-
+plt1.show()
+plt2.show()
+plt1.savefig(f"featImportance_{COL}-r0.png")
+plt2.savefig(f"featImportance_{COL}-r1.png")
 
 # # Compute change in survival % between training and validation set
 # sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
