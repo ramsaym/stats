@@ -54,7 +54,7 @@ SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
-X = dropColumnList(ftrain,excludeColumns,None)
+X = dropColumnList(ftrain,excludeColumns)
     
     
 
