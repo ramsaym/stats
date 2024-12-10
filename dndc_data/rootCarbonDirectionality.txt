@@ -1,0 +1,11 @@
+Xuan Yang, Baorong Wang, Abbas Fakher, Shaoshan An, Yakov Kuzyakov,
+Contribution of roots to soil organic carbon: From growth to decomposition experiment,
+CATENA,
+Volume 231,
+2023,
+107317,
+ISSN 0341-8162,
+https://doi.org/10.1016/j.catena.2023.107317.
+(https://www.sciencedirect.com/science/article/pii/S0341816223004083)
+Abstract: Carbon (C) derived from roots, rhizodeposition of living roots and dead root decomposition, plays a critical role in soil organic C (SOC) sequestration. Recent studies suggest that root inputs exert a disproportionate influence on SOC formation, and therefore, it is necessary to test separately the effects during root growth (i.e. rhizodeposition) and dead root decomposition (i.e. belowground litter) undernaturalconditions. A field experiment was carried out in grasslands with three typical plants: Stipa bungeana (St.B), Artemisia sacrorum (Ar.S), and Thymus mongolicus (Th.M) to differentiate the effects of root growth vs decomposition on C inputs by using in-growth soil cores and litter bag methods. For root growth experiment, the SOC content increased (2.5–3.8 g·kg−1) with root biomass, especially in soil under Ar.S. C input increased mineral-associated organic C (MAOC%) from 57% to 65%. The SOC δ13C was consistent with roots δ13C, indicating the roots were the primary source of SOC. The root decomposition experiment showed that the increase in SOC (0.74–2.6 g·kg−1) was highest at 90 days. Root decomposition rate was fast before 45 days, and SOC increased with the MAOC% during this period. After 45 days, particulate organic C % (POC%) was raised and was higher than in the control soil. The increase in SOC under root growth (2.5–3.8 g·kg−1) after one year was greater as compared to the rate under root decomposition (-0.4–0 g·kg−1). It suggested that C released during root growth was more effectively retained in the soil than that caused by dead root decomposition. The rise in MAOC during root growth and decomposition mainly explains the increase in SOC. Our results provided direct field based evidence illustrating the specific contribution of root growth and decomposition to SOC.
+Keywords: Root growth; Root decomposition; Soilorganicmatter; Root exudates; Chinese Loess Plateau; Rhizosphere processes; Carbon sequestration

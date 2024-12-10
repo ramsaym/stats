@@ -14,6 +14,7 @@ from statistics import mean
 from tqdm import tqdm
 import sys
 import json
+from utils import *
 
 
 #CALL:
@@ -56,9 +57,12 @@ print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 if FOCUS =='y':  
     print("!--- FOCUS IS SET") 
-    X = ftrain[columnsofinterest].drop(columns=excludeColumns) 
+    #X = ftrain[columnsofinterest].drop(columns=excludeColumns) 
+    X = dropColumnList(ftrain[columnsofinterest],excludeColumns)
 else:   
-    X = ftrain.drop(columns=excludeColumns) # Split up dependent and independent variables
+    #X = ftrain.drop(columns=excludeColumns) # Split up dependent and independent variables
+    X = dropColumnList(ftrain,excludeColumns)
+    
     
 
 ####PROCESS#####################################################
@@ -72,7 +76,7 @@ if SAMPLE:
     print(f"SAMPLING FOR SEED SENSTIVITY: {sampling_rows} iterations")
     sampleAcrossSeeds(sampling_results,sampling_rows)
 
-###APP0 - Feature Selection: TRAIN AND CLASSIFY WITH RF RETURN FEAT IMPRTNC BY QUANTILE RANK ################
+###SERVC0 - Feature Selection: TRAIN AND CLASSIFY WITH RF RETURN FEAT IMPRTNC BY QUANTILE RANK ################
 #############################################################################################################
 from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
@@ -94,9 +98,11 @@ if (r2>.95):
     print(feats)
 
 
-
+###SERVC1 - Feature Selection: permuatation based (column sets) using RF classifier
+#############################################################################################################
 from rf import permutationFeatureImportance
 permutationFeatureImportance(X.keys().to_list(),X_train, X_val, y_train, y_val)
+
 
 PLOT=True
 #######################
