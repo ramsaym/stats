@@ -57,6 +57,7 @@ print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 if FOCUS =='y':  
     print("!--- FOCUS IS SET") 
+    print(ftrain)
     #X = ftrain[columnsofinterest].drop(columns=excludeColumns) 
     X = dropColumnList(ftrain[columnsofinterest],excludeColumns)
 else:   
