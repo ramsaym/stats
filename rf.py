@@ -50,6 +50,7 @@ def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",th
     y_predictions, forest_importances, std = rfClassify(X_train, y_train,X_test,keys,randseed)
     featureCount = forest_importances.shape[0]
     threshhold = forest_importances.quantile(float(thresholdQuant))
+    print(forest_importances)
     featureShortList = forest_importances.loc[lambda x: x >float(threshhold)].sort_values(ascending=False)
     ACCURACY = metrics.accuracy_score(y_test, y_predictions)
     R2 = metrics.r2_score(y_test, y_predictions)
