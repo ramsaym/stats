@@ -26,7 +26,7 @@ name_of_script = sys.argv[0]
 
 datafile = sys.argv[1]
 try:
-    FOCUS = sys.argv[2]
+    FLAG = sys.argv[2]
     COL = sys.argv[3]
     TH1 = sys.argv[4]
     TH2 = sys.argv[5] 
@@ -56,13 +56,7 @@ SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
-if FOCUS =='y':  
-    print("!--- FOCUS IS SET") 
-    #X = ftrain[columnsofinterest].drop(columns=excludeColumns) 
-    X = dropColumnList(ftrain,excludeColumns,columnsofinterest)
-else:   
-    #X = ftrain.drop(columns=excludeColumns) # Split up dependent and independent variables
-    X = dropColumnList(ftrain,excludeColumns,None)
+X = dropColumnList(ftrain,excludeColumns,None)
     
     
 
