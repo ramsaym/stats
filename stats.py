@@ -105,7 +105,7 @@ PLOT=True
 if PLOT:
     #fig, ax0 = plt.subplots()
     fig, ((ax0, ax1,ax2,ax3), (ax4, ax5, ax6,ax7),(ax8, ax9, ax10,ax11)) = plt.subplots(3, 4)
-    forest_importances[forest_importances.loc[lambda x: x >float(TH1)].sort_values(ascending=False)].plot.bar(ax=ax0)
+    forest_importances.loc[lambda x:x > TH1,:].plot.bar(yerr=std, ax=ax0)
     ax0.set_title("Feature importances")
     ax0.set_ylabel("Mean decrease in impurity (MDI) ")
     #fig.tight_layout()
