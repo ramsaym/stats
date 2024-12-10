@@ -1,4 +1,5 @@
 import pandas as pd
+pd.options.mode.chained_assignment = None  # default='warn'
 
 def dropColumnList(df,delCols):
     rdf= pd.DataFrame()
