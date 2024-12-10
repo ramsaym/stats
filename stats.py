@@ -62,7 +62,7 @@ X = dropColumnList(ftrain,excludeColumns)
 #################################################################
 print(f"------  ANALYZING PREDICTORS OF {COL}")
 if VERBOSE: 
-    print(ftrain.loc[:,X.keys().to_list()].head())
+    print(X.loc[:,X.keys().to_list()].head())
 
 if SAMPLE:
     from rf import sampleAcrossSeeds
