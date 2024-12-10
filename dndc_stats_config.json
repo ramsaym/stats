@@ -2,6 +2,6 @@
 "setting1": [],
 "setting2": [],
 "meta-keyword": "dndc-database config",
-"columnsToExclude":["x1","y1","Crop 1.23_RootC","SOC10-20cm","SOC30-40cm","SOC50-60cm","Humus","Humads","Resistant litter", 
-                    "Labile litter","SOC","_nitrification_10-20cm","DayPET_RN(MJ/m2/d)","PET(mm)","Actual_ET(mm)"]
+"columnsToExclude":["x1","y1","Crop 1.23_RootC","SOC10-20cm","SOC30-40cm","SOC50-60cm","Humus","Humads",
+"Resistant litter", "Labile litter","SOC","_nitrification_10-20cm","DayPET_RN(MJ/m2/d)","PET(mm)","Actual_ET(mm)","Very labile litter"]
 }
