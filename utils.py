@@ -5,9 +5,9 @@ def dropColumnList(df,delCols,keepCols):
     for c in delCols:
         if keepCols is not None:
             if c in keepCols:
-                df = df.drop(c,axis=1, inplace=True)
+                rdf = df.drop(c,axis=1, inplace=True)
         else:
             if c in df.keys().to_list():
-                df = df.drop(c,axis=1, inplace=True)
+                rdf = df.drop(c,axis=1, inplace=True)
 
-    return df
+    return rdf
