@@ -105,15 +105,13 @@ PLOT=True
 if PLOT:
     #fig, ax0 = plt.subplots()
     fig, ((ax0, ax1,ax2,ax3), (ax4, ax5, ax6,ax7),(ax8, ax9, ax10,ax11)) = plt.subplots(3, 4)
-    forest_importances.plot.bar(yerr=std, ax=ax0)
+    feats.plot.bar(yerr=std, ax=ax0)
     ax0.set_title("Feature importances")
     ax0.set_ylabel("Mean decrease in impurity (MDI) ")
     #fig.tight_layout()
     i=1
     for ft in feats.keys():
         X = ftrain[ft] 
-        #print(X)
-        #Use 5 remaining slots to fill with top four features. Returned as feats sorted by MDI from rf.py
         match i:
             case 1:
                 ax1.scatter(X, y)
