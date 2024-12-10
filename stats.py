@@ -49,7 +49,7 @@ except:
 
 #####SETUP######################################################
 #################################################################
-print(f"---     SETTING UP - HANDLING CALL FOR {datafile} focus={FOCUS} and column={COL}")
+print(f"---     SETTING UP - HANDLING CALL FOR {datafile} focus={FLAG} and column={COL}")
 sampling_rows = 200
 VERBOSE=True
 SAMPLE=False
