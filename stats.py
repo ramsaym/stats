@@ -39,7 +39,7 @@ try:
     columnsofinterest  = configData["columnsofinterest"]
     excludeColumns = configData["columnsToExclude"]
     print(f"--      FOUND {len(columnsofinterest)} COLUMNS OF INTEREST")
-    print(f"--      FOUND {ftrain.columns.to_list()} COLUMNS TOTAL")
+    print(f"--      FOUND {len(ftrain.columns.to_list())} COLUMNS TOTAL")
 except:
     print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG: {cfg}")
     sys.exit(0)
