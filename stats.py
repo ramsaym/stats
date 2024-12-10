@@ -107,7 +107,7 @@ if PLOT:
     fig, ((ax0, ax1,ax2,ax3), (ax4, ax5, ax6,ax7),(ax8, ax9, ax10,ax11)) = plt.subplots(3, 4)
     #Series object
     forest_importances =  forest_importances[ forest_importances > forest_importances.quantile(float(TH2))]
-    forest_importances.plot.bar(yerr=std, ax=ax0)
+    forest_importances.plot.bar(ax=ax0)
     ax0.set_title("Feature importances")
     ax0.set_ylabel("Mean decrease in impurity (MDI) ")
     print(forest_importances.dtypes)
