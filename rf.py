@@ -24,11 +24,11 @@ def permutationFeatureImportance(keys,X_train, X_val, y_train, y_val):
     model.score(X_val, y_val)
     r = permutation_importance(model, X_val, y_val,n_repeats=30,random_state=1)
     print(r)
-    # for i in r.importances_mean.argsort()[::-1]:
-    #     if r.importances_mean[i] - 2 * r.importances_std[i] > 0:
-    #         print(f"{keys[i]:<8}"
-    #             f"{r.importances_mean[i]:.3f}"
-    #             f" +/- {r.importances_std[i]:.3f}")
+    for i in r.importances_mean.argsort()[::-1]:
+        if r.importances_mean[i] - 2 * r.importances_std[i] > 0:
+            print(f"{keys[i]:<8}"
+                f"{r.importances_mean[i]:.3f}"
+                f" +/- {r.importances_std[i]:.3f}")
 
 
 def rfClassify(X_train, y_train,X_test,keys,randseed):
@@ -53,7 +53,7 @@ def randomforestAnalyze(X_train,y_train,X_test,y_test,keys,identifier="rootC",th
     featureShortList = forest_importances.loc[lambda x: x >float(threshhold)].sort_values(ascending=False)
     ACCURACY = metrics.accuracy_score(y_test, y_predictions)
     R2 = metrics.r2_score(y_test, y_predictions)
-    return featureShortList, ACCURACY, R2, forest_importances.sort_values(ascending=False), std
+    return featureShortList, ACCURACY, R2, forest_importances, std
 
 
 def sampleAcrossSeeds(sampling_results,sampling_rows,COL):

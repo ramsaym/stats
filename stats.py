@@ -91,11 +91,11 @@ if (r2>.95):
     print(f"------- FEATURE IMPORTANCE USING {TH2} qUANTILE THRESHOLD")
     feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
     print(f"2-R^2:{r2}")
-    print(forest_importances)
+    print(forest_importances.loc[lambda x: x >0].sort_values(ascending=False))
 
 
 from rf import permutationFeatureImportance
-permutationFeatureImportance(feats.keys().to_list(),X_train, X_val, y_train, y_val)
+permutationFeatureImportance(X.keys().to_list(),X_train, X_val, y_train, y_val)
 
 PLOT=True
 #######################
