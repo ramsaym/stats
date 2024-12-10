@@ -32,8 +32,8 @@ try:
     TH2 = sys.argv[5] 
     CFKEY = sys.argv[6] 
     train_all = pd.read_csv(datafile)
-    ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-    #ftrain = train_all.loc[train_all['Crop 1.23_RootC'] > 0, :]
+    #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
+    ftrain = train_all.loc[train_all['Crop 1.23_RootC'] > 0, :]
     cfg = f'{CFKEY}_stats_config.json'
     print(f"-       LOOKING FOR CONFIG FILE {cfg}")
     with open(cfg, 'r') as config_file:

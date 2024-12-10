@@ -1,13 +1,10 @@
-import pandas
+import pandas as pd
 
-def dropColumnList(df,delCols,keepCols):
-    
+def dropColumnList(df,delCols):
+    rdf= pd.DataFrame()
     for c in delCols:
-        if keepCols is not None:
-            if c in keepCols:
-                df.drop(c,axis=1)
-        else:
-            if c in df.keys().to_list():
-                df.drop(c,axis=1)
+        if c in df.keys().to_list():
+            df.drop(c,axis=1)
+    rdf=df
 
-    return df
+    return rdf
