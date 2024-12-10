@@ -59,10 +59,10 @@ if FOCUS =='y':
     print("!--- FOCUS IS SET") 
     print(ftrain.columns)
     #X = ftrain[columnsofinterest].drop(columns=excludeColumns) 
-    X = dropColumnList(ftrain[columnsofinterest],excludeColumns)
+    X = dropColumnList(ftrain[columnsofinterest],excludeColumns,columnsofinterest)
 else:   
     #X = ftrain.drop(columns=excludeColumns) # Split up dependent and independent variables
-    X = dropColumnList(ftrain,excludeColumns)
+    X = dropColumnList(ftrain,excludeColumns,columnsofinterest)
     
     
 
