@@ -94,6 +94,8 @@ if (r2>.95):
     print(forest_importances)
 
 
+from rf import permutationFeatureImportance
+permutationFeatureImportance(feats.keys().to_list(),X_train, X_val, y_train, y_val)
 
 PLOT=True
 #######################
@@ -101,12 +103,10 @@ PLOT=True
 #######################
 if PLOT:
     #fig, ax0 = plt.subplots()
-    fig, ((ax0, ax1,ax2,ax3), (ax4, ax5, ax6,ax7)) = plt.subplots(2, 4)
+    fig, ((ax0, ax1,ax2,ax3), (ax4, ax5, ax6,ax7),(ax8, ax9, ax10,ax11)) = plt.subplots(3, 4)
     forest_importances.plot.bar(yerr=std, ax=ax0)
-    ax0.set_title("Feature importances using mean decrease in impurity (MDI)")
+    ax0.set_title("Feature importances")
     ax0.set_ylabel("Mean decrease in impurity (MDI) ")
-    sizes = np.random.uniform(15, 80, len(X))
-    colors = np.random.uniform(15, 80, len(X))
     fig.tight_layout()
     i=1
     for ft in feats.keys():
@@ -135,11 +135,22 @@ if PLOT:
             case 7:
                 ax7.scatter(X, y)
                 ax7.set_title(ft)
+            case 8:
+                ax8.scatter(X, y)
+                ax8.set_title(ft)
+            case 9:
+                ax9.scatter(X, y)
+                ax9.set_title(ft)
+            case 10:
+                ax10.scatter(X, y)
+                ax10.set_title(ft)
+            case 11:
+                ax11.scatter(X, y)
+                ax11.set_title(ft)
             case _:
                 print("!--- Unmapped Plot/Out of grid slots.")
         
         i+=1
-        plt.savefig(f"scatter_{COL}.png")
     
     plt.show()
     plt.savefig(f"panel_featImportance_{COL}.png")

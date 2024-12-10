@@ -14,6 +14,20 @@ from sklearn import metrics
 from statistics import mean
 from tqdm import tqdm
 import time
+from sklearn.linear_model import Ridge
+from sklearn.inspection import permutation_importance
+
+
+def permutationFeatureImportance(keys,X_train, X_val, y_train, y_val):
+
+    model = Ridge(alpha=1e-2).fit(X_train, y_train)
+    model.score(X_val, y_val)
+    r = permutation_importance(model, X_val, y_val,n_repeats=30,random_state=1)
+    for i in r.importances_mean.argsort()[::-1]:
+        if r.importances_mean[i] - 2 * r.importances_std[i] > 0:
+            print(f"{keys[i]:<8}"
+                f"{r.importances_mean[i]:.3f}"
+                f" +/- {r.importances_std[i]:.3f}")
 
 
 def rfClassify(X_train, y_train,X_test,keys,randseed):
