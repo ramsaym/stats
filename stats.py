@@ -137,10 +137,12 @@ if PLOT:
                 ax7.set_title(ft)
             case _:
                 print("!--- Unmapped Plot/Out of grid slots.")
+        
         i+=1
+        plt.savefig(f"scatter_{COL}.png")
     
     plt.show()
-    plt.savefig(f"featImportance_{COL}.png")
+    plt.savefig(f"panel_featImportance_{COL}.png")
 
 # # Compute change in survival % between training and validation set
 # sr['train-val-diff'] = abs(sr['rootc_train'] - sr['rootc_val'])
