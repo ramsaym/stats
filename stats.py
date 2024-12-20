@@ -98,12 +98,16 @@ try:
     ftrain = train_all.loc[train_all['Crop 1.23_RootC'] > 0, :]
     cfg = f'{CFKEY}_stats_config.json'
     print(f"-       LOOKING FOR CONFIG FILE {cfg}")
-    with open(cfg, 'r') as config_file:
-        configData = json.load(config_file)
-    excludeColumns = configData["columnsToExclude"]
+    try:
+        with open(cfg, 'r') as config_file:
+            configData = json.load(config_file)
+            excludeColumns = configData["columnsToExclude"]
+    except: 
+            configData = None
+            excludeColumns = []
     print(f"--      FOUND {len(ftrain.columns.to_list())} COLUMNS TOTAL")
 except:
-    print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG: {cfg}")
+    print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG")
     sys.exit(0)
 
 print(f"---     SETTING UP - HANDLING CALL FOR {datafile} and column={COL}")
@@ -114,6 +118,8 @@ sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = 
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 X = dropColumnList(ftrain,excludeColumns)
+
+
     
     
 
