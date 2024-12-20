@@ -26,6 +26,7 @@ def fetchHeaders(engine,tableName,verbose=1):
         except:
             results_as_dict=[]
         return results_as_dict
+    conn.close()
     
 
 def findHeaderCandidatesInData(engine,tableName,col,colst,regex='[a-z][\/\-\+]*',limit=2,print=1):
@@ -42,3 +43,4 @@ def findHeaderCandidatesInData(engine,tableName,col,colst,regex='[a-z][\/\-\+]*'
         except:
             results_as_dict=[]
         return results_as_dict
+    conn.close()

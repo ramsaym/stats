@@ -55,12 +55,9 @@ def connection():
 def calculate_variance_entropy(engine, table_name, column_name):   
     qry = sqlalchemy.text(f"SELECT \"{column_name}\" FROM \"{table_name}\"")
     with engine.connect() as conn:
-        conn.execute(qry)
+        resultset = conn.execute(qry)
+        results_as_dict = resultset.mappings().all()
  
-    resultset = conn.execute(qry)
-    results_as_dict = resultset.mappings().all()
-
-
     conn.close()
     column_data = [item[0] for item in resultset]
     variance = np.var(column_data)
