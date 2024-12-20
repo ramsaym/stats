@@ -66,7 +66,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
     # ent = entropy(value_counts)
     # return variance, ent
     #print(results_as_dict)
-    return column_data,variance
+    return resultset,variance
 
 
 #CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
