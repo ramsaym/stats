@@ -51,13 +51,15 @@ def connection():
         db=DB_NAME
     )
     return conn
+
 engine = sqlalchemy.create_engine(
     "postgresql+pg8000://",
     creator=connection
 )
 
 def calculate_variance_entropy(conn, table_name, column_name):   
-    qry = sqlalchemy.text(f"SELECT {column_name} FROM {table_name}")
+    #qry = sqlalchemy.text(f"SELECT {column_name} FROM {table_name}")
+    qry = f"SELECT {column_name} FROM {table_name}"
     conn.execute(qry)
     column_data = conn.fetchall()
     conn.close()
