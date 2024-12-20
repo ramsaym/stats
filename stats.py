@@ -52,10 +52,11 @@ def connection():
     )
     return conn
 
-def calculate_variance_entropy(conn, table_name, column_name):   
+def calculate_variance_entropy(engine, table_name, column_name):   
     #qry = sqlalchemy.text(f"SELECT {column_name} FROM {table_name}")
     qry = f"SELECT {column_name} FROM {table_name}"
-    conn.execute(qry)
+    with engine.connect() as conn:
+        conn.execute(qry)
     column_data = conn.fetchall()
     conn.close()
     column_data = [item[0] for item in column_data]
@@ -67,13 +68,13 @@ def calculate_variance_entropy(conn, table_name, column_name):
 
 #CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
 #that we will select from to do stats.
-def scanPredicateTables(tables,conn):
+def scanPredicateTables(tables,engine):
     tblnum=1
     collist=[]
     for tbl in tables:
         for obj in fetchHeaders(engine,tbl):
             col = obj['Column']
-            variance, ent = calculate_variance_entropy(conn,tbl, col)
+            variance, ent = calculate_variance_entropy(engine,tbl, col)
             print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
             #qry=sqlalchemy.text(f'SELECT * FROM "{tbl}" WHERE "{col}"::text ~ \'{regex}\' limit {limit}')
             # if "interesting" is True:
