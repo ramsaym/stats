@@ -174,43 +174,41 @@ if PLOT:
     i=1
     for ft in feats.keys():
         X = ftrain[ft] 
-        match i:
-            case 1:
-                ax1.scatter(X, y)
-                ax1.set_title(ft)
-            case 2:
-                ax2.scatter(X, y)
-                ax2.set_title(ft)
-            case 3:
-                ax3.scatter(X, y)
-                ax3.set_title(ft)
-            case 4:
-                ax4.scatter(X, y)
-                ax4.set_title(ft)
-            case 5:
-                ax5.scatter(X, y)
-                ax5.set_title(ft)
-            case 6:
-                ax6.scatter(X, y)
-                ax6.set_title(ft)
-            case 7:
-                ax7.scatter(X, y)
-                ax7.set_title(ft)
-            case 8:
-                ax8.scatter(X, y)
-                ax8.set_title(ft)
-            case 9:
-                ax9.scatter(X, y)
-                ax9.set_title(ft)
-            case 10:
-                ax10.scatter(X, y)
-                ax10.set_title(ft)
-            case 11:
-                ax11.scatter(X, y)
-                ax11.set_title(ft)
-            case _:
-                print("!--- Unmapped Plot/Out of grid slots.")
-        
+        if 1 == 1:
+            ax1.scatter(X, y)
+            ax1.set_title(ft)
+        elif i == 2:
+            ax2.scatter(X, y)
+            ax2.set_title(ft)
+        elif i == 3:
+            ax3.scatter(X, y)
+            ax3.set_title(ft)
+        elif i == 4:
+            ax4.scatter(X, y)
+            ax4.set_title(ft)
+        elif i == 5:
+            ax5.scatter(X, y)
+            ax5.set_title(ft)
+        elif i == 6:
+            ax6.scatter(X, y)
+            ax6.set_title(ft)
+        elif i == 7:
+            ax7.scatter(X, y)
+            ax7.set_title(ft)
+        elif i == 8:
+            ax8.scatter(X, y)
+            ax8.set_title(ft)
+        elif i == 9:
+            ax9.scatter(X, y)
+            ax9.set_title(ft)
+        elif i == 10:
+            ax10.scatter(X, y)
+            ax10.set_title(ft)
+        elif i == 11:
+            ax11.scatter(X, y)
+            ax11.set_title(ft)
+        else:
+            print("!--- Unmapped Plot/Out of grid slots.")
         i+=1
     
     plt.show()
