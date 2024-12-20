@@ -52,11 +52,6 @@ def connection():
     )
     return conn
 
-engine = sqlalchemy.create_engine(
-    "postgresql+pg8000://",
-    creator=connection
-)
-
 def calculate_variance_entropy(conn, table_name, column_name):   
     #qry = sqlalchemy.text(f"SELECT {column_name} FROM {table_name}")
     qry = f"SELECT {column_name} FROM {table_name}"
@@ -91,6 +86,8 @@ def scanPredicateTables(tables,conn):
 #################################################################
 mode=-999
 try:
+    engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
+
     if INSTANCE_CONNECTION_NAME != -999:
         scanPredicateTables(['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1'],engine)
         #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
