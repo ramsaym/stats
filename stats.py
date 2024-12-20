@@ -15,6 +15,7 @@ import sys
 import json
 from utils import *
 import sqlalchemy
+from sqlalchemy import text
 from google.cloud.sql.connector import Connector
 from google.cloud import storage
 import psycopg2
