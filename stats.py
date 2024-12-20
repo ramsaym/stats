@@ -174,7 +174,7 @@ if PLOT:
     i=1
     for ft in feats.keys():
         X = ftrain[ft] 
-        match i:
+        match ft:
             case 1:
                 ax1.scatter(X, y)
                 ax1.set_title(ft)
