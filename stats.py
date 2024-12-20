@@ -106,8 +106,9 @@ try:
             configData = None
             excludeColumns = []
     print(f"--      FOUND {len(ftrain.columns.to_list())} COLUMNS TOTAL")
-except:
+except Exception as e:
     print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG")
+    print(e)
     sys.exit(0)
 
 print(f"---     SETTING UP - HANDLING CALL FOR {datafile} and column={COL}")
