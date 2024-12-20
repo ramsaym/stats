@@ -59,7 +59,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
         results_as_dict = resultset.mappings().all()
  
     conn.close()
-    column_data = [item[0] for item in results_as_dict]
+    column_data = [item[0] for item in resultset]
     variance = np.var(column_data)
     # value_counts = np.bincount(column_data)
     # ent = entropy(value_counts)
