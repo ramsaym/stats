@@ -83,6 +83,9 @@ def scanPredicateTables(tables,conn):
         tblnum+=1
 
     return collist
+
+#####SETUP######################################################
+#################################################################
 mode=-999
 try:
     if INSTANCE_CONNECTION_NAME != -999:
@@ -104,9 +107,6 @@ except:
     print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG: {cfg}")
     sys.exit(0)
 
-
-#####SETUP######################################################
-#################################################################
 print(f"---     SETTING UP - HANDLING CALL FOR {datafile} and column={COL}")
 sampling_rows = 200
 VERBOSE=True
