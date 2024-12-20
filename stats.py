@@ -65,7 +65,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
     # ent = entropy(value_counts)
     # return variance, ent
     #print(results_as_dict)
-    return results_as_dict
+    return column_data,variance
 
 
 #CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
@@ -77,8 +77,8 @@ def scanPredicateTables(tables,engine):
         for obj in fetchHeaders(engine,tbl):
             col = obj['Column']
             #variance, ent = calculate_variance_entropy(engine,tbl, col)
-            unittestresult = calculate_variance_entropy(engine,tbl, col)
-            #print(f"Table: {tbl},Col: {col},Variance: {len(unittestresult)}, Entropy: {unittestresult}")
+            unittestresult, variance = calculate_variance_entropy(engine,tbl, col)
+            print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {unittestresult}")
             #qry=sqlalchemy.text(f'SELECT * FROM "{tbl}" WHERE "{col}"::text ~ \'{regex}\' limit {limit}')
             # if "interesting" is True:
             #     collist.append({f'\"{tblnum}\":\"{col}\"'})
