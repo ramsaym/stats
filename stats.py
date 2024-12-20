@@ -59,11 +59,13 @@ def calculate_variance_entropy(engine, table_name, column_name):
         results_as_dict = resultset.mappings().all()
  
     conn.close()
-    column_data = [item[0] for item in resultset]
-    variance = np.var(column_data)
-    value_counts = np.bincount(column_data)
-    ent = entropy(value_counts)
-    return variance, ent
+    # column_data = [item[0] for item in resultset]
+    # variance = np.var(column_data)
+    # value_counts = np.bincount(column_data)
+    # ent = entropy(value_counts)
+    # return variance, ent
+    print(results_as_dict)
+    return results_as_dict
 
 
 #CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
