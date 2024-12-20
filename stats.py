@@ -56,7 +56,8 @@ engine = sqlalchemy.create_engine(
 )
 
 def calculate_variance_entropy(conn, table_name, column_name):   
-    conn.execute(sqlalchemy.text(f"SELECT {column_name} FROM {table_name}"))
+    qry = sqlalchemy.text(f"SELECT {column_name} FROM {table_name}")
+    conn.execute(qry)
     column_data = conn.fetchall()
     conn.close()
     column_data = [item[0] for item in column_data]
