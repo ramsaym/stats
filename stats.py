@@ -85,34 +85,34 @@ def scanPredicateTables(tables,conn):
 #####SETUP######################################################
 #################################################################
 mode=-999
-try:
-    engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
+# try:
+engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
 
-    if INSTANCE_CONNECTION_NAME != -999:
-        scanPredicateTables(['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1'],engine)
-        #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
-        mode=0
-        exit(0)
-    else: 
-        train_all = pd.read_csv(datafile)
-        mode=1
-    print(train_all.columns)
-    #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-    ftrain = train_all.loc[train_all['Crop 1.23_RootC'] > 0, :]
-    cfg = f'{CFKEY}_stats_config.json'
-    print(f"-       LOOKING FOR CONFIG FILE {cfg}")
-    try:
-        with open(cfg, 'r') as config_file:
-            configData = json.load(config_file)
-            excludeColumns = configData["columnsToExclude"]
-    except: 
-            configData = None
-            excludeColumns = []
-    print(f"--      FOUND {len(ftrain.columns.to_list())} COLUMNS TOTAL")
-except Exception as e:
-    print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG")
-    print(e)
-    sys.exit(0)
+if INSTANCE_CONNECTION_NAME != -999:
+    scanPredicateTables(['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1'],engine)
+    #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
+    mode=0
+    exit(0)
+else: 
+    train_all = pd.read_csv(datafile)
+    mode=1
+print(train_all.columns)
+#ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
+ftrain = train_all.loc[train_all['Crop 1.23_RootC'] > 0, :]
+cfg = f'{CFKEY}_stats_config.json'
+print(f"-       LOOKING FOR CONFIG FILE {cfg}")
+try:
+    with open(cfg, 'r') as config_file:
+        configData = json.load(config_file)
+        excludeColumns = configData["columnsToExclude"]
+except: 
+        configData = None
+        excludeColumns = []
+print(f"--      FOUND {len(ftrain.columns.to_list())} COLUMNS TOTAL")
+# except Exception as e:
+#     print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG")
+#     print(e)
+#     sys.exit(0)
 
 print(f"---     SETTING UP - HANDLING CALL FOR {datafile} and column={COL}")
 sampling_rows = 200
