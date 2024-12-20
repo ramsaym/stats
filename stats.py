@@ -15,6 +15,65 @@ from tqdm import tqdm
 import sys
 import json
 from utils import *
+import sqlalchemy
+from google.cloud.sql.connector import Connector
+from google.cloud import storage
+import psycopg2
+import numpy as np
+from scipy.stats import entropy
+
+
+###CREDS
+DB_USER = "postgres"
+DB_NAME = "postgres"
+DB_PASS = sys.argv[9]
+#-----MAIN RUN LOGIC-----------------------------------------------------#
+#-----USAGE: python3 ./createView6.py agdata-378419:northamerica-northeast1:agdatastore postgres createView-Day_SoilC_1 Day_SoilN_1 '_Day,_Crop:[0-9],[0-9]' 'x1,x2,y1,y2,_Year,Year,_Day,Day'
+#---CONFIGURE DB---##############################################################################################
+#following https://cloud.google.com/sql/docs/postgres/connect-instance-auth-proxy?hl=en for the cloud SQL proxy
+connector=Connector()
+# function to return the database connection object
+def connection():
+    conn = connector.connect(
+        INSTANCE_CONNECTION_NAME,
+        "pg8000",
+        user=DB_USER,
+        password=DB_PASS,
+        db=DB_NAME
+    )
+    return conn
+engine = sqlalchemy.create_engine(
+    "postgresql+pg8000://",
+    creator=connection
+)
+
+def calculate_variance_entropy(conn, table_name, column_name):   
+    conn.execute(sqlalchemy.text(f"SELECT {column_name} FROM {table_name}"))
+    column_data = conn.fetchall()
+    conn.close()
+    column_data = [item[0] for item in column_data]
+    variance = np.var(column_data)
+    value_counts = np.bincount(column_data)
+    ent = entropy(value_counts)
+    return variance, ent
+
+
+#CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
+#that we will select from to do stats.
+def scanPredicateTables(tables,conn):
+    tblnum=1
+    collist=[]
+    for tbl in tables:
+        for obj in fetchHeaders(engine,tbl):
+            col = obj['Column']
+            variance, ent = calculate_variance_entropy(conn,tbl, col)
+            print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
+            #qry=sqlalchemy.text(f'SELECT * FROM "{tbl}" WHERE "{col}"::text ~ \'{regex}\' limit {limit}')
+            if "interesting" is True:
+                collist.append({f'\"{tblnum}\":\"{col}\"'})
+        tblnum+=1
+
+    return collist
 
 
 #CALL:
@@ -25,13 +84,18 @@ from utils import *
 name_of_script = sys.argv[0]
 
 datafile = sys.argv[1]
+INSTANCE_CONNECTION_NAME = sys.argv[2]
 try:
-    FLAG = sys.argv[2]
-    COL = sys.argv[3]
-    TH1 = sys.argv[4]
-    TH2 = sys.argv[5] 
-    CFKEY = sys.argv[6] 
-    train_all = pd.read_csv(datafile)
+    FLAG = sys.argv[3]
+    COL = sys.argv[4]
+    TH1 = sys.argv[5]
+    TH2 = sys.argv[7] 
+    CFKEY = sys.argv[8] 
+    
+    if INSTANCE_CONNECTION_NAME > 0:
+        train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
+    else: 
+        train_all = pd.read_csv(datafile)
     print(train_all.columns)
     #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
     ftrain = train_all.loc[train_all['Crop 1.23_RootC'] > 0, :]
