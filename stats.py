@@ -37,7 +37,7 @@ DB_USER = "postgres"
 DB_NAME = "postgres"
 DB_PASS = sys.argv[7]
 #-----MAIN RUN LOGIC-----------------------------------------------------#
-#-----USAGE: python3 ./createView6.py agdata-378419:northamerica-northeast1:agdatastore postgres createView-Day_SoilC_1 Day_SoilN_1 '_Day,_Crop:[0-9],[0-9]' 'x1,x2,y1,y2,_Year,Year,_Day,Day'
+#-----USAGE: 
 #---CONFIGURE DB---##############################################################################################
 #following https://cloud.google.com/sql/docs/postgres/connect-instance-auth-proxy?hl=en for the cloud SQL proxy
 connector=Connector()
@@ -78,7 +78,7 @@ def scanPredicateTables(tables,engine):
             col = obj['Column']
             #variance, ent = calculate_variance_entropy(engine,tbl, col)
             unittestresult = calculate_variance_entropy(engine,tbl, col)
-            print(f"Table: {tbl},Col: {col},Variance: {len(unittestresult)}, Entropy: {ent}")
+            print(f"Table: {tbl},Col: {col},Variance: {len(unittestresult)}, Entropy: {unittestresult}")
             #qry=sqlalchemy.text(f'SELECT * FROM "{tbl}" WHERE "{col}"::text ~ \'{regex}\' limit {limit}')
             # if "interesting" is True:
             #     collist.append({f'\"{tblnum}\":\"{col}\"'})
