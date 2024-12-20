@@ -21,12 +21,21 @@ from google.cloud import storage
 import psycopg2
 import numpy as np
 from scipy.stats import entropy
-
-
+#USAGE PGSQL:   python3 ./stats.py -999 agdata-378419:northamerica-northeast1:agdatastore 'Crop 1.23_RootC' .25 .50 "day_fieldcrop_1_day_fieldmanage_1" "postgre"
+#USAGE CSV:     python3 ./stats.py "dndc_data/biogeodb.csv" -999 predicted='Crop 1.23_RootC' threshold1=.25 threshold2=.50 "dndc" -999
+#####PARAMS######################################################
+#################################################################
+name_of_script = sys.argv[0]
+datafile = sys.argv[1]
+INSTANCE_CONNECTION_NAME = sys.argv[2]
+COL = sys.argv[3]
+TH1 = sys.argv[4]
+TH2 = sys.argv[5] 
+CFKEY = sys.argv[6] 
 ###CREDS
 DB_USER = "postgres"
 DB_NAME = "postgres"
-DB_PASS = sys.argv[9]
+DB_PASS = sys.argv[7]
 #-----MAIN RUN LOGIC-----------------------------------------------------#
 #-----USAGE: python3 ./createView6.py agdata-378419:northamerica-northeast1:agdatastore postgres createView-Day_SoilC_1 Day_SoilN_1 '_Day,_Crop:[0-9],[0-9]' 'x1,x2,y1,y2,_Year,Year,_Day,Day'
 #---CONFIGURE DB---##############################################################################################
@@ -69,33 +78,19 @@ def scanPredicateTables(tables,conn):
             variance, ent = calculate_variance_entropy(conn,tbl, col)
             print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
             #qry=sqlalchemy.text(f'SELECT * FROM "{tbl}" WHERE "{col}"::text ~ \'{regex}\' limit {limit}')
-            if "interesting" is True:
-                collist.append({f'\"{tblnum}\":\"{col}\"'})
+            # if "interesting" is True:
+            #     collist.append({f'\"{tblnum}\":\"{col}\"'})
         tblnum+=1
 
     return collist
-
-
-#CALL:
-#python3 ./stats.py "dndc_data/biogeodb.csv" True 'Crop 1.23_RootC' .02 .04
-
-#####PARAMS######################################################
-#################################################################
-name_of_script = sys.argv[0]
-
-datafile = sys.argv[1]
-INSTANCE_CONNECTION_NAME = sys.argv[2]
+mode=-999
 try:
-    FLAG = sys.argv[3]
-    COL = sys.argv[4]
-    TH1 = sys.argv[5]
-    TH2 = sys.argv[7] 
-    CFKEY = sys.argv[8] 
-    
-    if INSTANCE_CONNECTION_NAME > 0:
+    if INSTANCE_CONNECTION_NAME != -999:
         train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
+        mode=0
     else: 
         train_all = pd.read_csv(datafile)
+        mode=1
     print(train_all.columns)
     #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
     ftrain = train_all.loc[train_all['Crop 1.23_RootC'] > 0, :]
@@ -112,7 +107,7 @@ except:
 
 #####SETUP######################################################
 #################################################################
-print(f"---     SETTING UP - HANDLING CALL FOR {datafile} focus={FLAG} and column={COL}")
+print(f"---     SETTING UP - HANDLING CALL FOR {datafile} and column={COL}")
 sampling_rows = 200
 VERBOSE=True
 SAMPLE=False
