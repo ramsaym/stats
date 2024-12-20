@@ -88,8 +88,10 @@ def scanPredicateTables(tables,conn):
 mode=-999
 try:
     if INSTANCE_CONNECTION_NAME != -999:
-        train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
+        scanPredicateTables(['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1'],engine)
+        #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
         mode=0
+        exit(0)
     else: 
         train_all = pd.read_csv(datafile)
         mode=1
