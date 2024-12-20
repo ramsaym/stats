@@ -78,7 +78,7 @@ def scanPredicateTables(tables,engine):
             col = obj['Column']
             #variance, ent = calculate_variance_entropy(engine,tbl, col)
             unittestresult = calculate_variance_entropy(engine,tbl, col)
-            print(f"Table: {tbl},Col: {col},Variance: {len(unittestresult)}, Entropy: {unittestresult}")
+            #print(f"Table: {tbl},Col: {col},Variance: {len(unittestresult)}, Entropy: {unittestresult}")
             #qry=sqlalchemy.text(f'SELECT * FROM "{tbl}" WHERE "{col}"::text ~ \'{regex}\' limit {limit}')
             # if "interesting" is True:
             #     collist.append({f'\"{tblnum}\":\"{col}\"'})
