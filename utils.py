@@ -1,5 +1,7 @@
 import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
+import sqlalchemy
+from sqlalchemy import text
 
 def dropColumnList(df,delCols):
     rdf= pd.DataFrame()
