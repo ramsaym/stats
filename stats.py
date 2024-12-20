@@ -1,7 +1,6 @@
 #######
 # SETUP
 #######
-
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -13,6 +12,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 from statistics import mean
 from tqdm import tqdm
 import sys
+assert sys.version_info >= (3, 10)
 import json
 from utils import *
 import sqlalchemy
@@ -174,7 +174,7 @@ if PLOT:
     i=1
     for ft in feats.keys():
         X = ftrain[ft] 
-        match ft:
+        match i:
             case 1:
                 ax1.scatter(X, y)
                 ax1.set_title(ft)
