@@ -87,7 +87,7 @@ def scanPredicateTables(tables,engine):
     for tbl in tables:
         headers = fetchHeaders(engine,tbl)
         for obj in headers:
-            with tqdm(total=len(headers) as pbar2:
+            with tqdm(total=len(headers)) as pbar2:
                 col = obj['Column']
                 #variance, ent = calculate_variance_entropy(engine,tbl, col)
                 variance, ent = calculate_variance_entropy(engine,tbl, col)
