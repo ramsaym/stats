@@ -74,7 +74,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
     except Exception as e:
         variance = 0
         ent=0
-        print(e)
+        #print(e)
     return variance, ent
 
 
@@ -83,16 +83,19 @@ def calculate_variance_entropy(engine, table_name, column_name):
 def scanPredicateTables(tables,engine):
     tblnum=1
     collist=[]
-    for tbl in tables:
-        for obj in fetchHeaders(engine,tbl):
-            col = obj['Column']
-            #variance, ent = calculate_variance_entropy(engine,tbl, col)
-            variance, ent = calculate_variance_entropy(engine,tbl, col)
-            #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {unittestresult}")
-            if ent > 1:
-                collist.append({f'\"{tbl}\":\"{col}\"'})
-        tblnum+=1
 
+    for tbl in tables:
+        headers = fetchHeaders(engine,tbl)
+        for obj in headers:
+            with tqdm(total=len(headers) as pbar2:
+                col = obj['Column']
+                #variance, ent = calculate_variance_entropy(engine,tbl, col)
+                variance, ent = calculate_variance_entropy(engine,tbl, col)
+                #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {unittestresult}")
+                if ent > 1:
+                    collist.append({f'\"{tbl}\":\"{col}\"'})
+                pbar2.update(1)
+        tblnum+=1
     return collist
 
 #####SETUP######################################################
