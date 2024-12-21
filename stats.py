@@ -56,11 +56,10 @@ def calculate_variance_entropy(engine, table_name, column_name):
     qry = sqlalchemy.text(f"SELECT \"{column_name}\" FROM \"{table_name}\"")
     print(qry)
     with engine.connect() as conn:
-        resultset = conn.execute(qry)
-        results_as_dict = resultset.mappings().all()
- 
-    conn.close()
+        resultset = conn.execute(qry) 
+    
     column_data = [item[0] for item in resultset]
+    conn.close()
     print(column_data)
     variance = np.var(column_data)
     # value_counts = np.bincount(column_data)
