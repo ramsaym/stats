@@ -60,11 +60,14 @@ def calculate_variance_entropy(engine, table_name, column_name):
         resultset = conn.execute(qry) 
         for item in resultset:
             print(item[0])
-            try:
-                val = float(item[0].strip())
+            #need to handle garbage here carefully if DB is loaded with nans, nulls, or header artifacts from the merges
+            #test to see if its a pure string and ignore if so
+            if (not re.match(r"[a-zA-Z]+[^0-9]",item[0])):
+                if type(item[0]) is str:
+                    val = float(item[0].strip())
+                else:
+                    val = float(item[0])
                 column_data.append(val)
-            except:
-                val = item[0]
         conn.close()
     #print(column_data)
     try:
@@ -85,22 +88,20 @@ def scanPredicateTables(tables,engine):
     tblnum=1
     collist={"col":[],"var":[],"ent":[]}
     for tbl in tables:
-        try :
-            headers = fetchHeaders(engine,tbl)
-            with tqdm(total=len(headers)) as pbar2:
-                for obj in headers:
-                    col = obj['Column']
-                    #variance, ent = calculate_variance_entropy(engine,tbl, col)
-                    variance, ent = calculate_variance_entropy(engine,tbl, col)
-                    print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
-                    if ent > 1:
-                        collist['col'].append(col)
-                        collist['var'].append(variance)
-                        collist['ent'].append(ent)
-                    pbar2.update(1)
-            tblnum+=1
-        except:
-            print(f"Skipping table {tbl}")
+        headers = fetchHeaders(engine,tbl)
+        with tqdm(total=len(headers)) as pbar2:
+            for obj in headers:
+                col = obj['Column']
+                #variance, ent = calculate_variance_entropy(engine,tbl, col)
+                variance, ent = calculate_variance_entropy(engine,tbl, col)
+                print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
+                if ent > 1:
+                    collist['col'].append(col)
+                    collist['var'].append(variance)
+                    collist['ent'].append(ent)
+                pbar2.update(1)
+        tblnum+=1
+  
     return collist
 
 #####SETUP######################################################
