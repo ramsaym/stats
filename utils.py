@@ -54,7 +54,7 @@ def findHeaderCandidatesInData(engine,tableName,col,colst,regex='[a-z][\/\-\+]*'
 def dfToCsvCloud(dataframe,uri,VERBOSE=True):
     client = storage.Client()
     level=0
-   
+    print(dataframe)
     try: 
         #3 level
         match = re.match(r"gs://([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z]+)", uri)
