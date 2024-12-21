@@ -54,8 +54,7 @@ def findHeaderCandidatesInData(engine,tableName,col,colst,regex='[a-z][\/\-\+]*'
 def dfToCsvCloud(dataframe,uri,VERBOSE=True):
     client = storage.Client()
     level=0
-    if VERBOSE:
-        print(f'\-\-\-Uploading to {uri}')
+   
     try: 
         #3 level
         match = re.match(r"gs://([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z]+)", uri)
@@ -84,6 +83,8 @@ def dfToCsvCloud(dataframe,uri,VERBOSE=True):
     else:
         bucket_name=None    
     if (bucket_name is not None):
+        if VERBOSE:
+            print(f'---Uploading to {uri}')
         bucket = client.bucket(bucket_name)
         bucket.blob(bucket_path).upload_from_string(dataframe.to_csv(), 'text/csv')
   
