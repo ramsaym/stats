@@ -103,9 +103,10 @@ def scanPredicateTables(tables,engine):
 mode=-999
 # try:
 engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
-
+tables1 = ['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1']
+tables2 = ['day_soilclimate_1_day_soilmicrobe_1']
 if INSTANCE_CONNECTION_NAME != -999:
-    interestingcolumns = scanPredicateTables(['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1'],engine)
+    interestingcolumns = scanPredicateTables(tables2,engine)
     df = pd.DataFrame(interestingcolumns)
     dfToCsvCloud(df,"gs://agiot/stats",separator="\t",alias=['','','','','',''],ind='DATE',encoding='ascii',index=False,msg="6b-----CLOUDID-----CSV URI: ",VERBOSE=True)
     #print(interestingcolumns)
