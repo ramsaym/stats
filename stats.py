@@ -82,20 +82,24 @@ def calculate_variance_entropy(engine, table_name, column_name):
 #that we will select from to do stats.
 def scanPredicateTables(tables,engine):
     tblnum=1
-    collist=[]
-    
+    collist={"col":[],"var":[],"ent":[]}
     for tbl in tables:
-        headers = fetchHeaders(engine,tbl)
-        with tqdm(total=len(headers)) as pbar2:
-            for obj in headers:
-                col = obj['Column']
-                #variance, ent = calculate_variance_entropy(engine,tbl, col)
-                variance, ent = calculate_variance_entropy(engine,tbl, col)
-                #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {unittestresult}")
-                if ent > 1:
-                    collist.append({f'\"{col}\":{[variance,ent]}'})
-                pbar2.update(1)
-        tblnum+=1
+        try :
+            headers = fetchHeaders(engine,tbl)
+            with tqdm(total=len(headers)) as pbar2:
+                for obj in headers:
+                    col = obj['Column']
+                    #variance, ent = calculate_variance_entropy(engine,tbl, col)
+                    variance, ent = calculate_variance_entropy(engine,tbl, col)
+                    #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {unittestresult}")
+                    if ent > 1:
+                        collist['col'].append(col)
+                        collist['var'].append(variance)
+                        collist['ent'].append(ent)
+                    pbar2.update(1)
+            tblnum+=1
+        except:
+            print(f"Skipping table {tbl}")
     return collist
 
 #####SETUP######################################################
@@ -111,6 +115,7 @@ testtbl = ['Day_CO2_1']
 if INSTANCE_CONNECTION_NAME != -999:
     interestingcolumns = scanPredicateTables(testtbl,engine)
     df = pd.DataFrame(interestingcolumns)
+    print(df)
     dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
     #print(interestingcolumns)
     #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
