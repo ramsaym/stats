@@ -53,24 +53,37 @@ def findHeaderCandidatesInData(engine,tableName,col,colst,regex='[a-z][\/\-\+]*'
     #note the customized header references that require backout to front ui or config
 def dfToCsvCloud(dataframe,uri,VERBOSE=True):
     client = storage.Client()
+    level=0
     if VERBOSE:
         print(f'\-\-\-Uploading to {uri}')
-    match = re.match(r"gs://([^/]+)/(.+)/(.+)", uri)
-    slash="/"
     try: 
-        g2 = match.group(2)
-    except: 
-        g2= ''
-        slash=''
-    try:
-        g3 = match.group(3)
+        #3 level
+        match = re.match(r"gs://([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z]+)", uri)
+        level=3
     except:
-        key=''
-        g3=''
-        slash=''
-    bucket_path = f'{g2}{slash}{g3}_stats.csv'
-    bucket_name = match.group(1)
-    bucket = client.bucket(bucket_name)
-    #bucket.blob(key + '/' + asset).upload_from_string(dataframe.to_csv(sep=separator,index=index,header=alias,encoding=encoding), 'text/csv')
-    bucket.blob(bucket_path).upload_from_string(dataframe.to_csv(), 'text/csv')
-    #bucket.blob(key + '/' + asset + '.csv').upload_from_string(dataframe.to_csv(sep=separator,index=ind,header=alias,encoding=encoding), 'text/csv')
+        #2 level
+        try: 
+            match = re.match(r"gs:\/\/([a-zA-Z]+)\/([a-zA-Z]+)",uri)
+            level=2
+        except:
+            #single level bucket
+            match = re.match(r"gs:\/\/([a-zA-Z]+)",uri)
+            level=1
+
+    slash="/"
+    if (level==1):
+        m1 = match.group(1)
+        bucket_name = m1
+        bucket_path = f'{bucket_name}_stats.csv'
+        if (level==2):
+            m2 = match.group(2)
+            bucket_path = f'{m2}{slash}_stats.csv'
+        else:
+            m3 = match.group(3)
+            bucket_path = f'{m2}{slash}{m3}{slash}_stats.csv'
+    else:
+        bucket_name=None    
+    if (bucket_name is not None):
+        bucket = client.bucket(bucket_name)
+        bucket.blob(bucket_path).upload_from_string(dataframe.to_csv(), 'text/csv')
+  
