@@ -57,19 +57,18 @@ def calculate_variance_entropy(engine, table_name, column_name):
     print(qry)
     with engine.connect() as conn:
         resultset = conn.execute(qry) 
-    
-    column_data = [item[0] for item in resultset]
-    conn.close()
+        for item in resultset:
+            column_data = item[0]
+        conn.close()
     #print(column_data)
     try:
-        variance = np.var(column_data)
+        variance = np.var(column_data[np.logical_not(np.isnan(column_data))])
+        value_counts = np.bincount(column_data[np.logical_not(np.isnan(column_data))])
+        ent = entropy(value_counts)
     except:
         variance = 0
-    # value_counts = np.bincount(column_data)
-    # ent = entropy(value_counts)
-    # return variance, ent
-    #print(results_as_dict)
-    return resultset,variance
+        ent=0
+    return variance, ent
 
 
 #CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
