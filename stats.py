@@ -67,7 +67,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
             if (match is None):
                 if type(item[0]) is str:
                     val = float(item[0].strip())
-                elif type(item[0]) is datetime.datetime:
+                if isinstance(item[0], datetime):
                     val = item[0]
                 else:
                     val = float(item[0])
