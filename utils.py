@@ -57,16 +57,16 @@ def dfToCsvCloud(dataframe,uri,VERBOSE=True):
     
     try: 
         #3 level
-        match = re.match(r"gs://([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z]+)", uri)
+        match = re.search(r"gs://([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z]+)", uri)
         level=3
     except:
         #2 level
         try: 
-            match = re.match(r"gs:\/\/([a-zA-Z]+)\/([a-zA-Z]+)",uri)
+            match = re.search(r"gs:\/\/([a-zA-Z]+)\/([a-zA-Z]+)",uri)
             level=2
         except:
             #single level bucket
-            match = re.match(r"gs:\/\/([a-zA-Z]+)",uri)
+            match = re.search(r"gs:\/\/([a-zA-Z]+)",uri)
             level=1
 
     slash="/"

@@ -62,7 +62,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
             print(item[0])
             #need to handle garbage here carefully if DB is loaded with nans, nulls, or header artifacts from the merges
             #test to see if its a pure string and ignore if so
-            if (not re.match(r"[a-zA-Z]+[^0-9]",item[0])):
+            if (re.search(r"[a-zA-Z]+[^0-9]",item[0]) is None):
                 if type(item[0]) is str:
                     val = float(item[0].strip())
                 else:
