@@ -56,10 +56,20 @@ def dfToCsvCloud(dataframe,uri,VERBOSE=True):
     if VERBOSE:
         print(f'\-\-\-Uploading to {uri}')
     match = re.match(r"gs://([^/]+)/(.+)/(.+)", uri)
-    asset = match.group(3)
-    key = match.group(2)
+    slash="/"
+    try: 
+        g2 = match.group(2)
+    except: 
+        g2= ''
+        slash=''
+    try:
+        g3 = match.group(3)
+    except:
+        key=''
+        slash=''
+    bucket_path = f'{g2}{slash}{g3}'
     bucket_name = match.group(1)
     bucket = client.bucket(bucket_name)
     #bucket.blob(key + '/' + asset).upload_from_string(dataframe.to_csv(sep=separator,index=index,header=alias,encoding=encoding), 'text/csv')
-    bucket.blob(key + '/' + asset + '.csv').upload_from_string(dataframe.to_csv(), 'text/csv')
+    bucket.blob(bucket_path + '.csv').upload_from_string(dataframe.to_csv(), 'text/csv')
     #bucket.blob(key + '/' + asset + '.csv').upload_from_string(dataframe.to_csv(sep=separator,index=ind,header=alias,encoding=encoding), 'text/csv')
