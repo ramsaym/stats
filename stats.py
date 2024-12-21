@@ -66,7 +66,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
     try:
         # variance = np.var(column_data[np.logical_not(np.isnan(column_data))])
         variance = np.var(column_data)
-        value_counts = np.bincount(column_data[np.logical_not(np.isnan(column_data))])
+        value_counts = np.bincount(column_data)
         ent = entropy(value_counts)
     except Exception as e:
         variance = 0
