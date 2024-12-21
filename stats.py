@@ -108,7 +108,7 @@ tables2 = ['day_soilclimate_1_day_soilmicrobe_1']
 if INSTANCE_CONNECTION_NAME != -999:
     interestingcolumns = scanPredicateTables(tables2,engine)
     df = pd.DataFrame(interestingcolumns)
-    dfToCsvCloud(df,"gs://agiot/stats",separator="\t",alias=['','','','','',''],ind='DATE',encoding='ascii',index=False,msg="6b-----CLOUDID-----CSV URI: ",VERBOSE=True)
+    dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
     #print(interestingcolumns)
     #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
     mode=0
