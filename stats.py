@@ -87,11 +87,10 @@ def scanPredicateTables(tables,engine):
         for obj in fetchHeaders(engine,tbl):
             col = obj['Column']
             #variance, ent = calculate_variance_entropy(engine,tbl, col)
-            unittestresult, variance = calculate_variance_entropy(engine,tbl, col)
-            print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {unittestresult}")
-            #qry=sqlalchemy.text(f'SELECT * FROM "{tbl}" WHERE "{col}"::text ~ \'{regex}\' limit {limit}')
-            # if "interesting" is True:
-            #     collist.append({f'\"{tblnum}\":\"{col}\"'})
+            variance, ent = calculate_variance_entropy(engine,tbl, col)
+            #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {unittestresult}")
+            if ent > 1:
+                collist.append({f'\"{tbl}\":\"{col}\"'})
         tblnum+=1
 
     return collist
@@ -103,7 +102,8 @@ mode=-999
 engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
 
 if INSTANCE_CONNECTION_NAME != -999:
-    scanPredicateTables(['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1'],engine)
+    interestingcolumns = scanPredicateTables(['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1'],engine)
+    print(interestingcolumns)
     #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
     mode=0
     exit(0)

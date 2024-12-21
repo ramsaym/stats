@@ -13,7 +13,7 @@ def dropColumnList(df,delCols):
     return rdf
 
 
-def fetchHeaders(engine,tableName,verbose=1):
+def fetchHeaders(engine,tableName,verbose=0):
     qry=sqlalchemy.text(
         f'SELECT a.attname as "Column" FROM pg_catalog.pg_attribute a WHERE a.attnum > 0 AND NOT a.attisdropped AND a.attrelid = (SELECT c.oid FROM pg_catalog.pg_class c LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace WHERE c.relname ~ \'{tableName}\' AND pg_catalog.pg_table_is_visible(c.oid));'
     )
