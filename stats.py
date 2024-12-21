@@ -59,7 +59,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
     with engine.connect() as conn:
         resultset = conn.execute(qry) 
         for item in resultset:
-            print(item[0])
+            #print(item[0])
             #need to handle garbage here carefully if DB is loaded with nans, nulls, or header artifacts from the merges
             #test to see if its a pure string and ignore if so
             match = re.search(r"[a-zA-Z]+[^0-9]",str(item[0]))
