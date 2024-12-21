@@ -66,10 +66,11 @@ def dfToCsvCloud(dataframe,uri,VERBOSE=True):
         g3 = match.group(3)
     except:
         key=''
+        g3=''
         slash=''
-    bucket_path = f'{g2}{slash}{g3}'
+    bucket_path = f'{g2}{slash}{g3}_stats.csv'
     bucket_name = match.group(1)
     bucket = client.bucket(bucket_name)
     #bucket.blob(key + '/' + asset).upload_from_string(dataframe.to_csv(sep=separator,index=index,header=alias,encoding=encoding), 'text/csv')
-    bucket.blob(bucket_path + '.csv').upload_from_string(dataframe.to_csv(), 'text/csv')
+    bucket.blob(bucket_path).upload_from_string(dataframe.to_csv(), 'text/csv')
     #bucket.blob(key + '/' + asset + '.csv').upload_from_string(dataframe.to_csv(sep=separator,index=ind,header=alias,encoding=encoding), 'text/csv')
