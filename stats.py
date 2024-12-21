@@ -53,7 +53,7 @@ def connection():
     return conn
 
 def calculate_variance_entropy(engine, table_name, column_name):   
-    qry = sqlalchemy.text(f"SELECT \"{column_name}\" FROM \"{table_name}\"")
+    qry = sqlalchemy.text(f"SELECT \"{column_name}\"::numeric FROM \"{table_name}\"")
     print(qry)
     with engine.connect() as conn:
         resultset = conn.execute(qry) 
