@@ -83,7 +83,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
 def scanPredicateTables(tables,engine):
     tblnum=1
     collist=[]
-
+    
     for tbl in tables:
         headers = fetchHeaders(engine,tbl)
         with tqdm(total=len(headers)) as pbar2:
@@ -93,7 +93,7 @@ def scanPredicateTables(tables,engine):
                 variance, ent = calculate_variance_entropy(engine,tbl, col)
                 #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {unittestresult}")
                 if ent > 1:
-                    collist.append({f'\"{tbl}\":\"{col}\"'})
+                    collist.append({f'\"{col}\":{[variance,ent]}'})
                 pbar2.update(1)
         tblnum+=1
     return collist
@@ -106,7 +106,9 @@ engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
 
 if INSTANCE_CONNECTION_NAME != -999:
     interestingcolumns = scanPredicateTables(['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1'],engine)
-    print(interestingcolumns)
+    df = pd.DataFrame(interestingcolumns.items())
+    dfToCsvCloud(df,"gs://agiot/stats",separator="\t",alias=['','','','','',''],ind='DATE',encoding='ascii',index=False,msg="6b-----CLOUDID-----CSV URI: ",VERBOSE=True)
+    #print(interestingcolumns)
     #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
     mode=0
     exit(0)

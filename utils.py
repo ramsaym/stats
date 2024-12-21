@@ -2,6 +2,10 @@ import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
 import sqlalchemy
 from sqlalchemy import text
+from google.cloud import storage
+#import cloudstorage as gcs
+import json
+import re
 
 def dropColumnList(df,delCols):
     rdf= pd.DataFrame()
@@ -44,3 +48,18 @@ def findHeaderCandidatesInData(engine,tableName,col,colst,regex='[a-z][\/\-\+]*'
             results_as_dict=[]
         return results_as_dict
     conn.close()
+
+
+    #note the customized header references that require backout to front ui or config
+def dfToCsvCloud(dataframe,uri,VERBOSE=True):
+    client = storage.Client()
+    if VERBOSE:
+        print(f'\-\-\-Uploading to {uri}')
+    match = re.match(r"gs://([^/]+)/(.+)/(.+)", uri)
+    asset = match.group(3)
+    key = match.group(2)
+    bucket_name = match.group(1)
+    bucket = client.bucket(bucket_name)
+    #bucket.blob(key + '/' + asset).upload_from_string(dataframe.to_csv(sep=separator,index=index,header=alias,encoding=encoding), 'text/csv')
+    bucket.blob(key + '/' + asset + '.csv').upload_from_string(dataframe.to_csv(), 'text/csv')
+    #bucket.blob(key + '/' + asset + '.csv').upload_from_string(dataframe.to_csv(sep=separator,index=ind,header=alias,encoding=encoding), 'text/csv')
