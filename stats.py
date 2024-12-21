@@ -59,8 +59,11 @@ def calculate_variance_entropy(engine, table_name, column_name):
     with engine.connect() as conn:
         resultset = conn.execute(qry) 
         for item in resultset:
-            val = float(item[0].strip())
-            column_data.append(val)
+            try:
+                val = float(item[0].strip())
+                column_data.append(val)
+            except:
+                val = -999999
         conn.close()
     #print(column_data)
     try:
