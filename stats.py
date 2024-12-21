@@ -21,6 +21,7 @@ from google.cloud import storage
 import psycopg2
 import numpy as np
 from scipy.stats import entropy
+from datetime import datetime
 #USAGE PGSQL:   python3 ./stats.py -999 agdata-378419:northamerica-northeast1:agdatastore 'Crop 1.23_RootC' .25 .50 "day_fieldcrop_1_day_fieldmanage_1" "postgre"
 #USAGE CSV:     python3 ./stats.py "dndc_data/biogeodb.csv" -999 predicted='Crop 1.23_RootC' threshold1=.25 threshold2=.50 "dndc" -999
 #####PARAMS######################################################
@@ -66,6 +67,8 @@ def calculate_variance_entropy(engine, table_name, column_name):
             if (match is None):
                 if type(item[0]) is str:
                     val = float(item[0].strip())
+                elif type(item[0]) is datetime.datetime:
+                    val = item[0]
                 else:
                     val = float(item[0])
                 column_data.append(val)
