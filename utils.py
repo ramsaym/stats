@@ -71,17 +71,17 @@ def dfToCsvCloud(dataframe,uri,VERBOSE=True):
 
     slash="/"
     if (level==1):
-        m1 = match.group(1)
-        bucket_name = m1
+        bucket_name = match.group(1)
         bucket_path = f'{bucket_name}_stats.csv'
-        if (level==2):
-            m2 = match.group(2)
-            bucket_path = f'{m2}{slash}_stats.csv'
-        else:
-            m3 = match.group(3)
-            bucket_path = f'{m2}{slash}{m3}{slash}_stats.csv'
+    elif (level==2):
+        bucket_name = match.group(1)
+        m2 = match.group(2)
+        bucket_path = f'{m2}{slash}_stats.csv'
     else:
-        bucket_name=None    
+        m3 = match.group(3)
+        bucket_name = match.group(1)
+        bucket_path = f'{m2}{slash}{m3}{slash}_stats.csv'
+      
     if (bucket_name is not None):
         if VERBOSE:
             print(f'---Uploading to {uri}')
