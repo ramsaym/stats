@@ -25,7 +25,6 @@ from tqdm import tqdm
 #---PROJECT MODULES
 from utils import *
 from pgutils import *
-from sqlrepo import entropyViewColumns
 
 ###CREDS
 DB_USER = "postgres"
@@ -198,7 +197,7 @@ def getInterestingColumns():
     for item in evc:
         print(item) 
 
-        
+
 #---CODE INIT - Command line PARAMS---######################################
 # name_of_script = sys.argv[0]
 # INSTANCE_CONNECTION_NAME = sys.argv[1]
