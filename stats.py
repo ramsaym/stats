@@ -55,12 +55,10 @@ def connection():
 
 def calculate_variance_entropy(engine, table_name, column_name):   
     qry = sqlalchemy.text(f'SELECT \"{column_name}\" FROM \"{table_name}\" WHERE \"{column_name}\"::text ~ \'[0-9\.\-^a-z^A-Z]*\' ')
-    #print(qry)
     column_data=[]
     with engine.connect() as conn:
         resultset = conn.execute(qry) 
         for item in resultset:
-            #print(item[0])
             #need to handle garbage here carefully if DB is loaded with nans, nulls, or header artifacts from the merges
             #test to see if its a pure string and ignore if so
             match = re.search(r"[a-zA-Z]+[^0-9]",str(item[0]))
@@ -73,9 +71,7 @@ def calculate_variance_entropy(engine, table_name, column_name):
                     val = float(item[0])
                 column_data.append(val)
         conn.close()
-    #print(column_data)
     try:
-        # variance = np.var(column_data[np.logical_not(np.isnan(column_data))])
         variance = np.var(column_data)
         value_counts = np.bincount(column_data)
         ent = entropy(value_counts)
@@ -88,9 +84,9 @@ def calculate_variance_entropy(engine, table_name, column_name):
 
 #CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
 #that we will select from to do stats.
-def scanPredicateTables(tables,engine):
+def scanPredicateTables(tables,engine,th):
     tblnum=1
-    collist={"col":[],"var":[],"ent":[]}
+    collist={"col":[],"var":[],"ent":[],"sql":[]}
     for tbl in tables:
         headers = fetchHeaders(engine,tbl)
         with tqdm(total=len(headers)) as pbar2:
@@ -99,10 +95,11 @@ def scanPredicateTables(tables,engine):
                 #variance, ent = calculate_variance_entropy(engine,tbl, col)
                 variance, ent = calculate_variance_entropy(engine,tbl, col)
                 #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
-                if ent > 1:
+                if ent > th:
                     collist['col'].append(col)
                     collist['var'].append(variance)
                     collist['ent'].append(ent)
+                    collist['sql'].append(f'\"{tbl}\".\"{col}\"')
                 pbar2.set_description("Processing %s" % col)
                 pbar2.update(1)
         tblnum+=1
@@ -114,16 +111,18 @@ def scanPredicateTables(tables,engine):
 mode=-999
 # try:
 engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
-
 #testing. can be fed in via list or config file or txt file or as string list
-tables = ['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1']
-table = ['day_soilclimate_1_day_soilmicrobe_1']
+dailytables = ['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1','Day_CO2_1']
 testtbl = ['Day_CO2_1']
 if INSTANCE_CONNECTION_NAME != -999:
-    interestingcolumns = scanPredicateTables(tables,engine)
+    threshold=.1
+    interestingcolumns = scanPredicateTables(dailytables,engine,threshold)
     df = pd.DataFrame(interestingcolumns)
-    print(df)
+    print(f'Columns meeting entropic threshold of: {threshold}')
+    print(df.sort_values('ent'))
     dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
+    print("Copy this into View SQL: ")
+    print(interestingcolumns['sql'])
     #print(interestingcolumns)
     #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
     mode=0

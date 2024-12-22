@@ -13,9 +13,7 @@ def dropColumnList(df,delCols):
         if c in df.keys().to_list():
             df.drop(c,axis=1,inplace=True)
     rdf=df
-
     return rdf
-
 
 def fetchHeaders(engine,tableName,verbose=0):
     qry=sqlalchemy.text(
@@ -32,7 +30,6 @@ def fetchHeaders(engine,tableName,verbose=0):
         return results_as_dict
     conn.close()
     
-
 def findHeaderCandidatesInData(engine,tableName,col,colst,regex='[a-z][\/\-\+]*',limit=2,print=1):
     #limit = 1 just returns the first result. But in most csv merges there are many left from each merged file. 
     #this code can be used to clean those up as well
@@ -49,8 +46,7 @@ def findHeaderCandidatesInData(engine,tableName,col,colst,regex='[a-z][\/\-\+]*'
         return results_as_dict
     conn.close()
 
-
-    #note the customized header references that require backout to front ui or config
+#note the customized header references that require backout to front ui or config
 def dfToCsvCloud(dataframe,uri,VERBOSE=True):
     client = storage.Client()
     #catch root to three levels deep (port to config)
@@ -70,11 +66,8 @@ def dfToCsvCloud(dataframe,uri,VERBOSE=True):
     else:
         bucket_path = f'{bucket_name}_stats.csv'
         bucket_name = match1.group(1)
-       
-      
     if (bucket_name is not None):
         if VERBOSE:
             print(f'---Uploading to {uri}')
         bucket = client.bucket(bucket_name)
         bucket.blob(bucket_path).upload_from_string(dataframe.to_csv(), 'text/csv')
-  
