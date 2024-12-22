@@ -22,6 +22,7 @@ import psycopg2
 import numpy as np
 from scipy.stats import entropy
 from datetime import datetime
+from pgsql import *
 #USAGE PGSQL:   python3 ./stats.py -999 agdata-378419:northamerica-northeast1:agdatastore 'Crop 1.23_RootC' .25 .50 "day_fieldcrop_1_day_fieldmanage_1" "postgre"
 #USAGE CSV:     python3 ./stats.py "dndc_data/biogeodb.csv" -999 predicted='Crop 1.23_RootC' threshold1=.25 threshold2=.50 "dndc" -999
 #####PARAMS######################################################
@@ -37,6 +38,7 @@ CFKEY = sys.argv[6]
 DB_USER = "postgres"
 DB_NAME = "postgres"
 DB_PASS = sys.argv[7]
+BYPASS = sys.argv[8]
 #-----MAIN RUN LOGIC-----------------------------------------------------#
 #-----USAGE: 
 #---CONFIGURE DB---##############################################################################################
@@ -116,13 +118,17 @@ dailytables = ['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','da
 testtbl = ['Day_CO2_1']
 if INSTANCE_CONNECTION_NAME != -999:
     threshold=.1
-    interestingcolumns = scanPredicateTables(dailytables,engine,threshold)
-    df = pd.DataFrame(interestingcolumns)
-    print(f'Columns meeting entropic threshold of: {threshold}')
-    print(df.sort_values('ent'))
-    dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
-    print("Copy this into View SQL: ")
-    print(interestingcolumns['sql'])
+    if (BYPASS=='no'):
+        interestingcolumns = scanPredicateTables(dailytables,engine,threshold)
+        df = pd.DataFrame(interestingcolumns)
+        print(f'Columns meeting entropic threshold of: {threshold}')
+        print(df.sort_values('ent'))
+        dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
+        print("Copy this into View SQL: ")
+        print(interestingcolumns['sql'])
+    else:
+        getInterestingColumns()
+
     #print(interestingcolumns)
     #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
     mode=0
