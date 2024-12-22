@@ -98,11 +98,12 @@ def scanPredicateTables(tables,engine):
                 col = obj['Column']
                 #variance, ent = calculate_variance_entropy(engine,tbl, col)
                 variance, ent = calculate_variance_entropy(engine,tbl, col)
-                print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
+                #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
                 if ent > 1:
                     collist['col'].append(col)
                     collist['var'].append(variance)
                     collist['ent'].append(ent)
+                pbar2.set_description("Processing %s" % col)
                 pbar2.update(1)
         tblnum+=1
   

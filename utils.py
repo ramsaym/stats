@@ -53,34 +53,24 @@ def findHeaderCandidatesInData(engine,tableName,col,colst,regex='[a-z][\/\-\+]*'
     #note the customized header references that require backout to front ui or config
 def dfToCsvCloud(dataframe,uri,VERBOSE=True):
     client = storage.Client()
-    level=0
-    
-    try: 
-        #3 level
-        match = re.search(r"gs://([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z]+)", uri)
-        level=3
-    except:
-        #2 level
-        try: 
-            match = re.search(r"gs:\/\/([a-zA-Z]+)\/([a-zA-Z]+)",uri)
-            level=2
-        except:
-            #single level bucket
-            match = re.search(r"gs:\/\/([a-zA-Z]+)",uri)
-            level=1
-
+    #catch root to three levels deep (port to config)
+    match3 = re.search(r"gs://([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z]+)", uri)
+    match2 = re.search(r"gs:\/\/([a-zA-Z]+)\/([a-zA-Z]+)",uri)
+    match1 = re.search(r"gs:\/\/([a-zA-Z]+)",uri)
     slash="/"
-    if (level==1):
-        bucket_name = match.group(1)
-        bucket_path = f'{bucket_name}_stats.csv'
-    elif (level==2):
-        bucket_name = match.group(1)
-        m2 = match.group(2)
+    if (match3 is not None):
+        bucket_name = match3.group(1)
+        m3 = match3.group(3)
+        m2 = match3.group(2)
+        bucket_path = f'{m2}{slash}{m3}{slash}_stats.csv'
+    elif (match2 is not None):
+        bucket_name = match2.group(1)
+        m2 = match2.group(2)
         bucket_path = f'{m2}{slash}_stats.csv'
     else:
-        m3 = match.group(3)
-        bucket_name = match.group(1)
-        bucket_path = f'{m2}{slash}{m3}{slash}_stats.csv'
+        bucket_path = f'{bucket_name}_stats.csv'
+        bucket_name = match1.group(1)
+       
       
     if (bucket_name is not None):
         if VERBOSE:
