@@ -116,11 +116,11 @@ mode=-999
 engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
 
 #testing. can be fed in via list or config file or txt file or as string list
-tables1 = ['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1']
-tables2 = ['day_soilclimate_1_day_soilmicrobe_1']
+tables = ['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1']
+table = ['day_soilclimate_1_day_soilmicrobe_1']
 testtbl = ['Day_CO2_1']
 if INSTANCE_CONNECTION_NAME != -999:
-    interestingcolumns = scanPredicateTables(testtbl,engine)
+    interestingcolumns = scanPredicateTables(tables,engine)
     df = pd.DataFrame(interestingcolumns)
     print(df)
     dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
