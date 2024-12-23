@@ -263,7 +263,7 @@ def entropyBasedViewSQL(QAREGEX):
         #tbl1col sequence
         sql=''
         sqltrunk = ''
-        for c in tblsdf['table' == t]:
+        for c in tblsdf[tblsdf['table'] == t]:
             xmatch = re.search("[\_x]*[0-9]{0,1}$",c)
             if xmatch is not None:
                 joinmap['x'].append(f'x{i}')
