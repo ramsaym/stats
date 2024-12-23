@@ -278,8 +278,10 @@ def entropyBasedViewSQL(QAREGEX):
     sql1=''
     j=0
     for tablemeta in indexsql:
+        t = tablemeta['table']
+        n = tablemeta['tablenum']
         colsthistable = {k: v for k, v in indexsql['cols'].items() if k == j}
-        sql1 = sql1 + f'(SELECT {colsthistable} FROM \"{tablemeta['table']}\") tbl{tablemeta['tablenum']}'
+        sql1 = sql1 + f'(SELECT {colsthistable} FROM \"{t}\") tbl{n}'
         sqlview['subquery'].append(sql1)
         j+=1
     #now we have a collection of ready to go selects    
