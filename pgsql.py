@@ -204,6 +204,19 @@ def joinsql(sqlmapdict,col):
             sqlj = sqlj + f'{_and}tbl{num}.{col}{num}::numeric = tbl{num+1}.{col}{num+1}::numeric'
     return sqlj
 
+def subquery(sqlmapdict,sqdict):
+    sql1=''
+    j=0
+    for tablemeta in sqlmapdict:
+        t = tablemeta['table']
+        n = tablemeta['tablenum']
+        colsthistable = {k: v for k, v in sqlmapdict['cols'].items() if k == j}
+        sql1 = sql1 + f'(SELECT {colsthistable} FROM \"{t}\") tbl{n}'
+        sqdict['subquery'].append(sql1)
+        j+=1
+    return sqdict
+
+
 #---COMMON FUNCTIONS SPECIFIC TO VIEW CREATION
 def sqlregexfilters(inputStr):
     last=0
@@ -273,26 +286,16 @@ def entropyBasedViewSQL(QAREGEX):
         indexsql['tablenum'].append(i+1)
         i +=1
     trunkcols = indexsql['colstrunk']
-    sqlview = {"trunk":'',"subquery":[],"condition":[],"join":[]}
-    sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
-    sql1=''
-    j=0
-    for tablemeta in indexsql:
-        t = tablemeta['table']
-        n = tablemeta['tablenum']
-        colsthistable = {k: v for k, v in indexsql['cols'].items() if k == j}
-        sql1 = sql1 + f'(SELECT {colsthistable} FROM \"{t}\") tbl{n}'
-        sqlview['subquery'].append(sql1)
-        j+=1
+    qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
+    #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
+    subq = subquery(indexsql,{"subquery":[],"condition":[]})
     #now we have a collection of ready to go selects    
-    qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {indexsql['colstrunk']} FROM'
-    for sv in sqlview['subquery']:
+    for sv in subq['subquery']:
         s=''
         if (s==''):
             qryRaw = qryRaw + sv
         else:
             qryRaw = " JOIN " +  qryRaw + sv
-    
     ##create final join str
     qryRaw = qryRaw + " ON " 
     # tbl1.x1::numeric = tbl2.x2::numeric AND tbl1.y1::numeric = tbl2.y2::numeric AND tbl1.yyyy1::numeric = tbl2.yyyy2::numeric AND tbl1.dd1::numeric = tbl2.dd2::numeric
