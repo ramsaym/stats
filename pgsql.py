@@ -272,8 +272,9 @@ def entropyBasedViewSQL(QAREGEX):
         indexsql['table'].append(t)
         indexsql['tablenum'].append(i+1)
         i +=1
+    trunkcols = indexsql['colstrunk']
     sqlview = {"trunk":'',"subquery":[],"condition":[],"join":[]}
-    sqlview['trunk'] = f'(SELECT {indexsql['colstrunk']} FROM'
+    sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
     sql1=''
     j=0
     for tablemeta in indexsql:
