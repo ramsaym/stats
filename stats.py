@@ -39,6 +39,7 @@ DB_USER = "postgres"
 DB_NAME = "postgres"
 DB_PASS = sys.argv[7]
 BYPASS = sys.argv[8]
+QAREGEX = sys.argv[9]
 #-----MAIN RUN LOGIC-----------------------------------------------------#
 #-----USAGE: 
 #---CONFIGURE DB---##############################################################################################
@@ -114,6 +115,9 @@ mode=-999
 # try:
 engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
 #testing. can be fed in via list or config file or txt file or as string list
+
+##########################################
+###PGSQL ENTROPY APP
 dailytables = ['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1','Day_CO2_1']
 testtbl = ['Day_CO2_1']
 if INSTANCE_CONNECTION_NAME != -999:
@@ -127,12 +131,14 @@ if INSTANCE_CONNECTION_NAME != -999:
         print("Copy this into View SQL: ")
         print(interestingcolumns['sql'])
     else:
-        getInterestingColumns()
+        entropyBasedViewSQL(QAREGEX)
 
     #print(interestingcolumns)
     #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
     mode=0
-    exit(0)
+    exit(0)    
+###########################################    
+#####CSV Random Forest Classification APP
 else: 
     train_all = pd.read_csv(datafile)
     mode=1
@@ -162,11 +168,6 @@ sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = 
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain['Crop 1.23_RootC'].astype('int64')
 X = dropColumnList(ftrain,excludeColumns)
-
-
-    
-    
-
 ####PROCESS#####################################################
 #################################################################
 print(f"------  ANALYZING PREDICTORS OF {COL}")

@@ -192,10 +192,114 @@ def createJoinColMappings(colMapStr):
 def entropyViewColumns():
     return ['"day_fieldcrop_1_day_fieldmanage_1"."yyyy1"', '"day_fieldcrop_1_day_fieldmanage_1"."dd1"', '"day_fieldcrop_1_day_fieldmanage_1"."Precipitation"', '"day_fieldcrop_1_day_fieldmanage_1"."Radiation"', '"day_fieldcrop_1_day_fieldmanage_1"."PET"', '"day_fieldcrop_1_day_fieldmanage_1"."Transpiration"', '"day_fieldcrop_1_day_fieldmanage_1"."All_crops"', '"day_fieldcrop_1_day_fieldmanage_1"."All_crops.1"', '"day_fieldcrop_1_day_fieldmanage_1"."All_crops.2"', '"day_fieldcrop_1_day_fieldmanage_1"."All_crops.3"', '"day_fieldcrop_1_day_fieldmanage_1"."_CropID_#"', '"day_fieldcrop_1_day_fieldmanage_1"."_TDD_degree_C"', '"day_fieldcrop_1_day_fieldmanage_1"."_GrowthIndex_index"', '"day_fieldcrop_1_day_fieldmanage_1"."_Water_demand_mm"', '"day_fieldcrop_1_day_fieldmanage_1"."_Water_stress_index"', '"day_fieldcrop_1_day_fieldmanage_1"."_N_demand_kgN/ha/d"', '"day_fieldcrop_1_day_fieldmanage_1"."_Temp_Stress_index"', '"day_fieldcrop_1_day_fieldmanage_1"."_LAI_(LAI)"', '"day_fieldcrop_1_day_fieldmanage_1"."_N_fixation_kgN/ha/d"', '"day_fieldcrop_1_day_fieldmanage_1"."_Day_N_increase_kgN/ha/d"', '"day_fieldcrop_1_day_fieldmanage_1"."_TotalCropN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_DailyCropGrowth_kgC/ha/d"', '"day_fieldcrop_1_day_fieldmanage_1"."_DayLeafGrowth_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_DayStemGrowth_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_DayRootGrowth_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_DayGrainGrowth_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_LeafC_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_StemC_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_RootC_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_GrainC_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_LeafN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_StemN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_RootN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_GrainN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."x1"', '"day_fieldcrop_1_day_fieldmanage_1"."uid1"', '"day_fieldcrop_1_day_fieldmanage_1"."yyyy2"', '"day_fieldcrop_1_day_fieldmanage_1"."dd2"', '"day_fieldcrop_1_day_fieldmanage_1"."x2"', '"day_fieldcrop_1_day_fieldmanage_1"."uid2"', '"day_soilc_1_day_soiln_1"."Unnamed: 0"', '"day_soilc_1_day_soiln_1"."yyyy1"', '"day_soilc_1_day_soiln_1"."dd1"', '"day_soilc_1_day_soiln_1"."Labile litter"', '"day_soilc_1_day_soiln_1"."Resistant litter"', '"day_soilc_1_day_soiln_1"."Microbe"', '"day_soilc_1_day_soiln_1"."Humads"', '"day_soilc_1_day_soiln_1"."Humus"', '"day_soilc_1_day_soiln_1"."SOC"', '"day_soilc_1_day_soiln_1"."SOC0-10cm"', '"day_soilc_1_day_soiln_1"." SOC10-20cm"', '"day_soilc_1_day_soiln_1"."SOC20-30cm"', '"day_soilc_1_day_soiln_1"."SOC30-40cm"', '"day_soilc_1_day_soiln_1"."SOC40-50cm"', '"day_soilc_1_day_soiln_1"."SOC50-60cm"', '"day_soilc_1_day_soiln_1"."SOC60-70cm"', '"day_soilc_1_day_soiln_1"."SOC70-80cm"', '"day_soilc_1_day_soiln_1"."SOC80-90cm"', '"day_soilc_1_day_soiln_1"."SOC90-100cm"', '"day_soilc_1_day_soiln_1"."SOC100-110cm"', '"day_soilc_1_day_soiln_1"." SOC110-120cm"', '"day_soilc_1_day_soiln_1"."SOC120-130cm"', '"day_soilc_1_day_soiln_1"."SOC130-140cm"', '"day_soilc_1_day_soiln_1"."SOC140-150cm"', '"day_soilc_1_day_soiln_1"."SOC150-160cm"', '"day_soilc_1_day_soiln_1"."SOC160-170cm"', '"day_soilc_1_day_soiln_1"."SOC170-180cm"', '"day_soilc_1_day_soiln_1"."SOC180-190cm"', '"day_soilc_1_day_soiln_1"."SOC190-200cm"', '"day_soilc_1_day_soiln_1"."DOC"', '"day_soilc_1_day_soiln_1"."DOC_produce"', '"day_soilc_1_day_soiln_1"."DOC_consume"', '"day_soilc_1_day_soiln_1"."DOC_leach"', '"day_soilc_1_day_soiln_1"."Leaf-respiration"', '"day_soilc_1_day_soiln_1"." Root-respiration"', '"day_soilc_1_day_soiln_1"."Soil-heterotrophic-respiration"', '"day_soilc_1_day_soiln_1"." NPP"', '"day_soilc_1_day_soiln_1"."Stub"', '"day_soilc_1_day_soiln_1"."DOC_from_root"', '"day_soilc_1_day_soiln_1"."Litter-C"', '"day_soilc_1_day_soiln_1"." SoilCO2_0-10cm"', '"day_soilc_1_day_soiln_1"."x1"', '"day_soilc_1_day_soiln_1"."uid1"', '"day_soilc_1_day_soiln_1"."yyyy2"', '"day_soilc_1_day_soiln_1"."dd2"', '"day_soilc_1_day_soiln_1"."_Ice_DOC"', '"day_soilc_1_day_soiln_1"."_N_fixation"', '"day_soilc_1_day_soiln_1"."_SON0-10cm"', '"day_soilc_1_day_soiln_1"."_ SON10-20cm"', '"day_soilc_1_day_soiln_1"."_SON20-30cm"', '"day_soilc_1_day_soiln_1"."_SON30-40cm"', '"day_soilc_1_day_soiln_1"."_SON40-50cm"', '"day_soilc_1_day_soiln_1"."x2"', '"day_soilc_1_day_soiln_1"."uid2"', '"day_soilclimate_1_day_soilmicrobe_1"."_0"', '"day_soilclimate_1_day_soilmicrobe_1"."yyyy1"', '"day_soilclimate_1_day_soilmicrobe_1"."dd1"', '"day_soilclimate_1_day_soilmicrobe_1"."_Prec.(mm)"', '"day_soilclimate_1_day_soilmicrobe_1"."_PET"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_50cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_60cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_70cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_80cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_90cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_100cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_110cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_120cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_130cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_140cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_150cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_160cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_170cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_180cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_190cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_200cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)_5cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)_10cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)_20cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)_30cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_10cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_20cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_30cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_40cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_50cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Ice"', '"day_soilclimate_1_day_soilmicrobe_1"."Snowpack"', '"day_soilclimate_1_day_soilmicrobe_1"."SoilWater"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_pH"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_pH_20.0"', '"day_soilclimate_1_day_soilmicrobe_1"."x1"', '"day_soilclimate_1_day_soilmicrobe_1"."uid1"', '"day_soilclimate_1_day_soilmicrobe_1"."Unnamed: 0"', '"day_soilclimate_1_day_soilmicrobe_1"."yyyy2"', '"day_soilclimate_1_day_soilmicrobe_1"."dd2"', '"day_soilclimate_1_day_soilmicrobe_1"."Decomposition (kgC/ha)"', '"day_soilclimate_1_day_soilmicrobe_1"."x2"', '"day_soilclimate_1_day_soilmicrobe_1"."uid2"', '"Day_CO2_1"."Unnamed: 0"', '"Day_CO2_1"."Year"', '"Day_CO2_1"."Day"', '"Day_CO2_1"."Precip"', '"Day_CO2_1"."cropType1"', '"Day_CO2_1"."wreq1"', '"Day_CO2_1"."maxmn1"', '"Day_CO2_1"."graincn1"', '"Day_CO2_1"."x"', '"Day_CO2_1"."uid"']
 
-def getInterestingColumns():
+def joinsql(sqlmapdict,col):
+    sqlj=''
+    _and=" AND "
+    for num in sqlmapdict["tablenum"]:
+        #if we have 3 tables we need t1.x1=t2.x2 AND t2.x2 = t3.x3 (circe back on this assumption)
+        #this prevents the num +1 table reference from overshooting
+        if num< len(sqlmapdict["tablenum"]):
+            if sqlj=='':
+                _and=''
+            sqlj = sqlj + f'{_and}tbl{num}.{col}{num}::numeric = tbl{num+1}.{col}{num+1}::numeric'
+    return sqlj
+
+#---COMMON FUNCTIONS SPECIFIC TO VIEW CREATION
+def sqlregexfilters(inputStr):
+    last=0
+    i=0
+    SQLpairStr=''
+    #e.g. 'Day,Year:[0-9],[0-9]'
+    qacols = inputStr.split(":")[0]
+    regexs = inputStr.split(":")[1]
+    #print(regexs)
+    if(len(inputStr.split(":")) != len(inputStr.split(":"))):
+        print("DIFFERENT NUMBER OF QACOLS FROM REGEXS TO TEST")
+        exit(0)
+    for val in qacols.split(","):
+        if len(regexs.split(",")) > 1:
+            regex=regexs.split(",")[i]
+        else:
+            regex = regexs
+        logicalOperator='AND'
+        if (SQLpairStr==''):
+            logicalOperator=''
+        SQLpairStr = SQLpairStr + f' {logicalOperator} \"{val}\"::text ~ \'{regex}\'::text '   
+        last+=1
+        i+=1
+    return SQLpairStr
+
+
+def entropyBasedViewSQL(QAREGEX):
     evc = entropyViewColumns()
+    tables={"table":[],"col":[]}
     for item in evc:
         print(item) 
+        bits = item.split('.')
+        table = bits[0]
+        tables['table'].append(table)
+        col = bits[1]
+        tables['col'].append(col)
+    tblsdf = pd.Dataframe(tables)
+    indexsql = {"cols":[],"colstrunk":[],"table":[],"tablenum":[]}
+    joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
+    i=0
+    #strip as much meta data as possible
+    for t in tblsdf['table'].unique():
+        #tbl1col sequence
+        sql=''
+        sqltrunk = ''
+        for c in tblsdf['table' == t]:
+            xmatch = re.search("[\_x]*[0-9]{0,1}$",c)
+            if xmatch is not None:
+                joinmap['x'].append(f'x{i}')
+            ymatch = re.search("[\_y]*[0-9]{0,1}$",c)
+            if ymatch is not None:
+                joinmap['y'].append(f'y{i}')
+            yearmatch = re.search("[\_Year,year,yyyy]*[0-9]{0,1}$",c)
+            if yearmatch is not None:
+                joinmap['yyyy'].append(f'yyyy{i}')
+            daymatch = re.search("[\_Day,day,dd]*[0-9]{0,1}$",c)
+            if daymatch is not None:
+                joinmap['dd'].append(f'dd{i}')
+            comma=','
+            if(sql==''):
+                comma=''
+            sql = sql +  f'{comma}\"{t}\".\"{c}\"'
+            sqltrunk = sqltrunk + f'{comma}tbl{i+1}.\"{c}\"'
+        indexsql['cols'].append(sql)
+        indexsql['colstrunk'].append(sqltrunk)
+        indexsql['table'].append(t)
+        indexsql['tablenum'].append(i+1)
+        i +=1
+    sqlview = {"trunk":'',"subquery":[],"condition":[],"join":[]}
+    sqlview['trunk'] = f'(SELECT {indexsql['colstrunk']} FROM'
+    sql1=''
+    j=0
+    for tablemeta in indexsql:
+        colsthistable = {k: v for k, v in indexsql['cols'].items() if k == j}
+        sql1 = sql1 + f'(SELECT {colsthistable} FROM \"{tablemeta['table']}\") tbl{tablemeta['tablenum']}'
+        sqlview['subquery'].append(sql1)
+        j+=1
+    #now we have a collection of ready to go selects    
+    qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {indexsql['colstrunk']} FROM'
+    for sv in sqlview['subquery']:
+        s=''
+        if (s==''):
+            qryRaw = qryRaw + sv
+        else:
+            qryRaw = " JOIN " +  qryRaw + sv
+    
+    ##create final join str
+    qryRaw = qryRaw + " ON " 
+    # tbl1.x1::numeric = tbl2.x2::numeric AND tbl1.y1::numeric = tbl2.y2::numeric AND tbl1.yyyy1::numeric = tbl2.yyyy2::numeric AND tbl1.dd1::numeric = tbl2.dd2::numeric
+    xsqlj = joinsql(indexsql,"x")
+    ysqlj = joinsql(indexsql,"y")
+    yrsqlj = joinsql(indexsql,"yyyy")
+    dsqlj = joinsql(indexsql,"dd")
+    qryRaw = qryRaw + f'{xsqlj} AND {ysqlj} AND {yrsqlj} AND {dsqlj}'
+    qry = sqlalchemy.text(qryRaw)
+    print(qry)
 
 
 #---CODE INIT - Command line PARAMS---######################################
