@@ -207,13 +207,14 @@ def joinsql(sqlmapdict,col):
 def subquery(sqlmapdict,sqdict):
     sql1=''
     j=0
-    for tablemeta in sqlmapdict:
-        t = tablemeta['table']
-        n = tablemeta['tablenum']
-        colsthistable = {k: v for k, v in sqlmapdict['cols'].items() if k == j}
-        sql1 = sql1 + f'(SELECT {colsthistable} FROM \"{t}\") tbl{n}'
+    for val in sqlmapdict['table']:
+        t = val
+        tnum=j
+        colsthistable = {k: v for k, v in sqlmapdict['cols'].items() if k == tnum}
+        sql1 = sql1 + f'(SELECT {colsthistable} FROM \"{t}\") tbl{tnum}'
         sqdict['subquery'].append(sql1)
         j+=1
+        
     return sqdict
 
 
