@@ -254,6 +254,7 @@ def entropyBasedViewSQL(QAREGEX):
         col = bits[1]
         tables['col'].append(col)
     tblsdf = pd.DataFrame(tables)
+    print(tblsdf)
     indexsql = {"cols":[],"colstrunk":[],"table":[],"tablenum":[]}
     joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
     i=0
