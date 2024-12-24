@@ -210,6 +210,7 @@ def subquery(sqlmapdict,sqdict):
     for val in sqlmapdict['table']:
         t = val
         tnum=j
+        #not working re code it
         colsthistable = {k: v for k, v in sqlmapdict['cols'] if k == tnum}
         sql1 = sql1 + f'(SELECT {colsthistable} FROM \"{t}\") tbl{tnum}'
         sqdict['subquery'].append(sql1)
