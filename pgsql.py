@@ -205,6 +205,7 @@ def joinsql(sqlmapdict,col):
     return sqlj
 
 def subquery(sqlmapdict,sqdict):
+    print(sqlmapdict)
     sql1=''
     j=1
     for val in sqlmapdict['table']:
@@ -299,7 +300,7 @@ def entropyBasedViewSQL(QAREGEX):
                 if(sql==''):
                     comma=''
                 sql = sql +  f'{comma}\"{t}\".\"{c}\"'
-                sqltrunk = sqltrunk + f'{comma}tbl{i+1}.\"{c}\"'
+                sqltrunk = sqltrunk + f'{comma}tbl{i}.\"{c}\"'
             j+=1
         print("analyzing " + t)
         sqlstruct['cols'].append(sql)
