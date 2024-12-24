@@ -195,13 +195,14 @@ def gethighentropycolumns():
 def joinsql(sqlstruct,col):
     sqlj=''
     _and=" AND "
-    for num in sqlstruct["tnum"]:
+    i=1
+    for t in sqlstruct["table"]:
         #if we have 3 tables we need t1.x1=t2.x2 AND t2.x2 = t3.x3 (circe back on this assumption)
         #this prevents the num +1 table reference from overshooting
-        if num< len(sqlstruct["tnum"]):
+        if i< len(sqlstruct["table"]):
             if sqlj=='':
                 _and=''
-            sqlj = sqlj + f'{_and}tbl{num}.{col}{num}::numeric = tbl{num+1}.{col}{num+1}::numeric'
+            sqlj = sqlj + f'{_and}tbl{i}.{col}{i}::numeric = tbl{i+1}.{col}{i+1}::numeric'
     return sqlj
 
 def subquery(sqlstruct,sqdict):
