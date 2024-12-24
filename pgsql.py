@@ -204,19 +204,22 @@ def joinsql(sqlmapdict,col):
             sqlj = sqlj + f'{_and}tbl{num}.{col}{num}::numeric = tbl{num+1}.{col}{num+1}::numeric'
     return sqlj
 
-def subquery(sqlmapdict,sqdict):
+def subquery(sqlstruct,sqdict):
     #print(sqlmapdict)
     sql1=''
     j=1
-    for val in sqlmapdict['table']:
+    #unique tables n = 1-10 on average
+    for val in sqlstruct['table']:
         t = val
         tnum=j
         #not working re code it
         #{k: v for k, v in sqlmapdict['cols'] if k == tnum}
         cols = ''
-        for i in range(len(sqlmapdict['cols'])):
-            if (sqlmapdict['tablenum'][i] == i):
-                col = sqlmapdict['cols'][i]
+        #cols are on the order of tables * cols
+        for i in range(len(sqlstruct['cols'])):
+            col = sqlstruct['cols'][i]
+            tnumcol = sqlstruct['tnum'][i]
+            if(tnumcol == tnum):
                 comma=','
                 if cols=='':
                     comma=''
@@ -268,11 +271,11 @@ def packagetablestojoin():
         i +=1
     return pd.DataFrame(tables)
 
-
+DEBUG=False
 def entropyBasedViewSQL(QAREGEX):
     tblsdf = packagetablestojoin()
     print(tblsdf)
-    sqlstruct = {"cols":[],"colstrunk":[],"table":[],"tablenum":[]}
+    sqlstruct = {"cols":[],"colstrunk":[],"table":[],"tnum":[]}
     joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
     i=1
     #strip as much meta data as possible
@@ -301,15 +304,17 @@ def entropyBasedViewSQL(QAREGEX):
                     comma=''
                 sql = sql +  f'{comma}\"{t}\".\"{c}\"'
                 sqltrunk = sqltrunk + f'{comma}tbl{i}.\"{c}\"'
+                sqlstruct['tnum'].append(i)
             j+=1
         print("analyzing " + t)
         sqlstruct['cols'].append(sql)
         sqlstruct['colstrunk'].append(sqltrunk)
         sqlstruct['table'].append(t)
-        sqlstruct['tablenum'].append(i)
+        
         i +=1
     trunkcols = sqlstruct['colstrunk']
-    print(sqlstruct)
+    if DEBUG:
+        print(sqlstruct)
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
     subq = subquery(sqlstruct,{"subquery":[],"condition":[]})
