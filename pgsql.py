@@ -205,20 +205,24 @@ def joinsql(sqlstruct,col):
             sqlj = sqlj + f'{_and}tbl{i}.{col}{i}::numeric = tbl{i+1}.{col}{i+1}::numeric'
     return sqlj
 
-def subquery(sqlstruct,sqdict):
+def subquery(sqldf,tablelist,sqdict):
     #print(sqlmapdict)
     sql1=''
     j=1
     #unique tables n = 1-10 on average
-    for t in sqlstruct['table']:
+    for t in tablelist:
         tnum=j
         cols = ''
         omissionqueue=[]
         #cols are on the order of tables * cols
-        for i in range(len(sqlstruct['cols'])):
-            col = sqlstruct['cols'][i]
-            tnumcol = sqlstruct['tnum'][i]
-            if(tnumcol == tnum and col not in omissionqueue):
+        grouped = sqldf.groupby('tnum')
+        for name, group in grouped:
+        #for i in range(len(sqlstruct['cols'])):
+            #col = sqlstruct['cols'][i]
+            #tnumcol = sqlstruct['tnum'][i]
+            tnumloop=name
+            col=group['col']
+            if(tnumloop == tnum and col not in omissionqueue):
                 comma=','
                 if cols=='':
                     comma=''
@@ -276,7 +280,7 @@ DEBUG=False
 def entropyBasedViewSQL(QAREGEX):
     tblsdf = packagetablestojoin()
     print(tblsdf)
-    sqlstruct = {"cols":[],"colstrunk":[],"table":[],"tnum":[]}
+    sqldict = {"cols":[],"colstrunk":[],"table":[],"tnum":[]}
     joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
     i=1
     #strip as much meta data as possible
@@ -305,20 +309,20 @@ def entropyBasedViewSQL(QAREGEX):
                     comma=''
                 sql = sql +  f'{comma}{t}.{c}'
                 sqltrunk = sqltrunk + f'{comma}tbl{i}.{c}'
-                sqlstruct['tnum'].append(i)
+                sqldict['tnum'].append(i)
             j+=1
         print("analyzing " + t)
-        sqlstruct['cols'].append(sql)
-        sqlstruct['colstrunk'].append(sqltrunk)
-        sqlstruct['table'].append(t)
+        sqldict['cols'].append(sql)
+        sqldict['colstrunk'].append(sqltrunk)
+        sqldict['table'].append(t)
         
         i +=1
-    trunkcols = sqlstruct['colstrunk']
+    trunkcols = sqldict['colstrunk']
     if DEBUG:
-        print(sqlstruct)
+        print(sqldict)
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
-    subq = subquery(sqlstruct,{"subquery":[],"condition":[]})
+    subq = subquery(pd.DataFrame(sqldict['cols','tnum']),sqldict['table'],{"subquery":[],"condition":[]})
     #now we have a collection of ready to go selects    
     for sv in subq['subquery']:
         s=''
@@ -330,10 +334,10 @@ def entropyBasedViewSQL(QAREGEX):
     ##create final join str
     qryRaw = qryRaw + " ON " 
     # tbl1.x1::numeric = tbl2.x2::numeric AND tbl1.y1::numeric = tbl2.y2::numeric AND tbl1.yyyy1::numeric = tbl2.yyyy2::numeric AND tbl1.dd1::numeric = tbl2.dd2::numeric
-    xsqlj = joinsql(sqlstruct,"x")
-    ysqlj = joinsql(sqlstruct,"y")
-    yrsqlj = joinsql(sqlstruct,"yyyy")
-    dsqlj = joinsql(sqlstruct,"dd")
+    xsqlj = joinsql(sqldict,"x")
+    ysqlj = joinsql(sqldict,"y")
+    yrsqlj = joinsql(sqldict,"yyyy")
+    dsqlj = joinsql(sqldict,"dd")
     qryRaw = qryRaw + f'{xsqlj} AND {ysqlj} AND {yrsqlj} AND {dsqlj}'
     qry = sqlalchemy.text(qryRaw)
     print(qry)
