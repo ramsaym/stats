@@ -210,21 +210,20 @@ def subquery(sqlstruct,sqdict):
     sql1=''
     j=1
     #unique tables n = 1-10 on average
-    for val in sqlstruct['table']:
-        t = val
+    for t in sqlstruct['table']:
         tnum=j
-        #not working re code it
-        #{k: v for k, v in sqlmapdict['cols'] if k == tnum}
         cols = ''
+        omissionqueue=[]
         #cols are on the order of tables * cols
         for i in range(len(sqlstruct['cols'])):
             col = sqlstruct['cols'][i]
             tnumcol = sqlstruct['tnum'][i]
-            if(tnumcol == tnum):
+            if(tnumcol == tnum and col not in omissionqueue):
                 comma=','
                 if cols=='':
                     comma=''
                 cols = cols + f'{comma}{col}'
+                omissionqueue.append(col)
         sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
         sqdict['subquery'].append(sql1)
         j+=1
