@@ -263,7 +263,7 @@ def packagetablestojoin():
         tables['table'].append(table)
         col = bits[1]
         tables['col'].append(col)
-    return pd.DataFrame(tables,index=False)
+    return pd.DataFrame(tables)
 
 
 def entropyBasedViewSQL(QAREGEX):
