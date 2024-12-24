@@ -279,10 +279,10 @@ def entropyBasedViewSQL(QAREGEX):
         #tbl1col sequence
         sql=''
         sqltrunk = ''
-        j=1
+        j=0
         for c in tblsdf['col']:
             #matching line here to only take tables from the DF if they macth the outerloop table
-            if (tblsdf['table'][j] == t):
+            if (tblsdf['table'][j] == (j+1)):
                 xmatch = re.search("[\_x]*[0-9]{0,1}$",c)
                 if xmatch is not None:
                     joinmap['x'].append(f'x{i}')
