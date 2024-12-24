@@ -273,6 +273,7 @@ def entropyBasedViewSQL(QAREGEX):
         #tbl1col sequence
         sql=''
         sqltrunk = ''
+        print(tblsdf[tblsdf['col'] == t])
         for c in tblsdf[tblsdf['col'] == t]:
             xmatch = re.search("[\_x]*[0-9]{0,1}$",c)
             if xmatch is not None:
