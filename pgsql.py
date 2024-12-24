@@ -256,7 +256,7 @@ def sqlregexfilters(inputStr):
 def packagetablestojoin():
     #this is to mimic piping in results from the stats.py discovery component of code. can be direct or api structured
     hientcols = gethighentropycolumns()
-    tables={"tblnum":[],"table":[],"col":[]}
+    tables={"table":[],"col":[]}
     i=1
     for obj in hientcols:
         bits = obj.split('.')
