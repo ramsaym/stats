@@ -214,7 +214,7 @@ def subquery(sqlmapdict,sqdict):
 
         #{k: v for k, v in sqlmapdict['cols'] if k == tnum}
         cols = ''
-        for i in len(sqlmapdict['cols']):
+        for i in range(len(sqlmapdict['cols'])):
             if (sqlmapdict['tablenum'][i] == i):
                 col = sqlmapdict['cols'][i]
                 comma=','
