@@ -309,6 +309,7 @@ def entropyBasedViewSQL(QAREGEX):
         sqlstruct['tablenum'].append(i)
         i +=1
     trunkcols = sqlstruct['colstrunk']
+    print(sqlstruct)
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
     subq = subquery(sqlstruct,{"subquery":[],"condition":[]})
