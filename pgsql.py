@@ -224,6 +224,7 @@ def subquery(sqlstruct,sqdict):
                     comma=''
                 cols = cols + f'{comma}{col}'
                 omissionqueue.append(col)
+                print(omissionqueue)
         sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
         sqdict['subquery'].append(sql1)
         j+=1
