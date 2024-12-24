@@ -256,13 +256,16 @@ def sqlregexfilters(inputStr):
 def packagetablestojoin():
     #this is to mimic piping in results from the stats.py discovery component of code. can be direct or api structured
     hientcols = gethighentropycolumns()
-    tables={"table":[],"col":[]}
+    tables={"tblnum":[],"table":[],"col":[]}
+    i=1
     for obj in hientcols:
         bits = obj.split('.')
         table = bits[0]
         tables['table'].append(table)
+        tables['tblnum'].append(i)
         col = bits[1]
         tables['col'].append(col)
+        i = i+1
     return pd.DataFrame(tables)
 
 
@@ -271,14 +274,13 @@ def entropyBasedViewSQL(QAREGEX):
     print(tblsdf)
     sqlstruct = {"cols":[],"colstrunk":[],"table":[],"tablenum":[]}
     joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
-    i=0
+    i=1
     #strip as much meta data as possible
     for t in tblsdf['table'].unique():
         #tbl1col sequence
         sql=''
         sqltrunk = ''
-        print(tblsdf['col'])
-        for c in tblsdf[tblsdf['col'] == t]:
+        for c in tblsdf[tblsdf['tblnum'] == i]:
             xmatch = re.search("[\_x]*[0-9]{0,1}$",c)
             if xmatch is not None:
                 joinmap['x'].append(f'x{i}')
