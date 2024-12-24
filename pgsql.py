@@ -257,14 +257,14 @@ def packagetablestojoin():
     #this is to mimic piping in results from the stats.py discovery component of code. can be direct or api structured
     hientcols = gethighentropycolumns()
     tables={"table":[],"col":[]}
-    i=1
+    i=0
     for obj in hientcols:
         bits = obj.split('.')
         table = bits[0]
         tables['table'].append(table)
         col = bits[1]
         tables['col'].append(col)
-        i = i+1
+        i +=1
     return pd.DataFrame(tables)
 
 
