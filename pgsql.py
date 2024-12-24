@@ -205,7 +205,7 @@ def joinsql(sqlmapdict,col):
     return sqlj
 
 def subquery(sqlmapdict,sqdict):
-    print(sqlmapdict)
+    #print(sqlmapdict)
     sql1=''
     j=1
     for val in sqlmapdict['table']:
@@ -306,7 +306,7 @@ def entropyBasedViewSQL(QAREGEX):
         sqlstruct['cols'].append(sql)
         sqlstruct['colstrunk'].append(sqltrunk)
         sqlstruct['table'].append(t)
-        sqlstruct['tablenum'].append(i+1)
+        sqlstruct['tablenum'].append(i)
         i +=1
     trunkcols = sqlstruct['colstrunk']
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
