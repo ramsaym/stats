@@ -206,7 +206,7 @@ def joinsql(sqlmapdict,col):
 
 def subquery(sqlmapdict,sqdict):
     sql1=''
-    j=0
+    j=1
     for val in sqlmapdict['table']:
         t = val
         tnum=j
