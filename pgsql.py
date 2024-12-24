@@ -189,7 +189,7 @@ def createJoinColMappings(colMapStr):
         i+=1
     return stringout
 
-def entropyViewColumns():
+def gethighentropycolumns():
     return ['"day_fieldcrop_1_day_fieldmanage_1"."yyyy1"', '"day_fieldcrop_1_day_fieldmanage_1"."dd1"', '"day_fieldcrop_1_day_fieldmanage_1"."Precipitation"', '"day_fieldcrop_1_day_fieldmanage_1"."Radiation"', '"day_fieldcrop_1_day_fieldmanage_1"."PET"', '"day_fieldcrop_1_day_fieldmanage_1"."Transpiration"', '"day_fieldcrop_1_day_fieldmanage_1"."All_crops"', '"day_fieldcrop_1_day_fieldmanage_1"."All_crops.1"', '"day_fieldcrop_1_day_fieldmanage_1"."All_crops.2"', '"day_fieldcrop_1_day_fieldmanage_1"."All_crops.3"', '"day_fieldcrop_1_day_fieldmanage_1"."_CropID_#"', '"day_fieldcrop_1_day_fieldmanage_1"."_TDD_degree_C"', '"day_fieldcrop_1_day_fieldmanage_1"."_GrowthIndex_index"', '"day_fieldcrop_1_day_fieldmanage_1"."_Water_demand_mm"', '"day_fieldcrop_1_day_fieldmanage_1"."_Water_stress_index"', '"day_fieldcrop_1_day_fieldmanage_1"."_N_demand_kgN/ha/d"', '"day_fieldcrop_1_day_fieldmanage_1"."_Temp_Stress_index"', '"day_fieldcrop_1_day_fieldmanage_1"."_LAI_(LAI)"', '"day_fieldcrop_1_day_fieldmanage_1"."_N_fixation_kgN/ha/d"', '"day_fieldcrop_1_day_fieldmanage_1"."_Day_N_increase_kgN/ha/d"', '"day_fieldcrop_1_day_fieldmanage_1"."_TotalCropN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_DailyCropGrowth_kgC/ha/d"', '"day_fieldcrop_1_day_fieldmanage_1"."_DayLeafGrowth_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_DayStemGrowth_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_DayRootGrowth_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_DayGrainGrowth_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_LeafC_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_StemC_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_RootC_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_GrainC_kgC/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_LeafN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_StemN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_RootN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."_GrainN_kgN/ha"', '"day_fieldcrop_1_day_fieldmanage_1"."x1"', '"day_fieldcrop_1_day_fieldmanage_1"."uid1"', '"day_fieldcrop_1_day_fieldmanage_1"."yyyy2"', '"day_fieldcrop_1_day_fieldmanage_1"."dd2"', '"day_fieldcrop_1_day_fieldmanage_1"."x2"', '"day_fieldcrop_1_day_fieldmanage_1"."uid2"', '"day_soilc_1_day_soiln_1"."Unnamed: 0"', '"day_soilc_1_day_soiln_1"."yyyy1"', '"day_soilc_1_day_soiln_1"."dd1"', '"day_soilc_1_day_soiln_1"."Labile litter"', '"day_soilc_1_day_soiln_1"."Resistant litter"', '"day_soilc_1_day_soiln_1"."Microbe"', '"day_soilc_1_day_soiln_1"."Humads"', '"day_soilc_1_day_soiln_1"."Humus"', '"day_soilc_1_day_soiln_1"."SOC"', '"day_soilc_1_day_soiln_1"."SOC0-10cm"', '"day_soilc_1_day_soiln_1"." SOC10-20cm"', '"day_soilc_1_day_soiln_1"."SOC20-30cm"', '"day_soilc_1_day_soiln_1"."SOC30-40cm"', '"day_soilc_1_day_soiln_1"."SOC40-50cm"', '"day_soilc_1_day_soiln_1"."SOC50-60cm"', '"day_soilc_1_day_soiln_1"."SOC60-70cm"', '"day_soilc_1_day_soiln_1"."SOC70-80cm"', '"day_soilc_1_day_soiln_1"."SOC80-90cm"', '"day_soilc_1_day_soiln_1"."SOC90-100cm"', '"day_soilc_1_day_soiln_1"."SOC100-110cm"', '"day_soilc_1_day_soiln_1"." SOC110-120cm"', '"day_soilc_1_day_soiln_1"."SOC120-130cm"', '"day_soilc_1_day_soiln_1"."SOC130-140cm"', '"day_soilc_1_day_soiln_1"."SOC140-150cm"', '"day_soilc_1_day_soiln_1"."SOC150-160cm"', '"day_soilc_1_day_soiln_1"."SOC160-170cm"', '"day_soilc_1_day_soiln_1"."SOC170-180cm"', '"day_soilc_1_day_soiln_1"."SOC180-190cm"', '"day_soilc_1_day_soiln_1"."SOC190-200cm"', '"day_soilc_1_day_soiln_1"."DOC"', '"day_soilc_1_day_soiln_1"."DOC_produce"', '"day_soilc_1_day_soiln_1"."DOC_consume"', '"day_soilc_1_day_soiln_1"."DOC_leach"', '"day_soilc_1_day_soiln_1"."Leaf-respiration"', '"day_soilc_1_day_soiln_1"." Root-respiration"', '"day_soilc_1_day_soiln_1"."Soil-heterotrophic-respiration"', '"day_soilc_1_day_soiln_1"." NPP"', '"day_soilc_1_day_soiln_1"."Stub"', '"day_soilc_1_day_soiln_1"."DOC_from_root"', '"day_soilc_1_day_soiln_1"."Litter-C"', '"day_soilc_1_day_soiln_1"." SoilCO2_0-10cm"', '"day_soilc_1_day_soiln_1"."x1"', '"day_soilc_1_day_soiln_1"."uid1"', '"day_soilc_1_day_soiln_1"."yyyy2"', '"day_soilc_1_day_soiln_1"."dd2"', '"day_soilc_1_day_soiln_1"."_Ice_DOC"', '"day_soilc_1_day_soiln_1"."_N_fixation"', '"day_soilc_1_day_soiln_1"."_SON0-10cm"', '"day_soilc_1_day_soiln_1"."_ SON10-20cm"', '"day_soilc_1_day_soiln_1"."_SON20-30cm"', '"day_soilc_1_day_soiln_1"."_SON30-40cm"', '"day_soilc_1_day_soiln_1"."_SON40-50cm"', '"day_soilc_1_day_soiln_1"."x2"', '"day_soilc_1_day_soiln_1"."uid2"', '"day_soilclimate_1_day_soilmicrobe_1"."_0"', '"day_soilclimate_1_day_soilmicrobe_1"."yyyy1"', '"day_soilclimate_1_day_soilmicrobe_1"."dd1"', '"day_soilclimate_1_day_soilmicrobe_1"."_Prec.(mm)"', '"day_soilclimate_1_day_soilmicrobe_1"."_PET"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_50cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_60cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_70cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_80cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_90cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_100cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_110cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_120cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_130cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_140cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_150cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_160cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_170cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_180cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_190cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_temperature_200cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)_5cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)_10cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)_20cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_moisture(wfps)_30cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_10cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_20cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_30cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_40cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_Eh(mv)_50cm"', '"day_soilclimate_1_day_soilmicrobe_1"."Ice"', '"day_soilclimate_1_day_soilmicrobe_1"."Snowpack"', '"day_soilclimate_1_day_soilmicrobe_1"."SoilWater"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_pH"', '"day_soilclimate_1_day_soilmicrobe_1"."Soil_pH_20.0"', '"day_soilclimate_1_day_soilmicrobe_1"."x1"', '"day_soilclimate_1_day_soilmicrobe_1"."uid1"', '"day_soilclimate_1_day_soilmicrobe_1"."Unnamed: 0"', '"day_soilclimate_1_day_soilmicrobe_1"."yyyy2"', '"day_soilclimate_1_day_soilmicrobe_1"."dd2"', '"day_soilclimate_1_day_soilmicrobe_1"."Decomposition (kgC/ha)"', '"day_soilclimate_1_day_soilmicrobe_1"."x2"', '"day_soilclimate_1_day_soilmicrobe_1"."uid2"', '"Day_CO2_1"."Unnamed: 0"', '"Day_CO2_1"."Year"', '"Day_CO2_1"."Day"', '"Day_CO2_1"."Precip"', '"Day_CO2_1"."cropType1"', '"Day_CO2_1"."wreq1"', '"Day_CO2_1"."maxmn1"', '"Day_CO2_1"."graincn1"', '"Day_CO2_1"."x"', '"Day_CO2_1"."uid"']
 
 def joinsql(sqlmapdict,col):
@@ -253,19 +253,23 @@ def sqlregexfilters(inputStr):
     return SQLpairStr
 
 
-def entropyBasedViewSQL(QAREGEX):
-    evc = entropyViewColumns()
+def packagetablestojoin():
+    #this is to mimic piping in results from the stats.py discovery component of code. can be direct or api structured
+    hientcols = gethighentropycolumns()
     tables={"table":[],"col":[]}
-    for item in evc:
-        print(item) 
-        bits = item.split('.')
+    for obj in hientcols:
+        bits = obj.split('.')
         table = bits[0]
         tables['table'].append(table)
         col = bits[1]
         tables['col'].append(col)
-    tblsdf = pd.DataFrame(tables)
+    return pd.DataFrame(tables,index=False)
+
+
+def entropyBasedViewSQL(QAREGEX):
+    tblsdf = packagetablestojoin()
     print(tblsdf)
-    indexsql = {"cols":[],"colstrunk":[],"table":[],"tablenum":[]}
+    sqlstruct = {"cols":[],"colstrunk":[],"table":[],"tablenum":[]}
     joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
     i=0
     #strip as much meta data as possible
@@ -293,15 +297,15 @@ def entropyBasedViewSQL(QAREGEX):
             sql = sql +  f'{comma}\"{t}\".\"{c}\"'
             sqltrunk = sqltrunk + f'{comma}tbl{i+1}.\"{c}\"'
         print("analyzing " + t)
-        indexsql['cols'].append(sql)
-        indexsql['colstrunk'].append(sqltrunk)
-        indexsql['table'].append(t)
-        indexsql['tablenum'].append(i+1)
+        sqlstruct['cols'].append(sql)
+        sqlstruct['colstrunk'].append(sqltrunk)
+        sqlstruct['table'].append(t)
+        sqlstruct['tablenum'].append(i+1)
         i +=1
     trunkcols = indexsql['colstrunk']
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
-    subq = subquery(indexsql,{"subquery":[],"condition":[]})
+    subq = subquery(sqlstruct,{"subquery":[],"condition":[]})
     #now we have a collection of ready to go selects    
     for sv in subq['subquery']:
         s=''
@@ -312,49 +316,10 @@ def entropyBasedViewSQL(QAREGEX):
     ##create final join str
     qryRaw = qryRaw + " ON " 
     # tbl1.x1::numeric = tbl2.x2::numeric AND tbl1.y1::numeric = tbl2.y2::numeric AND tbl1.yyyy1::numeric = tbl2.yyyy2::numeric AND tbl1.dd1::numeric = tbl2.dd2::numeric
-    xsqlj = joinsql(indexsql,"x")
-    ysqlj = joinsql(indexsql,"y")
-    yrsqlj = joinsql(indexsql,"yyyy")
-    dsqlj = joinsql(indexsql,"dd")
+    xsqlj = joinsql(sqlstruct,"x")
+    ysqlj = joinsql(sqlstruct,"y")
+    yrsqlj = joinsql(sqlstruct,"yyyy")
+    dsqlj = joinsql(sqlstruct,"dd")
     qryRaw = qryRaw + f'{xsqlj} AND {ysqlj} AND {yrsqlj} AND {dsqlj}'
     qry = sqlalchemy.text(qryRaw)
     print(qry)
-
-
-#---CODE INIT - Command line PARAMS---######################################
-# name_of_script = sys.argv[0]
-# INSTANCE_CONNECTION_NAME = sys.argv[1]
-# DB_PASS = sys.argv[2]
-# COMMAND = sys.argv[3]
-# COMMANDVAL = sys.argv[4]
-# QAREGEX1 = sys.argv[5]
-# QAREGEX2 = sys.argv[6]
-# COLMAPS = sys.argv[7]
-# KEYWORDS = sys.argv[8]
-# #---START PROCESSING---##############################################################################################
-# #this is a support helper fork to either create an run sql require to fix bad headers or to just create the sql output
-# operation = COMMAND.split("-")[0]
-# tableName = COMMAND.split("-")[1]
-# operationParam = COMMANDVAL
-# viewName = f'{tableName}_{operationParam}'
-# print("b0-->CREATE MATERIALIZED VIEW<--" + tableName)
-# if (tableName is not None or tableName !=""):
-#     #1.0 - CREATE COLUMN LISTS
-#     #need at least 3 dynamically generated column sequences to automate view creation
-#     table1ColSasDict = fetchHeaders(engine,tableName,0)
-#     table2ColSasDict = fetchHeaders(engine,operationParam,0)
-#     #1.1populate command separated strings to inject into SQL call below
-#     tbl1ColSeq=sqlcolumnsequence(table1ColSasDict,tableName,COLMAPS,trunk=False,keywords=KEYWORDS)
-#     tbl2ColSeq=sqlcolumnsequence(table2ColSasDict,operationParam,COLMAPS,trunk=False,keywords=KEYWORDS)
-#     ViewColSeqLeft=sqlcolumnsequence(table1ColSasDict,'tbl1',COLMAPS,trunk=True,keywords=KEYWORDS)
-#     ViewColSeqRight=sqlcolumnsequence(table2ColSasDict,'tbl2',COLMAPS,trunk=True,keywords=KEYWORDS)
-#     finalVarsInView = ViewColSeqLeft + ',' +  ViewColSeqRight
-#     #2.0 - sql regex filters, retain only numbers for instance '[0-9]*'
-#     tbl1Conditions = sqlregexfilters(QAREGEX1)
-#     tbl2Conditions = sqlregexfilters(QAREGEX2)
-#     #3.0 - CREATE JOIN COLUMN MAPPINGS
-#     SQLJoinStr = createJoinColMappings(COLMAPS)
-#     qryRaw = f'CREATE MATERIALIZED VIEW public.{viewName} TABLESPACE pg_default AS SELECT {finalVarsInView} FROM (SELECT {tbl1ColSeq} FROM \"{tableName}\" WHERE {tbl1Conditions}) tbl1 JOIN (SELECT {tbl2ColSeq} FROM \"{operationParam}\" WHERE {tbl2Conditions}) tbl2 ON {SQLJoinStr}'
-#     qry = sqlalchemy.text(qryRaw)
-#     print(qry)
-engine.dispose()
