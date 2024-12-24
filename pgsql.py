@@ -211,8 +211,17 @@ def subquery(sqlmapdict,sqdict):
         t = val
         tnum=j
         #not working re code it
-        colsthistable = {k: v for k, v in sqlmapdict['cols'] if k == tnum}
-        sql1 = sql1 + f'(SELECT {colsthistable} FROM \"{t}\") tbl{tnum}'
+
+        #{k: v for k, v in sqlmapdict['cols'] if k == tnum}
+        cols = ''
+        for i in len(sqlmapdict['cols']):
+            if (sqlmapdict['tablenum'][i] == i):
+                col = sqlmapdict['cols'][i]
+                comma=','
+                if cols=='':
+                    comma=''
+                cols = cols + f'{comma}{col}'
+        sql1 = sql1 + f'(SELECT {cols} FROM \"{t}\") tbl{tnum}'
         sqdict['subquery'].append(sql1)
         j+=1
         
