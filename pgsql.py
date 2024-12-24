@@ -211,7 +211,6 @@ def subquery(sqlmapdict,sqdict):
         t = val
         tnum=j
         #not working re code it
-
         #{k: v for k, v in sqlmapdict['cols'] if k == tnum}
         cols = ''
         for i in range(len(sqlmapdict['cols'])):
@@ -292,6 +291,7 @@ def entropyBasedViewSQL(QAREGEX):
                 comma=''
             sql = sql +  f'{comma}\"{t}\".\"{c}\"'
             sqltrunk = sqltrunk + f'{comma}tbl{i+1}.\"{c}\"'
+        print("analyzing " + t)
         indexsql['cols'].append(sql)
         indexsql['colstrunk'].append(sqltrunk)
         indexsql['table'].append(t)
