@@ -225,7 +225,7 @@ def subquery(sqlstruct,sqdict):
                 if cols=='':
                     comma=''
                 cols = cols + f'{comma}{col}'
-        sql1 = sql1 + f'(SELECT {cols} FROM \"{t}\") tbl{tnum}'
+        sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
         sqdict['subquery'].append(sql1)
         j+=1
         
@@ -303,8 +303,8 @@ def entropyBasedViewSQL(QAREGEX):
                 comma=','
                 if(sql==''):
                     comma=''
-                sql = sql +  f'{comma}\"{t}\".\"{c}\"'
-                sqltrunk = sqltrunk + f'{comma}tbl{i}.\"{c}\"'
+                sql = sql +  f'{comma}{t}.{c}'
+                sqltrunk = sqltrunk + f'{comma}tbl{i}.{c}'
                 sqlstruct['tnum'].append(i)
             j+=1
         print("analyzing " + t)
@@ -325,7 +325,8 @@ def entropyBasedViewSQL(QAREGEX):
         if (s==''):
             qryRaw = qryRaw + sv
         else:
-            qryRaw = " JOIN " +  qryRaw + sv
+            s=" JOIN " 
+        qryRaw = qryRaw + s
     ##create final join str
     qryRaw = qryRaw + " ON " 
     # tbl1.x1::numeric = tbl2.x2::numeric AND tbl1.y1::numeric = tbl2.y2::numeric AND tbl1.yyyy1::numeric = tbl2.yyyy2::numeric AND tbl1.dd1::numeric = tbl2.dd2::numeric
