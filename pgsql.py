@@ -262,7 +262,6 @@ def packagetablestojoin():
         bits = obj.split('.')
         table = bits[0]
         tables['table'].append(table)
-        tables['tblnum'].append(i)
         col = bits[1]
         tables['col'].append(col)
         i = i+1
@@ -280,24 +279,28 @@ def entropyBasedViewSQL(QAREGEX):
         #tbl1col sequence
         sql=''
         sqltrunk = ''
-        for c in tblsdf[tblsdf['tblnum'] == i]:
-            xmatch = re.search("[\_x]*[0-9]{0,1}$",c)
-            if xmatch is not None:
-                joinmap['x'].append(f'x{i}')
-            ymatch = re.search("[\_y]*[0-9]{0,1}$",c)
-            if ymatch is not None:
-                joinmap['y'].append(f'y{i}')
-            yearmatch = re.search("[\_Year,year,yyyy]*[0-9]{0,1}$",c)
-            if yearmatch is not None:
-                joinmap['yyyy'].append(f'yyyy{i}')
-            daymatch = re.search("[\_Day,day,dd]*[0-9]{0,1}$",c)
-            if daymatch is not None:
-                joinmap['dd'].append(f'dd{i}')
-            comma=','
-            if(sql==''):
-                comma=''
-            sql = sql +  f'{comma}\"{t}\".\"{c}\"'
-            sqltrunk = sqltrunk + f'{comma}tbl{i+1}.\"{c}\"'
+        j=1
+        for c in tblsdf['col']:
+            #matching line here to only take tables from the DF if they macth the outerloop table
+            if (tblsdf['table'][j] == t):
+                xmatch = re.search("[\_x]*[0-9]{0,1}$",c)
+                if xmatch is not None:
+                    joinmap['x'].append(f'x{i}')
+                ymatch = re.search("[\_y]*[0-9]{0,1}$",c)
+                if ymatch is not None:
+                    joinmap['y'].append(f'y{i}')
+                yearmatch = re.search("[\_Year,year,yyyy]*[0-9]{0,1}$",c)
+                if yearmatch is not None:
+                    joinmap['yyyy'].append(f'yyyy{i}')
+                daymatch = re.search("[\_Day,day,dd]*[0-9]{0,1}$",c)
+                if daymatch is not None:
+                    joinmap['dd'].append(f'dd{i}')
+                comma=','
+                if(sql==''):
+                    comma=''
+                sql = sql +  f'{comma}\"{t}\".\"{c}\"'
+                sqltrunk = sqltrunk + f'{comma}tbl{i+1}.\"{c}\"'
+            j+=1
         print("analyzing " + t)
         sqlstruct['cols'].append(sql)
         sqlstruct['colstrunk'].append(sqltrunk)
