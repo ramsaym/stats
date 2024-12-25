@@ -306,13 +306,15 @@ def entropyBasedViewSQL(QAREGEX):
                 daymatch = re.search("[\_Day,day,dd]*[0-9]{0,1}$",c)
                 if daymatch is not None:
                     joinmap['dd'].append(f'dd{i}')
+                
+                #format sql string
                 comma=','
                 if(sql==''):
                     comma=''
                 sql = sql +  f'{comma}{t}.{c}'
                 sqltrunk = sqltrunk + f'{comma}tbl{i}.{c}'
                 sqldict['tnum'].append(i)
-                print(tblsdf['table'][j] + "= " + t + "tnum: " + sqldict['tnum'][i])
+                print(tblsdf['table'][j] + "= " + t + "tnum: " + sqldict['tnum'][j])
             j+=1
         print("analyzing " + t)
         sqldict['cols'].append(sql)
