@@ -211,7 +211,7 @@ def subquery(sqldict,sqlout):
     sql1=''
     j=1
     #unique tables n = 1-10 on average
-    for t in sqldict['tables']:
+    for t in sqldict['table']:
         tnum=j
         cols = ''
         omissionqueue=[]
