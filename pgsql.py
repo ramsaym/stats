@@ -205,7 +205,7 @@ def joinsql(sqlstruct,col):
             sqlj = sqlj + f'{_and}tbl{i}.{col}{i}::numeric = tbl{i+1}.{col}{i+1}::numeric'
     return sqlj
 
-def subquery(sqldict,sqlout):
+def subquery(sqldict):
     #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
     sqldf = pd.DataFrame(sqldict.items(), columns=['cols','tnum'])
