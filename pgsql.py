@@ -207,7 +207,7 @@ def joinsql(sqlstruct,col):
 
 def subquery(sqldict,sqlout):
     #print(sqlmapdict)
-    sqldf = pd.DataFrame(sqldict['cols','tnum'])
+    sqldf = pd.DataFrame(sqldict.items(), columns=['cols','tnum'])
     sql1=''
     j=1
     #unique tables n = 1-10 on average
