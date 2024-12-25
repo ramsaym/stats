@@ -314,7 +314,7 @@ def entropyBasedViewSQL(QAREGEX):
                 sql = sql +  f'{comma}{t}.{c}'
                 sqltrunk = sqltrunk + f'{comma}tbl{i}.{c}'
                 sqldict['tnum'].append(i)
-                print(tblsdf['table'][j] + "= " + t + "tnum: " + sqldict['tnum'][j])
+                print(tblsdf['table'][j] + "= " + t + "tnum: " + str(sqldict['tnum'][j]))
             j+=1
         print("analyzing " + t)
         sqldict['cols'].append(sql)
