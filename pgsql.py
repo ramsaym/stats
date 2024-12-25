@@ -322,7 +322,7 @@ def entropyBasedViewSQL(QAREGEX):
         print(sqldict)
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
-    subq = subquery(pd.DataFrame(sqldict['cols','tnum']),sqldict['table'],{"subquery":[],"condition":[]})
+    subq = subquery(pd.DataFrame(sqldict['cols','tnum']),{"subquery":[],"condition":[]})
     #now we have a collection of ready to go selects    
     for sv in subq['subquery']:
         s=''
