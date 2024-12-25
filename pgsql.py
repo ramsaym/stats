@@ -218,6 +218,7 @@ def subquery(sqldict):
         omissionqueue=[]
         #cols are on the order of tables * cols
         grouped = sqldf.groupby('tnum')
+        print(grouped)
         for name, group in grouped:
         #for i in range(len(sqlstruct['cols'])):
             #col = sqlstruct['cols'][i]
