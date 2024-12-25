@@ -207,6 +207,7 @@ def joinsql(sqlstruct,col):
 
 def subquery(sqldict,sqlout):
     #print(sqlmapdict)
+    sqldictout = {"subquery":[],"condition":[]}
     sqldf = pd.DataFrame(sqldict.items(), columns=['cols','tnum'])
     sql1=''
     j=1
@@ -231,10 +232,10 @@ def subquery(sqldict,sqlout):
                 omissionqueue.append(col)
                 print(omissionqueue)
         sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
-        sqldict['subquery'].append(sql1)
+        sqldictout['subquery'].append(sql1)
         j+=1
         
-    return sqdict
+    return sqldictout
 
 
 #---COMMON FUNCTIONS SPECIFIC TO VIEW CREATION
@@ -327,7 +328,7 @@ def entropyBasedViewSQL(QAREGEX):
         print(sqldict)
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
-    subq = subquery(sqldict,{"subquery":[],"condition":[]})
+    subq = subquery(sqldict)
     #now we have a collection of ready to go selects    
     for sv in subq['subquery']:
         s=''
