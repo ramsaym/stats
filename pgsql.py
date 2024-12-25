@@ -292,9 +292,8 @@ def entropyBasedViewSQL(QAREGEX):
         j=0
         for c in tblsdf['col']:
             #matching line here to only take tables from the DF if they macth the outerloop table
-            
             if (tblsdf['table'][j] == t):
-                print(tblsdf['table'][j] + "= " + t + "tnum: " + str(i))
+                
                 xmatch = re.search("[\_x]*[0-9]{0,1}$",c)
                 if xmatch is not None:
                     joinmap['x'].append(f'x{i}')
@@ -313,6 +312,7 @@ def entropyBasedViewSQL(QAREGEX):
                 sql = sql +  f'{comma}{t}.{c}'
                 sqltrunk = sqltrunk + f'{comma}tbl{i}.{c}'
                 sqldict['tnum'].append(i)
+                print(tblsdf['table'][j] + "= " + t + "tnum: " + sqldict['tnum'][i])
             j+=1
         print("analyzing " + t)
         sqldict['cols'].append(sql)
