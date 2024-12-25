@@ -205,12 +205,13 @@ def joinsql(sqlstruct,col):
             sqlj = sqlj + f'{_and}tbl{i}.{col}{i}::numeric = tbl{i+1}.{col}{i+1}::numeric'
     return sqlj
 
-def subquery(sqldf,tablelist,sqdict):
+def subquery(sqldict,sqlout):
     #print(sqlmapdict)
+    sqldf = pd.DataFrame(sqldict['cols','tnum'])
     sql1=''
     j=1
     #unique tables n = 1-10 on average
-    for t in tablelist:
+    for t in sqldict['tables']:
         tnum=j
         cols = ''
         omissionqueue=[]
@@ -230,7 +231,7 @@ def subquery(sqldf,tablelist,sqdict):
                 omissionqueue.append(col)
                 print(omissionqueue)
         sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
-        sqdict['subquery'].append(sql1)
+        sqldict['subquery'].append(sql1)
         j+=1
         
     return sqdict
@@ -291,6 +292,7 @@ def entropyBasedViewSQL(QAREGEX):
         j=0
         for c in tblsdf['col']:
             #matching line here to only take tables from the DF if they macth the outerloop table
+            print(tblsdf['table'][j] + "= " + t)
             if (tblsdf['table'][j] == t):
                 xmatch = re.search("[\_x]*[0-9]{0,1}$",c)
                 if xmatch is not None:
@@ -322,7 +324,7 @@ def entropyBasedViewSQL(QAREGEX):
         print(sqldict)
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
-    subq = subquery(pd.DataFrame(sqldict['cols','tnum']),{"subquery":[],"condition":[]})
+    subq = subquery(sqldict,{"subquery":[],"condition":[]})
     #now we have a collection of ready to go selects    
     for sv in subq['subquery']:
         s=''
