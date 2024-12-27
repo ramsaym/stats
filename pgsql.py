@@ -207,6 +207,7 @@ def joinsql(sqlstruct,col):
 
 
 def grabfromdict(dict,cols):
+    print(dict)
     dataframe=pd.DataFrame()
     for col in cols:
         #json=f'\{\"{col}\":[]\}'
