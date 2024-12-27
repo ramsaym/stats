@@ -208,12 +208,14 @@ def joinsql(sqlstruct,col):
 
 def grabfromdict(dict,cols):
     #print(dict)
-    dataframe=pd.DataFrame()
+    dataframe=pd.DataFrame(dict[cols[0]])
+    i=0
     for col in cols:
-        coldata=[]
-        for v in dict[col]:
-            coldata.append(v)
-        dataframe[col] = coldata
+        if i > 0:
+            coldata=[]
+            for v in dict[col]:
+                coldata.append(v)
+            dataframe[col] = coldata
     return dataframe
 
 
