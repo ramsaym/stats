@@ -208,7 +208,7 @@ def joinsql(sqlstruct,col):
 def subquery(sqldict):
     #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
-    sqldf = pd.DataFrame(sqldict.items(), columns=['cols','tnum'])
+    sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
     print(sqldf)
     sql1=''
     j=1
@@ -219,7 +219,7 @@ def subquery(sqldict):
         omissionqueue=[]
         #cols are on the order of tables * cols
         grouped = sqldf.groupby('tnum')
-        for name, group in grouped.items():
+        for name, group in grouped:
             print(grouped)
         #for i in range(len(sqlstruct['cols'])):
             #col = sqlstruct['cols'][i]
