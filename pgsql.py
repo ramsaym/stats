@@ -205,10 +205,25 @@ def joinsql(sqlstruct,col):
             sqlj = sqlj + f'{_and}tbl{i}.{col}{i}::numeric = tbl{i+1}.{col}{i+1}::numeric'
     return sqlj
 
+
+def grabfromdict(dict,cols):
+    dataframe=pd.DataFrame()
+    for col in cols:
+        #json=f'\{\"{col}\":[]\}'
+        colname = col
+        #colstruct = {colname: {'email': 'john@example.com', 'age': 30}}
+        coldata=[]
+        for k,v in dict[col]:
+            coldata.append(v)
+        dataframe[col] = coldata
+    return dataframe
+
+
 def subquery(sqldict):
     #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
-    sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
+    sqldf = grabfromdict(sqldict,['cols','tnum'])
+    #sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
     print(sqldf)
     sql1=''
     j=1
