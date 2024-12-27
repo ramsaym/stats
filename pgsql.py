@@ -209,6 +209,7 @@ def subquery(sqldict):
     #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
     sqldf = pd.DataFrame(sqldict.items(), columns=['cols','tnum'])
+    print(sqldf)
     sql1=''
     j=1
     #unique tables n = 1-10 on average
@@ -218,8 +219,8 @@ def subquery(sqldict):
         omissionqueue=[]
         #cols are on the order of tables * cols
         grouped = sqldf.groupby('tnum')
-        print(grouped)
         for name, group in grouped:
+            print(grouped)
         #for i in range(len(sqlstruct['cols'])):
             #col = sqlstruct['cols'][i]
             #tnumcol = sqlstruct['tnum'][i]
