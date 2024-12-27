@@ -207,13 +207,11 @@ def joinsql(sqlstruct,col):
 
 
 def grabfromdict(dict,cols):
-    print(dict)
+    #print(dict)
     dataframe=pd.DataFrame()
     for col in cols:
-        #json=f'\{\"{col}\":[]\}'
-        colname = col
-        #colstruct = {colname: {'email': 'john@example.com', 'age': 30}}
         coldata=[]
+        print(dict[col])
         for k,v in dict[col]:
             coldata.append(v)
         dataframe[col] = coldata
