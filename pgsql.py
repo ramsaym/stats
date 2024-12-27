@@ -211,8 +211,7 @@ def grabfromdict(dict,cols):
     dataframe=pd.DataFrame()
     for col in cols:
         coldata=[]
-        print(dict[col])
-        for k,v in dict[col]:
+        for v in dict[col]:
             coldata.append(v)
         dataframe[col] = coldata
     return dataframe
