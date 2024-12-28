@@ -206,9 +206,9 @@ def joinsql(sqlstruct,col):
     return sqlj
 
 
-def grabfromdict(dict,cols):
+def grabfromdict(dict,cols,ind):
     #print(dict)
-    dataframe=pd.DataFrame(dict[cols[0]], index=True)
+    dataframe=pd.DataFrame(dict[cols[0]], index=ind)
     i=0
     for col in cols:
         if i > 0:
@@ -222,7 +222,7 @@ def grabfromdict(dict,cols):
 def subquery(sqldict):
     #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
-    sqldf = grabfromdict(sqldict,['cols','tnum'])
+    sqldf = grabfromdict(sqldict,['cols','tnum'],'tnum')
     #sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
     print(sqldf)
     sql1=''
