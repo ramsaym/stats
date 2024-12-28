@@ -206,7 +206,7 @@ def joinsql(sqlstruct,col):
     return sqlj
 
 
-def grabfromdict(dict,cols,ind):
+def dataframefromdict(dict,cols):
     print(dict)
     #dataframe=pd.DataFrame(columns=cols)
     #df = pd.DataFrame(zip(arrayA, arrayB, arrayC), columns=['AA','NN','gg'])
@@ -216,9 +216,9 @@ def grabfromdict(dict,cols,ind):
         coldata=[]
         for v in dict[col]:
             coldata.append(v)
-        
+        datastore.append(coldata)
     #datastore.append(coldata)
-    dataframe=pd.DataFrame(coldata,columns=cols)
+    dataframe=pd.DataFrame(datastore,columns=cols)
     #dataframe[[col]] = coldata
     #dataframe=pd.DataFrame(dict[cols[0]],)
     return dataframe
@@ -227,7 +227,7 @@ def grabfromdict(dict,cols,ind):
 def subquery(sqldict):
     #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
-    sqldf = grabfromdict(sqldict,['cols','tnum'],'tnum')
+    sqldf = dataframefromdict(sqldict,['cols','tnum'])
     #sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
     print(sqldf)
     sql1=''
