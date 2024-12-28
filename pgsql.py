@@ -216,9 +216,9 @@ def grabfromdict(dict,cols,ind):
         coldata=[]
         for v in dict[col]:
             coldata.append(v)
-        #datastore.append(coldata)
-        dataframe[col] = coldata
-    
+        
+    #datastore.append(coldata)
+    dataframe[[col]] = coldata
     #dataframe=pd.DataFrame(dict[cols[0]],)
     return dataframe
 
