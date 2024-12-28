@@ -241,7 +241,7 @@ def subquery(sqldict):
         #cols are on the order of tables * cols
         grouped = sqldf.groupby('tnum')
         for name, group in grouped:
-            print(grouped)
+            #print(grouped)
         #for i in range(len(sqlstruct['cols'])):
             #col = sqlstruct['cols'][i]
             #tnumcol = sqlstruct['tnum'][i]
