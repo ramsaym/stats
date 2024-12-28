@@ -208,7 +208,7 @@ def joinsql(sqlstruct,col):
 
 def grabfromdict(dict,cols,ind):
     print(dict)
-    dataframe=pd.DataFrame(columns=cols)
+    #dataframe=pd.DataFrame(columns=cols)
     #df = pd.DataFrame(zip(arrayA, arrayB, arrayC), columns=['AA','NN','gg'])
     i=0
     datastore=[]
@@ -218,7 +218,8 @@ def grabfromdict(dict,cols,ind):
             coldata.append(v)
         
     #datastore.append(coldata)
-    dataframe[[col]] = coldata
+    dataframe=pd.DataFrame(coldata,columns=cols)
+    #dataframe[[col]] = coldata
     #dataframe=pd.DataFrame(dict[cols[0]],)
     return dataframe
 
