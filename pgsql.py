@@ -222,7 +222,7 @@ def grabfromdict(dict,cols):
 def subquery(sqldict):
     #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
-    sqldf = grabfromdict(sqldict,['cols','tnum'])
+    sqldf = grabfromdict(sqldict,['cols','tnum']).set_index('tnum')
     #sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
     print(sqldf)
     sql1=''
