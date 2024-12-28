@@ -208,7 +208,7 @@ def joinsql(sqlstruct,col):
 
 def grabfromdict(dict,cols,ind):
     #print(dict)
-    dataframe=pd.DataFrame(dict[cols[0]], index=ind)
+    dataframe=pd.DataFrame(dict[cols[0]], index=[ind])
     i=0
     for col in cols:
         if i > 0:
