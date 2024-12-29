@@ -237,7 +237,7 @@ def subquery(sqldict):
         for name, group in grouped:
             # tnumloop=name
             #col=group
-            print(group)
+            print(group.col)
             #tnum=group['tnum']
             #print(f'{col} - {tnum}')
             #print(name)
