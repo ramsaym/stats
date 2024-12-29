@@ -206,19 +206,20 @@ def joinsql(sqlstruct,col):
     return sqlj
 
 
-def dataframefromdict(dict):
+def dataframefromdict(dictFieldNamesTableNum):
     i=0
-    print(dict)
+    print(dictFieldNamesTableNum)
     datastore=[]
-    for col in dict:
-        items = col.split(",")
-        col=items[0]
-        tnum=items[1]
-        print(f'---Appending {col} to dataframe')
-        datastore.append(f'[{col},{tnum}]')
+    for sqlchunk in dictFieldNamesTableNum['sqlchunk']:
+        #SQL for each table is passed as one fstring to preserve quotes on tables. we split it by comma to get each col and tnum pair
+        tableCols = sqlchunk.split(",")
+        for tcol in tableCols:
+            print(f'---Appending {col} to dataframe')
+            tnum = dictFieldNamesTableNum['tnum'][i]
+            datastore.append([tcol,tnum])
         i+=1
     
-    #print(datastore)
+    print(datastore)
     dataframe=pd.DataFrame(datastore,columns=['col','tnum'])
     #dataframe=pd.DataFrame(datastore,columns=cols)
 
