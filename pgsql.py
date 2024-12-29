@@ -234,11 +234,12 @@ def subquery(sqldict):
     omissionqueue=[]
         #cols are on the order of tables * cols
     grouped = sqldf.groupby("tnum")
-    print(tnum.items())
+    
     #name the group number, we iterate by tnum and extract the SQL text
     for name, group in grouped:
         cols=''
         print(f'outer loop run: {name} ')
+        print(grouped.get_group(name))
         # tnumloop=name
         #col=group
         for obj in group.col:
