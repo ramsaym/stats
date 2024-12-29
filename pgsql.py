@@ -213,12 +213,12 @@ def dataframefromdict(dict,cols):
     i=0
     datastore=[]
     for col in cols:
-        coldata=[]
         # for v in dict[col]:
         #     coldata.append(v)
         print(dict[col])
         datastore.append(dict[col])
     #datastore.append(coldata)
+    print(datastore)
     dataframe=pd.DataFrame(datastore,columns=cols)
     #dataframe[[col]] = coldata
     #dataframe=pd.DataFrame(dict[cols[0]],)
@@ -230,7 +230,7 @@ def subquery(sqldict):
     sqldictout = {"subquery":[],"condition":[]}
     sqldf = dataframefromdict(sqldict,['cols','tnum'])
     #sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
-    print(sqldf)
+    #print(sqldf)
     sql1=''
     j=1
     #unique tables n = 1-10 on average
@@ -304,7 +304,7 @@ def packagetablestojoin():
 DEBUG=False
 def entropyBasedViewSQL(QAREGEX):
     tblsdf = packagetablestojoin()
-    print(tblsdf)
+    #print(tblsdf)
     sqldict = {"cols":[],"colstrunk":[],"table":[],"tnum":[]}
     joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
     i=1
@@ -338,7 +338,7 @@ def entropyBasedViewSQL(QAREGEX):
                 sql = sql +  f'{comma}{t}.{c}'
                 sqltrunk = sqltrunk + f'{comma}tbl{i}.{c}'
                 sqldict['tnum'].append(i)
-                print(tblsdf['table'][j] + "= " + t + "tnum: " + str(sqldict['tnum'][j]))
+                #print(tblsdf['table'][j] + "= " + t + "tnum: " + str(sqldict['tnum'][j]))
             j+=1
         print("analyzing " + t)
         sqldict['cols'].append(sql)
