@@ -228,30 +228,30 @@ def subquery(sqldict):
     j=1
     #print(sqldf)
     #unique tables n = 1-10 on average
-    for t in sqldict['table']:
-        tnum=j
-        cols = ''
-        omissionqueue=[]
+    #for t in sqldict['table']:
+        # tnum=j
+        # cols = ''
+    omissionqueue=[]
         #cols are on the order of tables * cols
-        grouped = sqldf.groupby('tnum')
-        for name, group in grouped:
-            print(f'outer loop run: {j} ')
-            # tnumloop=name
-            #col=group
-            for obj in group.col:
-                print(obj)
-                print(name)
-                col=obj
-                tnum=name
-                comma=','
-                if(col not in omissionqueue):
-                    if cols=='':
-                        cols = cols + f'{col}'
-                    else: 
-                        cols = cols + f'{comma}{col}'
-                    omissionqueue.append(col)
+    grouped = sqldf.groupby('tnum')
+    for name, group in grouped:
+        print(f'outer loop run: {name} ')
+        # tnumloop=name
+        #col=group
+        for obj in group.col:
+            print(obj)
+            print(name)
+            col=obj
+            tnum=name
+            comma=','
+            if(col not in omissionqueue):
+                if cols=='':
+                    cols = cols + f'{col}'
+                else: 
+                    cols = cols + f'{comma}{col}'
+                omissionqueue.append(col)
 
-        sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
+        sql1 = sql1 + f'(SELECT {cols} FROM {j}) tbl{tnum}'
         sqldictout['subquery'].append(sql1)
         j+=1
         
