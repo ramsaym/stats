@@ -232,7 +232,7 @@ def subquery(sqldict):
         grouped = sqldf.groupby('tnum')
         for name, group in grouped:
             tnumloop=name
-            col=group['col']
+            col=group['col'].values()
             if(tnumloop == tnum and col not in omissionqueue):
                 comma=','
                 if cols=='':
