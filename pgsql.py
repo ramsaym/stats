@@ -233,7 +233,8 @@ def subquery(sqldict):
         # cols = ''
     omissionqueue=[]
         #cols are on the order of tables * cols
-    grouped = sqldf.groupby(by=["tnum"])
+    grouped = sqldf.groupby("tnum")
+    print(tnum.items())
     #name the group number, we iterate by tnum and extract the SQL text
     for name, group in grouped:
         cols=''
@@ -253,7 +254,7 @@ def subquery(sqldict):
                     cols = cols + f'{comma}{col}'
                 omissionqueue.append(col)
         sql1 = sql1 + f'(SELECT {cols} FROM {j}) tbl{tnum}'
-        print(sql1)
+        #print(sql1)
         sqldictout['subquery'].append(sql1)
         j+=1
     return sqldictout
