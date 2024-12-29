@@ -208,7 +208,7 @@ def joinsql(sqlstruct,col):
 
 def dataframefromdict(dictFieldNamesTableNum):
     i=0
-    print(dictFieldNamesTableNum)
+    #print(dictFieldNamesTableNum)
     datastore=[]
     for sqlchunk in dictFieldNamesTableNum['cols']:
         #SQL for each table is passed as one fstring to preserve quotes on tables. we split it by comma to get each col and tnum pair
@@ -219,7 +219,7 @@ def dataframefromdict(dictFieldNamesTableNum):
             datastore.append([tcol,tnum])
         i+=1
     
-    print(datastore)
+    #print(datastore)
     dataframe=pd.DataFrame(datastore,columns=['col','tnum'])
     #dataframe=pd.DataFrame(datastore,columns=cols)
 
@@ -231,7 +231,7 @@ def subquery(sqldict):
     sqldictout = {"subquery":[],"condition":[]}
     sqldf = dataframefromdict(sqldict)
     #sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
-    #print(sqldf)
+    print(sqldf)
     sql1=''
     j=1
     #unique tables n = 1-10 on average
