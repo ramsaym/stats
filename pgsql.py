@@ -234,7 +234,7 @@ def subquery(sqldict):
         grouped = sqldf.groupby('tnum')
         for name, group in grouped:
             tnumloop=name
-            col=group['col']
+            col=group['tnum']
             #print(col)
             for v in col:
                 if(tnumloop == tnum and v not in omissionqueue):
