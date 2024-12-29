@@ -198,10 +198,12 @@ def joinsql(sqlstruct,col):
     for t in sqlstruct["table"]:
         #if we have 3 tables we need t1.x1=t2.x2 AND t2.x2 = t3.x3 (circe back on this assumption)
         #this prevents the num +1 table reference from overshooting
+        comma=','
         if i< len(sqlstruct["table"]):
             if sqlj=='':
-                _and=''
-            sqlj = sqlj + f'{_and}tbl{i}.{col}{i}::numeric = tbl{i+1}.{col}{i+1}::numeric'
+                sqlj = sqlj + f'tbl{i}.{col}{i}::numeric = tbl{i+1}.{col}{i+1}::numeric'
+            else: 
+                sqlj = sqlj + f'{_and}tbl{i}.{col}{i}::numeric = tbl{i+1}.{col}{i+1}::numeric'
     return sqlj
 
 def dataframefromdict(dictFieldNamesTableNum):
@@ -238,8 +240,9 @@ def subquery(sqldict):
                 if(tnumloop == tnum and v not in omissionqueue):
                     comma=','
                     if cols=='':
-                        comma=''
-                    cols = cols + f'{comma}{v}'
+                        cols = cols + f'{v}'
+                    else: 
+                        cols = cols + f'{comma}{v}'
                     omissionqueue.append(v)
                     #print(omissionqueue)
         sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
