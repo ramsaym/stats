@@ -252,9 +252,9 @@ def subquery(sqldict):
     #         #         omissionqueue.append(v)
     #         #         #print(omissionqueue)
     #         #     i+=1
-    sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
-    sqldictout['subquery'].append(sql1)
-    j+=1
+        # sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
+        # sqldictout['subquery'].append(sql1)
+        # j+=1
         
     return sqldictout
 
