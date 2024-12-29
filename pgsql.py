@@ -214,8 +214,9 @@ def dataframefromdict(dictFieldNamesTableNum):
         tableCols = sqlchunk.split(",")
         for tcol in tableCols:
             #print(f'---Appending {tcol} to dataframe')
-            tnum = dictFieldNamesTableNum['tnum'][i]
-            datastore.append([tcol,i])
+            #tnum = dictFieldNamesTableNum['tnum'][i]
+            #dependency that there is one sql chunk per table so the double loop addressing matches the table number (+1)
+            datastore.append([tcol,i+1])
         i+=1
     dataframe=pd.DataFrame(datastore,columns=['col','tnum'])
     return dataframe
@@ -225,36 +226,36 @@ def subquery(sqldict):
     sqldf = dataframefromdict(sqldict)
     sql1=''
     j=1
-    print(sqldf)
+    #print(sqldf)
     #unique tables n = 1-10 on average
-    # for t in sqldict['table']:
-    #     tnum=j
-    #     cols = ''
-    #     omissionqueue=[]
-    #     #cols are on the order of tables * cols
-    #     grouped = sqldf.groupby('tnum')
-    #     for group in grouped:
-    #         # tnumloop=name
-    #         #col=group
-    #         print(group)
-    #         #tnum=group['tnum']
-    #         #print(f'{col} - {tnum}')
-    #         #print(name)
-    #         # #print(col)
-    #         # i=0
-    #         # for v in col:
-    #         #     if(tnumloop == tnum and v not in omissionqueue):
-    #         #         comma=','
-    #         #         if cols=='':
-    #         #             cols = cols + f'{v}'
-    #         #         else: 
-    #         #             cols = cols + f'{comma}{v}'
-    #         #         omissionqueue.append(v)
-    #         #         #print(omissionqueue)
-    #         #     i+=1
-        # sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
-        # sqldictout['subquery'].append(sql1)
-        # j+=1
+    for t in sqldict['table']:
+        tnum=j
+        cols = ''
+        omissionqueue=[]
+        #cols are on the order of tables * cols
+        grouped = sqldf.groupby('tnum')
+        for name, group in grouped:
+            # tnumloop=name
+            #col=group
+            print(group)
+            #tnum=group['tnum']
+            #print(f'{col} - {tnum}')
+            #print(name)
+            # #print(col)
+            # i=0
+            # for v in col:
+            #     if(tnumloop == tnum and v not in omissionqueue):
+            #         comma=','
+            #         if cols=='':
+            #             cols = cols + f'{v}'
+            #         else: 
+            #             cols = cols + f'{comma}{v}'
+            #         omissionqueue.append(v)
+            #         #print(omissionqueue)
+            #     i+=1
+        sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
+        sqldictout['subquery'].append(sql1)
+        j+=1
         
     return sqldictout
 
