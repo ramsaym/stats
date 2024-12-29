@@ -234,8 +234,9 @@ def subquery(sqldict):
         grouped = sqldf.groupby('tnum')
         for group in grouped:
             # tnumloop=name
-            col=group
-            tnum=group['tnum']
+            #col=group
+            print(group)
+            #tnum=group['tnum']
             print(f'{col} - {tnum}')
             #print(name)
             # #print(col)
