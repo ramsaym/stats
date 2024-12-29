@@ -362,4 +362,4 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
     dsqlj = joinsql(sqldict,"dd")
     qryRaw = qryRaw + f'{xsqlj} AND {ysqlj} AND {yrsqlj} AND {dsqlj}'
     qry = sqlalchemy.text(qryRaw)
-    print(qry)
+    #print(qry)
