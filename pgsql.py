@@ -234,10 +234,13 @@ def subquery(sqldict):
         grouped = sqldf.groupby('tnum')
         for name, group in grouped:
             tnumloop=name
-            col=group['tnum']
+            col=group['col']
+            tnum=group['tnum']
             #print(col)
-            for v in col:
-                if(tnumloop == tnum and v not in omissionqueue):
+            i=0
+            for k in tnum:
+                v=col[i]
+                if(v not in omissionqueue):
                     comma=','
                     if cols=='':
                         cols = cols + f'{v}'
@@ -245,6 +248,7 @@ def subquery(sqldict):
                         cols = cols + f'{comma}{v}'
                     omissionqueue.append(v)
                     #print(omissionqueue)
+                i+=1
         sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
         sqldictout['subquery'].append(sql1)
         j+=1
