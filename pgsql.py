@@ -243,8 +243,8 @@ def subquery(sqldict):
         # tnumloop=name
         #col=group
         for obj in grouped.get_group(name)['col']:
-            print(obj)
-            print(name)
+            # print(obj)
+            # print(name)
             col=obj
             tnum=name
             comma=','
