@@ -214,7 +214,7 @@ def dataframefromdict(dictFieldNamesTableNum):
         #SQL for each table is passed as one fstring to preserve quotes on tables. we split it by comma to get each col and tnum pair
         tableCols = sqlchunk.split(",")
         for tcol in tableCols:
-            print(f'---Appending {tcol} to dataframe')
+            #print(f'---Appending {tcol} to dataframe')
             tnum = dictFieldNamesTableNum['tnum'][i]
             datastore.append([tcol,tnum])
         i+=1
@@ -254,7 +254,7 @@ def subquery(sqldict):
                     comma=''
                 cols = cols + f'{comma}{col}'
                 omissionqueue.append(col)
-                print(omissionqueue)
+                #print(omissionqueue)
         sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
         sqldictout['subquery'].append(sql1)
         j+=1
