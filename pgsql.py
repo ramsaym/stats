@@ -235,26 +235,22 @@ def subquery(sqldict):
         #cols are on the order of tables * cols
         grouped = sqldf.groupby('tnum')
         for name, group in grouped:
+            print(f'outer loop run: {} ')
             # tnumloop=name
             #col=group
             for obj in group.col:
                 print(obj)
                 print(name)
-            #tnum=group['tnum']
-            #print(f'{col} - {tnum}')
-            #print(name)
-            # #print(col)
-            # i=0
-            # for v in col:
-            #     if(tnumloop == tnum and v not in omissionqueue):
-            #         comma=','
-            #         if cols=='':
-            #             cols = cols + f'{v}'
-            #         else: 
-            #             cols = cols + f'{comma}{v}'
-            #         omissionqueue.append(v)
-            #         #print(omissionqueue)
-            #     i+=1
+                col=obj
+                tnum=name
+                comma=','
+                if(col not in omissionqueue):
+                    if cols=='':
+                        cols = cols + f'{col}'
+                    else: 
+                        cols = cols + f'{comma}{col}'
+                    omissionqueue.append(col)
+
         sql1 = sql1 + f'(SELECT {cols} FROM {t}) tbl{tnum}'
         sqldictout['subquery'].append(sql1)
         j+=1
