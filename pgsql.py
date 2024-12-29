@@ -211,7 +211,6 @@ def dataframefromdict(dict,cols):
     datastore=[]
     for col in cols:
         print(f'---Appending {col} to dataframe')
-        print(dict[col][0])
         datastore.append(dict[col])
     dataframe=pd.DataFrame(datastore,columns=cols)
 
@@ -344,7 +343,7 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=True):
         print(sqldict)
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
-    subq = subquery(sqldict)
+    subq = subquery(sqldict[0])
     #now we have a collection of ready to go selects    
     for sv in subq['subquery']:
         s=''
