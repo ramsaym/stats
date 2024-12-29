@@ -247,7 +247,7 @@ def subquery(sqldict):
             #col = sqlstruct['cols'][i]
             #tnumcol = sqlstruct['tnum'][i]
             tnumloop=name
-            col=group['cols']
+            col=group['col']
             if(tnumloop == tnum and col not in omissionqueue):
                 comma=','
                 if cols=='':
