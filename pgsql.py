@@ -207,12 +207,10 @@ def joinsql(sqlstruct,col):
 
 
 def dataframefromdict(dict,cols):
-    #print(dict)
-    #dataframe=pd.DataFrame(columns=cols)
-    #df = pd.DataFrame(zip(arrayA, arrayB, arrayC), columns=['AA','NN','gg'])
     i=0
     datastore=[]
     for col in cols:
+        print(f'---Appending {col} to dataframe')
         datastore.append(dict[col])
     dataframe=pd.DataFrame(datastore,columns=cols)
 
