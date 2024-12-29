@@ -211,6 +211,7 @@ def dataframefromdict(dict,cols):
     datastore=[]
     for col in cols:
         print(f'---Appending {col} to dataframe')
+        print(dict[col][0])
         datastore.append(dict[col])
     dataframe=pd.DataFrame(datastore,columns=cols)
 
