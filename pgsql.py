@@ -206,14 +206,17 @@ def joinsql(sqlstruct,col):
     return sqlj
 
 
-def dataframefromdict(dict,cols):
+def dataframefromdict(dict):
     i=0
     datastore=[]
-    for col in cols:
+    for col in dict:
+        items = col.split(",")
+        col=items[0]
+        tnum=items[1]
         print(f'---Appending {col} to dataframe')
         item=dict[col][i]
         print(item)
-        datastore.append(item)
+        datastore.append(f'[{col},{tnum}]')
         i+=1
     
     print(datastore)
@@ -225,7 +228,7 @@ def dataframefromdict(dict,cols):
 def subquery(sqldict):
     #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
-    sqldf = dataframefromdict(sqldict,['cols','tnum'])
+    sqldf = dataframefromdict(sqldict['cols'])
     #sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
     #print(sqldf)
     sql1=''
@@ -334,11 +337,11 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
                     comma=''
                 sql = sql +  f'{comma}{t}.{c}'
                 sqltrunk = sqltrunk + f'{comma}tbl{i}.{c}'
-                sqldict['tnum'][i]=i
+                #sqldict['tnum'].append(i)
                 #print(tblsdf['table'][j] + "= " + t + "tnum: " + str(sqldict['tnum'][j]))
             j+=1
         print("analyzing " + t)
-        sqldict['cols'].append(sql)
+        sqldict['cols'].append(f'[{sql},{i}]')
         sqldict['colstrunk'].append(sqltrunk)
         sqldict['table'].append(t)
         
