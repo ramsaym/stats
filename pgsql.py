@@ -208,6 +208,7 @@ def joinsql(sqlstruct,col):
 
 def dataframefromdict(dict):
     i=0
+    print(dict)
     datastore=[]
     for col in dict:
         items = col.split(",")
