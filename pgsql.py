@@ -234,7 +234,7 @@ def subquery(sqldict):
             tnumloop=name
             col=group['col']
             #print(col)
-            for k,v in col:
+            for v in col:
                 if(tnumloop == tnum and col not in omissionqueue):
                     comma=','
                     if cols=='':
