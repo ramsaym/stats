@@ -215,7 +215,7 @@ def dataframefromdict(dictFieldNamesTableNum):
         for tcol in tableCols:
             #print(f'---Appending {tcol} to dataframe')
             tnum = dictFieldNamesTableNum['tnum'][i]
-            datastore.append([tcol,tnum])
+            datastore.append([tcol,i])
         i+=1
     dataframe=pd.DataFrame(datastore,columns=['col','tnum'])
     return dataframe
