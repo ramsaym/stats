@@ -214,8 +214,6 @@ def dataframefromdict(dict):
         col=items[0]
         tnum=items[1]
         print(f'---Appending {col} to dataframe')
-        item=dict[col][i]
-        print(item)
         datastore.append(f'[{col},{tnum}]')
         i+=1
     
