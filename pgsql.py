@@ -215,7 +215,7 @@ def dataframefromdict(dict,cols):
     for col in cols:
         # for v in dict[col]:
         #     coldata.append(v)
-        print(dict[col])
+        #print(dict[col])
         datastore.append(dict[col])
     #datastore.append(coldata)
     print(datastore)
