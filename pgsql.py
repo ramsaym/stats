@@ -242,7 +242,7 @@ def subquery(sqldict):
         print(grouped.get_group(name))
         # tnumloop=name
         #col=group
-        for obj in group.col:
+        for obj in grouped.get_group(name):
             #print(obj)
             #print(name)
             col=obj
@@ -255,7 +255,7 @@ def subquery(sqldict):
                     cols = cols + f'{comma}{col}'
                 omissionqueue.append(col)
         sql1 = sql1 + f'(SELECT {cols} FROM {j}) tbl{tnum}'
-        #print(sql1)
+        print(sql1)
         sqldictout['subquery'].append(sql1)
         j+=1
     return sqldictout
