@@ -235,7 +235,7 @@ def subquery(sqldict):
             col=group['col']
             #print(col)
             for v in col:
-                if(tnumloop == tnum and col not in omissionqueue):
+                if(tnumloop == tnum and v not in omissionqueue):
                     comma=','
                     if cols=='':
                         comma=''
