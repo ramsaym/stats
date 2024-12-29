@@ -234,29 +234,28 @@ def subquery(sqldict):
     omissionqueue=[]
         #cols are on the order of tables * cols
     grouped = sqldf.groupby('tnum')
+    #name the group number, we iterate by tnum and extract the SQL text
     for name, group in grouped:
         cols=''
         print(f'outer loop run: {name} ')
         # tnumloop=name
         #col=group
         for obj in group.col:
-            print(obj)
-            print(name)
+            #print(obj)
+            #print(name)
             col=obj
             tnum=name
             comma=','
-
             if(col not in omissionqueue):
                 if cols=='':
                     cols = cols + f'{col}'
                 else: 
                     cols = cols + f'{comma}{col}'
                 omissionqueue.append(col)
-
         sql1 = sql1 + f'(SELECT {cols} FROM {j}) tbl{tnum}'
+        print(sql1)
         sqldictout['subquery'].append(sql1)
         j+=1
-        
     return sqldictout
 
 #---COMMON FUNCTIONS SPECIFIC TO VIEW CREATION
