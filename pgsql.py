@@ -73,7 +73,6 @@ def sqlregexfilters(inputStr):
         i+=1
     return SQLpairStr
 
-
 def populatecolumnmappingsdict(colmaps,pydict):
     i=1 #important for modulus conditional
     for val in colmaps.split(","):
@@ -205,10 +204,8 @@ def joinsql(sqlstruct,col):
             sqlj = sqlj + f'{_and}tbl{i}.{col}{i}::numeric = tbl{i+1}.{col}{i+1}::numeric'
     return sqlj
 
-
 def dataframefromdict(dictFieldNamesTableNum):
     i=0
-    #print(dictFieldNamesTableNum)
     datastore=[]
     for sqlchunk in dictFieldNamesTableNum['cols']:
         #SQL for each table is passed as one fstring to preserve quotes on tables. we split it by comma to get each col and tnum pair
@@ -218,20 +215,12 @@ def dataframefromdict(dictFieldNamesTableNum):
             tnum = dictFieldNamesTableNum['tnum'][i]
             datastore.append([tcol,tnum])
         i+=1
-    
-    #print(datastore)
     dataframe=pd.DataFrame(datastore,columns=['col','tnum'])
-    #dataframe=pd.DataFrame(datastore,columns=cols)
-
     return dataframe
 
-
 def subquery(sqldict):
-    #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
     sqldf = dataframefromdict(sqldict)
-    #sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
-    print(sqldf)
     sql1=''
     j=1
     #unique tables n = 1-10 on average
@@ -242,10 +231,6 @@ def subquery(sqldict):
         #cols are on the order of tables * cols
         grouped = sqldf.groupby('tnum')
         for name, group in grouped:
-            #print(grouped)
-        #for i in range(len(sqlstruct['cols'])):
-            #col = sqlstruct['cols'][i]
-            #tnumcol = sqlstruct['tnum'][i]
             tnumloop=name
             col=group['col']
             if(tnumloop == tnum and col not in omissionqueue):
@@ -260,7 +245,6 @@ def subquery(sqldict):
         j+=1
         
     return sqldictout
-
 
 #---COMMON FUNCTIONS SPECIFIC TO VIEW CREATION
 def sqlregexfilters(inputStr):
@@ -287,7 +271,6 @@ def sqlregexfilters(inputStr):
         i+=1
     return SQLpairStr
 
-
 def packagetablestojoin():
     #this is to mimic piping in results from the stats.py discovery component of code. can be direct or api structured
     hientcols = gethighentropycolumns()
@@ -301,7 +284,6 @@ def packagetablestojoin():
         tables['col'].append(col)
         i +=1
     return pd.DataFrame(tables)
-
 
 def entropyBasedViewSQL(QAREGEX,DEBUG=False):
     tblsdf = packagetablestojoin()
