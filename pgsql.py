@@ -235,7 +235,7 @@ def subquery(sqldict):
         #cols are on the order of tables * cols
         grouped = sqldf.groupby('tnum')
         for name, group in grouped:
-            print(f'outer loop run: {} ')
+            print(f'outer loop run: {j} ')
             # tnumloop=name
             #col=group
             for obj in group.col:
