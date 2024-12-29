@@ -218,7 +218,7 @@ def dataframefromdict(dict):
         datastore.append(f'[{col},{tnum}]')
         i+=1
     
-    print(datastore)
+    #print(datastore)
     dataframe=pd.DataFrame(datastore,columns=['col','tnum'])
     #dataframe=pd.DataFrame(datastore,columns=cols)
 
@@ -228,7 +228,7 @@ def dataframefromdict(dict):
 def subquery(sqldict):
     #print(sqlmapdict)
     sqldictout = {"subquery":[],"condition":[]}
-    sqldf = dataframefromdict(sqldict['cols'])
+    sqldf = dataframefromdict(sqldict)
     #sqldf = pd.DataFrame(sqldict, columns=['cols','tnum'])
     #print(sqldf)
     sql1=''
