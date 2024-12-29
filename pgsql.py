@@ -302,7 +302,7 @@ def packagetablestojoin():
     return pd.DataFrame(tables)
 
 
-def entropyBasedViewSQL(QAREGEX,DEBUG=True):
+def entropyBasedViewSQL(QAREGEX,DEBUG=False):
     tblsdf = packagetablestojoin()
     #print(tblsdf)
     sqldict = {"cols":[],"colstrunk":[],"table":[],"tnum":[]}
