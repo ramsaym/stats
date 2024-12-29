@@ -232,12 +232,12 @@ def subquery(sqldict):
         omissionqueue=[]
         #cols are on the order of tables * cols
         grouped = sqldf.groupby('tnum')
-        for name, group in grouped:
+        for group in grouped:
             # tnumloop=name
             col=group['col']
             tnum=group['tnum']
             #print(f'{col} - {tnum}')
-            print(name)
+            #print(name)
             # #print(col)
             # i=0
             # for v in col:
