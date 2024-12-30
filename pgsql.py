@@ -239,6 +239,7 @@ def subquery(sqldict):
     for name, group in grouped:
         cols=''
         sql1=''
+        tablename = sqldict["table"][j-1]
         #print(f'outer loop run: {name} ')
         #print(grouped.get_group(name))
         # tnumloop=name
@@ -253,7 +254,7 @@ def subquery(sqldict):
                 cols = cols + f'{col}'
             else: 
                 cols = cols + f'{comma}{col}'
-        sql1 = sql1 + f'(SELECT {cols} FROM {sqldict["table"][j]}) tbl{tnum}'
+        sql1 = sql1 + f'(SELECT {cols} FROM {tablename}) tbl{tnum}'
         print(sql1)
         sqldictout['subquery'].append(sql1)
         j+=1
