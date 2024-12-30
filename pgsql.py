@@ -260,7 +260,7 @@ def packagetablestojoin():
         #if column name has a period in in take it too. assume the first dot separates table from col
         if len(bits) >2:
             for i in range(len(bits)-2):
-                col = col + bits[i+2]
+                col = col + "." + bits[i+2]
         else:
             col = bits[1]
         tables['col'].append(col)
