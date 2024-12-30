@@ -273,6 +273,7 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
     joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
     i=1
     comma=','
+    collision=[]
     #strip as much meta data as possible
     for t in tblsdf['table'].unique():
         #tbl1col sequence
@@ -301,8 +302,11 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
                 if(sql==''):
                     comma=''
                 sql = sql +  f'{comma}{t}.{c}'
-                sqltrunk = sqltrunk + f'{comma}tbl{i}.{c}'
+                #sql trunk cols (resultant columns) have to be unique whereas individual selects can have same column names
+                if (c not in collision):
+                    sqltrunk = sqltrunk + f'{comma}tbl{i}.{c}'
                 sqldict['tnum'].append(i)
+                collision.append(c)
                 #print(tblsdf['table'][j] + "= " + t + "tnum: " + str(sqldict['tnum'][j]))
             j+=1
         print("analyzing " + t)

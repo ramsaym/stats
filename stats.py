@@ -125,7 +125,7 @@ if INSTANCE_CONNECTION_NAME != -999:
     threshold=.1
     if (BYPASS=='no'):
         interestingcolumns = scanPredicateTables(testtbl,engine,threshold)
-        df = pd.DataFrame(interestingcolumns)
+        targetdf = pd.DataFrame(interestingcolumns)
         print(f'Columns meeting entropic threshold of: {threshold}')
         print(df.sort_values('ent'))
         dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
@@ -139,12 +139,12 @@ if INSTANCE_CONNECTION_NAME != -999:
 ###########################################    
 #####CSV Random Forest Classification APP
 else: 
-    interestingcolumns = pd.read_csv(datafile)
+    targetdf = pd.read_csv(datafile)
     mode=1
 
-print(interestingcolumns.columns)
+print(targetdf.columns)
 #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-ftrain = interestingcolumns.loc[interestingcolumns['_RootC_kgC/ha'] > 0, :]
+ftrain = targetdf.loc[targetdf['_RootC_kgC/ha'] > 0, :]
 cfg = f'{CFKEY}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
