@@ -253,7 +253,7 @@ def subquery(sqldict):
                 cols = cols + f'{col}'
             else: 
                 cols = cols + f'{comma}{col}'
-        sql1 = sql1 + f'(SELECT {cols} FROM {j}) tbl{tnum}'
+        sql1 = sql1 + f'(SELECT {cols} FROM {sqldict["table"][j]}) tbl{tnum}'
         print(sql1)
         sqldictout['subquery'].append(sql1)
         j+=1
