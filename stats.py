@@ -124,20 +124,18 @@ enttable = ['entropy']
 if INSTANCE_CONNECTION_NAME != -999:
     threshold=.1
     if (BYPASS=='no'):
-        interestingcolumns = scanPredicateTables(enttable,engine,threshold)
+        interestingcolumns = scanPredicateTables(testtbl,engine,threshold)
         df = pd.DataFrame(interestingcolumns)
         print(f'Columns meeting entropic threshold of: {threshold}')
         print(df.sort_values('ent'))
         dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
-        print("Copy this into View SQL: ")
+        print("SQL Table.Col References: ")
         print(interestingcolumns['sql'])
     else:
         entropyBasedViewSQL(QAREGEX)
-
-    #print(interestingcolumns)
-    #train_all = pd.read_sql('SELECT int_column, date_column FROM test_data', engine)
+        exit(0) 
     mode=0
-    exit(0)    
+       
 ###########################################    
 #####CSV Random Forest Classification APP
 else: 
@@ -146,7 +144,7 @@ else:
 
 print(interestingcolumns.columns)
 #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-ftrain = interestingcolumns.loc[interestingcolumns['Crop 1.23_RootC'] > 0, :]
+ftrain = interestingcolumns.loc[interestingcolumns['_RootC_kgC/ha'] > 0, :]
 cfg = f'{CFKEY}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
