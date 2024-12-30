@@ -120,10 +120,11 @@ engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
 ###PGSQL ENTROPY APP
 dailytables = ['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1','Day_CO2_1']
 testtbl = ['Day_CO2_1']
+enttable = ['entropy']
 if INSTANCE_CONNECTION_NAME != -999:
     threshold=.1
     if (BYPASS=='no'):
-        interestingcolumns = scanPredicateTables(dailytables,engine,threshold)
+        interestingcolumns = scanPredicateTables(enttable,engine,threshold)
         df = pd.DataFrame(interestingcolumns)
         print(f'Columns meeting entropic threshold of: {threshold}')
         print(df.sort_values('ent'))
@@ -140,11 +141,12 @@ if INSTANCE_CONNECTION_NAME != -999:
 ###########################################    
 #####CSV Random Forest Classification APP
 else: 
-    train_all = pd.read_csv(datafile)
+    interestingcolumns = pd.read_csv(datafile)
     mode=1
-print(train_all.columns)
+
+print(interestingcolumns.columns)
 #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-ftrain = train_all.loc[train_all['Crop 1.23_RootC'] > 0, :]
+ftrain = interestingcolumns.loc[interestingcolumns['Crop 1.23_RootC'] > 0, :]
 cfg = f'{CFKEY}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
