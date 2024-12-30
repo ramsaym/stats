@@ -272,6 +272,7 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
     sqldict = {"cols":[],"colstrunk":[],"table":[],"tnum":[]}
     joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
     i=1
+    comma=','
     #strip as much meta data as possible
     for t in tblsdf['table'].unique():
         #tbl1col sequence
@@ -307,13 +308,17 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
         print("analyzing " + t)
         sqldict['cols'].append(sql)
         sqldict['colstrunk'].append(sqltrunk)
-        sqldict['table'].append(t)
-        
+        sqldict['table'].append(t)        
         i +=1
-    trunkcols = sqldict['colstrunk']
+
     if DEBUG:
         print(sqldict)
-    qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {sqltrunk} FROM'
+    #redundant as is looped above. but workable if function is split in two ultimately
+    trunksql = ''
+    for colset in sqldict['colstrunk']:
+        if (trunksql==''):
+            trunksql = trunksql + f'{colset}'
+    qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunksql} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
     subq = subquery(sqldict)
     #now we have a collection of ready to go selects    
