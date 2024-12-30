@@ -248,26 +248,27 @@ def subquery(sqldict,DEBUG=False):
         i+=1
     return sqldictout
 
-def packagetablestojoin():
+def packageSQLTableColTuples():
     #this is to mimic piping in results from the stats.py discovery component of code. can be direct or api structured
+    #the input string is a preformatted list of "table"."columnname" f strings requiring parsing by delim
     hientcols = highentropycolumns()
     tables={"table":[],"col":[]}
     i=0
     for obj in hientcols:
         bits = obj.split('.')
         table = bits[0]
-        tables['table'].append(table)
         #if column name has a period in in take it too. assume the first dot separates table from col
         col = bits[1]
         if(len(bits)>2):
             print(f'Kicking out: {obj} due to invalid chars')
         else:
+            tables['table'].append(table)
             tables['col'].append(col)
         i +=1
     return pd.DataFrame(tables)
 
 def entropyBasedViewSQL(QAREGEX,DEBUG=False):
-    tblsdf = packagetablestojoin()
+    tblsdf = packageSQLTableColTuples()
     #print(tblsdf)
     sqldict = {"cols":[],"colstrunk":[],"table":[],"tnum":[]}
     joinmap = {"x":[],"y":[],"dd":[],"yyyy":[]}
