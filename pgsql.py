@@ -309,7 +309,7 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
         sqldict['cols'].append(sql)
         sqldict['colstrunk'].append(sqltrunk)
         sqldict['table'].append(t)        
-        i +=1
+        i+=1
 
     if DEBUG:
         print(sqldict)
@@ -318,6 +318,9 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
     for colset in sqldict['colstrunk']:
         if (trunksql==''):
             trunksql = trunksql + f'{colset}'
+        else:
+            trunksql = trunksql + f'{comma}{colset}'
+
     qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunksql} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
     subq = subquery(sqldict)
