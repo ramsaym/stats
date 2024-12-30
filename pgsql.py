@@ -314,8 +314,9 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
     subq = subquery(sqldict)
     #now we have a collection of ready to go selects    
+    s=''
     for sv in subq['subquery']:
-        s=''
+        
         if (s==''):
             qryRaw = qryRaw + sv
         else:
