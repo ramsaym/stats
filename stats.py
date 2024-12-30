@@ -127,8 +127,8 @@ if INSTANCE_CONNECTION_NAME != -999:
         interestingcolumns = scanPredicateTables(testtbl,engine,threshold)
         targetdf = pd.DataFrame(interestingcolumns)
         print(f'Columns meeting entropic threshold of: {threshold}')
-        print(df.sort_values('ent'))
-        dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
+        print(targetdf.sort_values('ent',ascending=False))
+        dfToCsvCloud(targetdf,"gs://agiot/stats",VERBOSE=True)
         print("SQL Table.Col References: ")
         print(interestingcolumns['sql'])
     else:
