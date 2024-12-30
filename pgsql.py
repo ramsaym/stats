@@ -313,7 +313,7 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
     trunkcols = sqldict['colstrunk']
     if DEBUG:
         print(sqldict)
-    qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {trunkcols} FROM'
+    qryRaw = f'CREATE MATERIALIZED VIEW public.entropy TABLESPACE pg_default AS SELECT {sqltrunk} FROM'
     #sqlview['trunk'] = f'(SELECT {trunkcols} FROM'
     subq = subquery(sqldict)
     #now we have a collection of ready to go selects    
