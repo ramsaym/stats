@@ -224,7 +224,7 @@ def dataframefromdict(dictFieldNamesTableNum):
 def subquery(sqldict):
     sqldictout = {"subquery":[],"condition":[]}
     sqldf = dataframefromdict(sqldict)
-    sql1=''
+    
     j=1
     #print(sqldf)
     #unique tables n = 1-10 on average
@@ -238,6 +238,7 @@ def subquery(sqldict):
     #name the group number, we iterate by tnum and extract the SQL text
     for name, group in grouped:
         cols=''
+        sql1=''
         #print(f'outer loop run: {name} ')
         #print(grouped.get_group(name))
         # tnumloop=name
@@ -248,12 +249,10 @@ def subquery(sqldict):
             col=obj
             tnum=name
             comma=','
-            if(col not in omissionqueue):
-                if cols=='':
-                    cols = cols + f'{col}'
-                else: 
-                    cols = cols + f'{comma}{col}'
-                omissionqueue.append(col)
+            if cols=='':
+                cols = cols + f'{col}'
+            else: 
+                cols = cols + f'{comma}{col}'
         sql1 = sql1 + f'(SELECT {cols} FROM {j}) tbl{tnum}'
         print(sql1)
         sqldictout['subquery'].append(sql1)
