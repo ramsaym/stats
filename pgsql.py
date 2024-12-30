@@ -54,6 +54,7 @@ def sqlregexfilters(inputStr):
     last=0
     i=0
     SQLpairStr=''
+    #e.g. 'Day,Year:[0-9],[0-9]'
     qacols = inputStr.split(":")[0]
     regexs = inputStr.split(":")[1]
     #print(regexs)
@@ -221,29 +222,16 @@ def dataframefromdict(dictFieldNamesTableNum):
     dataframe=pd.DataFrame(datastore,columns=['col','tnum'])
     return dataframe
 
-def subquery(sqldict):
+def subquery(sqldict,DEBUG=False):
     sqldictout = {"subquery":[],"condition":[]}
     sqldf = dataframefromdict(sqldict)
-    
-    j=1
-    #print(sqldf)
-    #unique tables n = 1-10 on average
-    #for t in sqldict['table']:
-        # tnum=j
-        # cols = ''
-    omissionqueue=[]
-        #cols are on the order of tables * cols
     grouped = sqldf.groupby("tnum")
-    
     #name the group number, we iterate by tnum and extract the SQL text
+    i=1
     for name, group in grouped:
         cols=''
         sql1=''
-        tablename = sqldict["table"][j-1]
-        #print(f'outer loop run: {name} ')
-        #print(grouped.get_group(name))
-        # tnumloop=name
-        #col=group
+        tablename = sqldict["table"][i-1]
         for obj in grouped.get_group(name)['col']:
             # print(obj)
             # print(name)
@@ -255,35 +243,11 @@ def subquery(sqldict):
             else: 
                 cols = cols + f'{comma}{col}'
         sql1 = sql1 + f'(SELECT {cols} FROM {tablename}) tbl{tnum}'
-        print(sql1)
+        if DEBUG:
+            print(sql1)
         sqldictout['subquery'].append(sql1)
-        j+=1
-    return sqldictout
-
-#---COMMON FUNCTIONS SPECIFIC TO VIEW CREATION
-def sqlregexfilters(inputStr):
-    last=0
-    i=0
-    SQLpairStr=''
-    #e.g. 'Day,Year:[0-9],[0-9]'
-    qacols = inputStr.split(":")[0]
-    regexs = inputStr.split(":")[1]
-    #print(regexs)
-    if(len(inputStr.split(":")) != len(inputStr.split(":"))):
-        print("DIFFERENT NUMBER OF QACOLS FROM REGEXS TO TEST")
-        exit(0)
-    for val in qacols.split(","):
-        if len(regexs.split(",")) > 1:
-            regex=regexs.split(",")[i]
-        else:
-            regex = regexs
-        logicalOperator='AND'
-        if (SQLpairStr==''):
-            logicalOperator=''
-        SQLpairStr = SQLpairStr + f' {logicalOperator} \"{val}\"::text ~ \'{regex}\'::text '   
-        last+=1
         i+=1
-    return SQLpairStr
+    return sqldictout
 
 def packagetablestojoin():
     #this is to mimic piping in results from the stats.py discovery component of code. can be direct or api structured
@@ -366,4 +330,4 @@ def entropyBasedViewSQL(QAREGEX,DEBUG=False):
     dsqlj = joinsql(sqldict,"dd")
     qryRaw = qryRaw + f'{xsqlj} AND {ysqlj} AND {yrsqlj} AND {dsqlj}'
     qry = sqlalchemy.text(qryRaw)
-    #print(qry)
+    print(qry)
