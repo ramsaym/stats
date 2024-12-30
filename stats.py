@@ -124,7 +124,7 @@ enttable = ['entropy']
 if INSTANCE_CONNECTION_NAME != -999:
     threshold=.1
     if (BYPASS=='no'):
-        interestingcolumns = scanPredicateTables(testtbl,engine,threshold)
+        interestingcolumns = scanPredicateTables(enttable,engine,threshold)
         targetdf = pd.DataFrame(interestingcolumns)
         print(f'Columns meeting entropic threshold of: {threshold}')
         print(targetdf.sort_values('ent',ascending=False))
