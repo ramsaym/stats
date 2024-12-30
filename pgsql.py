@@ -258,12 +258,11 @@ def packagetablestojoin():
         table = bits[0]
         tables['table'].append(table)
         #if column name has a period in in take it too. assume the first dot separates table from col
-        if len(bits) >2:
-            for i in range(len(bits)-2):
-                col = col + "." + bits[i+2]
+        col = bits[1]
+        if(len(bits)>2):
+            print(f'Kicking out: {obj} due to invalid chars')
         else:
-            col = bits[1]
-        tables['col'].append(col)
+            tables['col'].append(col)
         i +=1
     return pd.DataFrame(tables)
 
