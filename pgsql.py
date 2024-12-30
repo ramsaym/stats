@@ -250,14 +250,13 @@ def subquery(sqldict,DEBUG=False):
 
 def packageSQLTableColTuples():
     #this is to mimic piping in results from the stats.py discovery component of code. can be direct or api structured
-    #the input string is a preformatted list of "table"."columnname" f strings requiring parsing by delim
+    #the input string is a preformatted list of "table"."columnname" f strings requiring parsing by delim# room for a kickout if errors bottlnecking here
     hientcols = highentropycolumns()
     tables={"table":[],"col":[]}
     i=0
     for obj in hientcols:
         bits = obj.split('.')
         table = bits[0]
-        #if column name has a period in in take it too. assume the first dot separates table from col
         col = bits[1]
         if(len(bits)>2):
             print(f'Kicking out: {obj} due to invalid chars')
