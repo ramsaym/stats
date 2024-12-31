@@ -41,7 +41,6 @@ DB_PASS = sys.argv[7]
 BYPASS = sys.argv[8]
 SCAN = sys.argv[9]
 QAREGEX = sys.argv[10]
-YCOL = sys.argv[11]
 #'_RootC_kgC/ha'
 
 #-----MAIN RUN LOGIC-----------------------------------------------------#
@@ -164,7 +163,7 @@ else:
 
 print(targetdf.columns)
 #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-ftrain = targetdf.loc[targetdf[YCOL].astype('int64') > 0, :]
+ftrain = targetdf.loc[targetdf[COL].astype('int64') > 0, :]
 cfg = f'{CFKEY}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
@@ -186,7 +185,7 @@ VERBOSE=True
 SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
-y = ftrain[YCOL].astype('int64')
+y = ftrain[COL].astype('int64')
 X = dropColumnList(ftrain,excludeColumns)
 ####PROCESS#####################################################
 #################################################################
