@@ -39,7 +39,8 @@ DB_USER = "postgres"
 DB_NAME = "postgres"
 DB_PASS = sys.argv[7]
 BYPASS = sys.argv[8]
-QAREGEX = sys.argv[9]
+SCAN = sys.argv[9]
+QAREGEX = sys.argv[10]
 #-----MAIN RUN LOGIC-----------------------------------------------------#
 #-----USAGE: 
 #---CONFIGURE DB---##############################################################################################
@@ -85,6 +86,14 @@ def calculate_variance_entropy(engine, table_name, column_name):
     return variance, ent
 
 
+def fetchTableData(engine, table_name, column_name):   
+    qry = sqlalchemy.text(f'SELECT * FROM \"{table_name}\" WHERE \"{column_name}\"::text ~ \'[0-9\.\-^a-z^A-Z]*\' ')
+    column_data=[]
+    with engine.connect() as conn:
+        resultset = conn.execute(qry) 
+        df = pd.DataFrame(resultset.fetchall())
+    return df
+
 #CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
 #that we will select from to do stats.
 def scanPredicateTables(tables,engine,th):
@@ -123,14 +132,20 @@ testtbl = ['Day_CO2_1']
 enttable = ['entropy']
 if INSTANCE_CONNECTION_NAME != -999:
     threshold=.1
+    #MAIN ROUTE FOR PRODUCING STATS
     if (BYPASS=='no'):
-        interestingcolumns = scanPredicateTables(enttable,engine,threshold)
-        targetdf = pd.DataFrame(interestingcolumns)
-        print(f'Columns meeting entropic threshold of: {threshold}')
-        print(targetdf.sort_values('ent',ascending=False))
-        dfToCsvCloud(targetdf,"gs://agiot/stats",VERBOSE=True)
-        print("SQL Table.Col References: ")
-        print(interestingcolumns['sql'])
+        if (SCAN=='yes'):
+            interestingcolumns = scanPredicateTables(enttable,engine,threshold)
+            df = pd.DataFrame(interestingcolumns)
+            print(f'Columns meeting entropic threshold of: {threshold}')
+            print(df.sort_values('ent',ascending=False))
+            dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
+            print("SQL Table.Col References: ")
+            print(interestingcolumns['sql'])
+        else:
+            targetdf = fetchTableData(engine, 'entropy', "dd1") 
+        
+    #BYPASS DISCOVERY ROUTE
     else:
         entropyBasedViewSQL(QAREGEX)
         exit(0) 
