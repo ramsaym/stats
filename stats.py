@@ -163,7 +163,7 @@ else:
 
 print(targetdf.columns)
 #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
-ftrain = targetdf.loc[targetdf[COL].str.strip().astype('int64') > 0, :]
+ftrain = targetdf.loc[targetdf[COL].str.strip().astype('float64') > 0, :]
 cfg = f'{CFKEY}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
