@@ -122,21 +122,13 @@ def scanPredicateTables(tables,engine,th):
   
     return collist
 
-
 def splitDataAndRunRf(X, y, test_size = 0.2, random_state = 1,DEBUG=True):
     from rf import randomforestAnalyze
     ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
     print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
-    ##Setup to iteratate on. ~30seconds per run on large datasets
-    if DEBUG:
-        print(X_train.head())
-        print(X_val.head())
-        print(y_train.head())
-        print(y_val.head())
-    feats, accuracy, r2, forest_importances, std, [X_train, X_val, y_train, y_val] = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
-
-    return feats, accuracy, r2, forest_importances, std
+    feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
+    return feats, accuracy, r2, forest_importances, std, [X_train, X_val, y_train, y_val]
 #####SETUP######################################################
 #################################################################
 mode=-999
@@ -208,6 +200,7 @@ X = dropColumnList(ftrain,excludeColumns)
 print(f"------  ANALYZING PREDICTORS OF {COL}")
 if VERBOSE: 
     print(X.loc[:,X.keys().to_list()].head())
+    print(X.loc[:,y.keys().to_list()].head())
 
 if SAMPLE:
     from rf import sampleAcrossSeeds
