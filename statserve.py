@@ -186,7 +186,7 @@ SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain[COL].str.strip().fillna('', inplace=True)
-X = dropColumnList(ftrain,excludeColumns).fillna('', inplace=True).str.strip().astype('float64')
+X = dropColumnList(ftrain,excludeColumns).str.strip().astype('float64')
 ####PROCESS#####################################################
 #################################################################
 print(f"------  ANALYZING PREDICTORS OF {COL}")
@@ -205,20 +205,24 @@ from rf import randomforestAnalyze
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
 print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
 ##Setup to iteratate on. ~30seconds per run on large datasets
+print(X_train.head())
+print(X_val.head())
+print(y_train.head())
+print(y_val.head())
 ###########RUN 0##################
-feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
+#feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
 #print(feats.keys())
-print(feats)
-print(f"1-R^2:{r2}")
+#print(feats)
+#print(f"1-R^2:{r2}")
 ###########RUN 1##################
-if (r2>.95):
-    #does not like nas, strings, or anything non numeric
-    X = ftrain[feats.keys()]
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-    print(f"------- FEATURE IMPORTANCE USING {TH2} qUANTILE THRESHOLD")
-    feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
-    print(f"2-R^2:{r2}")
-    print(feats)
+# if (r2>.95):
+#     #does not like nas, strings, or anything non numeric
+#     X = ftrain[feats.keys()]
+#     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
+#     print(f"------- FEATURE IMPORTANCE USING {TH2} qUANTILE THRESHOLD")
+#     feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
+#     print(f"2-R^2:{r2}")
+#     print(feats)
 
 ###SERVC1 - Feature Selection: permuatation based (column sets) using RF classifier
 #############################################################################################################
