@@ -185,8 +185,8 @@ VERBOSE=True
 SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
-y = ftrain[COL].str.strip().astype('float64')
-X = dropColumnList(ftrain,excludeColumns)
+y = ftrain[COL].fillna('', inplace=True).str.strip().astype('float64')
+X = dropColumnList(ftrain,excludeColumns).fillna('', inplace=True).str.strip().astype('float64')
 ####PROCESS#####################################################
 #################################################################
 print(f"------  ANALYZING PREDICTORS OF {COL}")
@@ -202,7 +202,7 @@ if SAMPLE:
 #############################################################################################################
 from rf import randomforestAnalyze
 ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
-X_train, X_val, y_train, y_val = train_test_split(X.fillna('', inplace=True), y.fillna('', inplace=True), test_size = 0.2, random_state = 1)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
 print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
 ##Setup to iteratate on. ~30seconds per run on large datasets
 ###########RUN 0##################
@@ -213,8 +213,8 @@ print(f"1-R^2:{r2}")
 ###########RUN 1##################
 if (r2>.95):
     #does not like nas, strings, or anything non numeric
-    X = ftrain[feats.keys()].fillna('', inplace=True)
-    X_train, X_val, y_train, y_val = train_test_split(X, y.fillna('', inplace=True), test_size = 0.2, random_state = 1)
+    X = ftrain[feats.keys()]
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
     print(f"------- FEATURE IMPORTANCE USING {TH2} qUANTILE THRESHOLD")
     feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
     print(f"2-R^2:{r2}")
