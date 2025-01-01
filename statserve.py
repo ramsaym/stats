@@ -201,7 +201,7 @@ SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain[COL].str.strip().fillna('', inplace=True)
-X = dropColumnList(ftrain,excludeColumns).fillna('', inplace=True)
+X = dropColumnList(ftrain,excludeColumns)
 #.str.strip().astype('float64')
 ####PROCESS#####################################################
 #################################################################
@@ -216,6 +216,7 @@ if SAMPLE:
 
 ###SERVC0 - Feature Selection: TRAIN AND CLASSIFY WITH RF RETURN FEAT IMPRTNC BY QUANTILE RANK ################
 #############################################################################################################
+
 feats, accuracy, r2, forest_importances, std, trainingsplits = splitDataAndRunRf(X, y, test_size = 0.2, random_state = 1,DEBUG=True)
 X_train =  trainingsplits[0]
 X_val =  trainingsplits[1]
