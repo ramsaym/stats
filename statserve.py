@@ -192,7 +192,8 @@ VERBOSE=True
 SAMPLE=False
 sampling_results = pd.DataFrame(np.nan, index = range(sampling_rows), columns = ['seed', 'rootc_train', 'rootc_max', 'rootc_val', 'rootc_max'])
 print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
-y = ftrain[COL].str.strip().fillna('', inplace=True)
+#y = ftrain[COL].str.strip().fillna('', inplace=True)
+y = ftrain[COL]
 X = dropColumnList(ftrain,excludeColumns)
 #.str.strip().astype('float64')
 ####PROCESS#####################################################
