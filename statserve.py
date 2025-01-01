@@ -122,6 +122,21 @@ def scanPredicateTables(tables,engine,th):
   
     return collist
 
+
+def splitDataAndRunRf(X, y, test_size = 0.2, random_state = 1,DEBUG=True):
+    from rf import randomforestAnalyze
+    ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
+    print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
+    ##Setup to iteratate on. ~30seconds per run on large datasets
+    if DEBUG:
+        print(X_train.head())
+        print(X_val.head())
+        print(y_train.head())
+        print(y_val.head())
+    feats, accuracy, r2, forest_importances, std, [X_train, X_val, y_train, y_val] = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
+
+    return feats, accuracy, r2, forest_importances, std
 #####SETUP######################################################
 #################################################################
 mode=-999
@@ -200,29 +215,19 @@ if SAMPLE:
 
 ###SERVC0 - Feature Selection: TRAIN AND CLASSIFY WITH RF RETURN FEAT IMPRTNC BY QUANTILE RANK ################
 #############################################################################################################
-from rf import randomforestAnalyze
-###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
-X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
-##Setup to iteratate on. ~30seconds per run on large datasets
-print(X_train.head())
-print(X_val.head())
-print(y_train.head())
-print(y_val.head())
-###########RUN 0##################
-#feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
-#print(feats.keys())
-#print(feats)
-#print(f"1-R^2:{r2}")
-###########RUN 1##################
-# if (r2>.95):
-#     #does not like nas, strings, or anything non numeric
-#     X = ftrain[feats.keys()]
-#     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-#     print(f"------- FEATURE IMPORTANCE USING {TH2} qUANTILE THRESHOLD")
-#     feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
-#     print(f"2-R^2:{r2}")
-#     print(feats)
+feats, accuracy, r2, forest_importances, std, trainingsplits = splitDataAndRunRf(X, y, test_size = 0.2, random_state = 1,DEBUG=True)
+X_train =  trainingsplits[0]
+X_val =  trainingsplits[1]
+y_train=  trainingsplits[2]
+y_val = trainingsplits[3]
+#attempt to reduce the amount of features. 
+if (r2>.95):
+    X = ftrain[feats.keys()]
+    feats, accuracy, r2, forest_importances, std,trainingsplits = splitDataAndRunRf(X, y, test_size = 0.2, random_state = 1,DEBUG=True)
+    X_train =  trainingsplits[0]
+    X_val =  trainingsplits[1]
+    y_train=  trainingsplits[2]
+    y_val = trainingsplits[3]
 
 ###SERVC1 - Feature Selection: permuatation based (column sets) using RF classifier
 #############################################################################################################
