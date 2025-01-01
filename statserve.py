@@ -33,7 +33,7 @@ INSTANCE_CONNECTION_NAME = sys.argv[2]
 COL = sys.argv[3]
 TH1 = sys.argv[4]
 TH2 = sys.argv[5] 
-CFKEY = sys.argv[6] 
+DATASOURCE = sys.argv[6] 
 ###CREDS
 DB_USER = "postgres"
 DB_NAME = "postgres"
@@ -139,7 +139,7 @@ if INSTANCE_CONNECTION_NAME != -999:
     #MAIN ROUTE FOR PRODUCING STATS
     if (BYPASS=='no'):
         if (SCAN=='yes'):
-            interestingcolumns = scanPredicateTables(enttable,engine,threshold)
+            interestingcolumns = scanPredicateTables([DATASOURCE],engine,threshold)
             df = pd.DataFrame(interestingcolumns)
             print(f'Columns meeting entropic threshold of: {threshold}')
             print(df.sort_values('ent',ascending=False))
@@ -164,7 +164,7 @@ else:
 print(targetdf.columns)
 #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 ftrain = targetdf.loc[targetdf[COL].str.strip().astype('float64') > 0, :]
-cfg = f'{CFKEY}_stats_config.json'
+cfg = f'{DATASOURCE}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
     with open(cfg, 'r') as config_file:
@@ -212,8 +212,8 @@ print(feats)
 print(f"1-R^2:{r2}")
 ###########RUN 1##################
 if (r2>.95):
-    X = ftrain[feats.keys()]
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
+    X = ftrain[feats.keys()].fillna('', inplace=True)
+    X_train, X_val, y_train, y_val = train_test_split(X, y.fillna('', inplace=True), test_size = 0.2, random_state = 1)
     print(f"------- FEATURE IMPORTANCE USING {TH2} qUANTILE THRESHOLD")
     feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,feats.keys(),identifier=COL,thresholdQuant=TH2)
     print(f"2-R^2:{r2}")
