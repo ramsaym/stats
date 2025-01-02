@@ -37,6 +37,7 @@ def rfClassify(X_train, y_train,X_test,keys,randseed):
     feature_names = [f"{keys[i]}" for i in range(X_test.shape[1])]
     # Training the model on the training dataset
     # fit function is used to train the model using the training sets as parameters
+    print(X_train)
     print(y_train)
     rf.fit(X_train, y_train)
     # performing predictions on the test dataset
