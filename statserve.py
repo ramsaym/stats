@@ -96,7 +96,7 @@ else:
 #####-----Assume: Data is formatted and sorted in a SQL view or table as numeric, text, and date types appropriately
 #####-----View 'entropy' currently has a mixed bag. To fix an A-Z error on a view, use tbl.col::numeric
 ########################################################
-ftrain = targetdf.loc[targetdf[COL]>float(MINYVAL), :]
+ftrain = targetdf.loc[targetdf[COL]>float(MINYVAL), :].dropna()
 cfg = f'{DATASOURCE}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
