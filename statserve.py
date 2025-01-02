@@ -95,9 +95,10 @@ else:
 
 
 
-print(targetdf.columns)
+#print(targetdf.columns)
 #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
 ftrain = targetdf.loc[targetdf[COL].str.contains('[0-9]'), :]
+print(ftrain)
 cfg = f'{DATASOURCE}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
