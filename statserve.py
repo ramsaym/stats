@@ -201,7 +201,7 @@ X = dropColumnList(ftrain,excludeColumns)
 print(f"------  ANALYZING PREDICTORS OF {COL}")
 if VERBOSE: 
     print(X.loc[:,X.keys().to_list()].head())
-    print(y.loc[:,y.keys().to_list()].head())
+    #print(y.loc[:,y.keys().to_list()].head())
 
 if SAMPLE:
     from rf import sampleAcrossSeeds
