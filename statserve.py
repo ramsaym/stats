@@ -137,7 +137,7 @@ if SAMPLE:
 ###SERVC0 - Feature Selection: TRAIN AND CLASSIFY WITH RF RETURN FEAT IMPRTNC BY QUANTILE RANK ################
 #############################################################################################################
 
-feats, accuracy, r2, forest_importances, std, trainingsplits = splitDataAndRunRf(X, y, TH1,test_size = 0.2, random_state = 1,DEBUG=True)
+feats, accuracy, r2, forest_importances, std, trainingsplits = splitDataAndRunRf(X, y,TH1,COL,test_size = 0.2, random_state = 1,DEBUG=True)
 X_train =  trainingsplits[0]
 X_val =  trainingsplits[1]
 y_train=  trainingsplits[2]
@@ -145,7 +145,7 @@ y_val = trainingsplits[3]
 #attempt to reduce the amount of features. 
 if (r2>.95):
     X = ftrain[feats.keys()]
-    feats, accuracy, r2, forest_importances, std,trainingsplits = splitDataAndRunRf(X, y,TH1, test_size = 0.2, random_state = 1,DEBUG=True)
+    feats, accuracy, r2, forest_importances, std,trainingsplits = splitDataAndRunRf(X, y,TH1,COL,test_size = 0.2, random_state = 1,DEBUG=True)
     X_train =  trainingsplits[0]
     X_val =  trainingsplits[1]
     y_train=  trainingsplits[2]

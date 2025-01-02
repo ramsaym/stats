@@ -71,10 +71,10 @@ def sampleAcrossSeeds(sampling_results,sampling_rows,COL):
     print(sr.head())
 
 
-def splitDataAndRunRf(X, y,TH, test_size = 0.2, random_state = 1,DEBUG=True):
+def splitDataAndRunRf(X, y,TH, COL,test_size = 0.2, random_state = 1,DEBUG=True):
     from rf import randomforestAnalyze
     ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-    print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
-    feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
+    print(f"------- FEATURE IMPORTANCE USING {TH} qUANTILE THRESHOLD")
+    feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH)
     return feats, accuracy, r2, forest_importances, std, [X_train, X_val, y_train, y_val]
