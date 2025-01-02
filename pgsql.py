@@ -50,6 +50,38 @@ engine = sqlalchemy.create_engine(
     creator=connection
 )
 
+def fetchTableData(engine, table_name, column_name):   
+    qry = sqlalchemy.text(f'SELECT * FROM \"{table_name}\" WHERE \"{column_name}\"::text ~ \'[0-9\.\-^a-z^A-Z]*\' ')
+    column_data=[]
+    with engine.connect() as conn:
+        resultset = conn.execute(qry) 
+        df = pd.DataFrame(resultset.fetchall())
+    return df
+
+#CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
+#that we will select from to do stats.
+def scanPredicateTables(tables,engine,th):
+    tblnum=1
+    collist={"col":[],"var":[],"ent":[],"sql":[]}
+    for tbl in tables:
+        headers = fetchHeaders(engine,tbl)
+        with tqdm(total=len(headers)) as pbar2:
+            for obj in headers:
+                col = obj['Column']
+                #variance, ent = calculate_variance_entropy(engine,tbl, col)
+                variance, ent = calculate_variance_entropy(engine,tbl, col)
+                #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
+                if ent > th:
+                    collist['col'].append(col)
+                    collist['var'].append(variance)
+                    collist['ent'].append(ent)
+                    collist['sql'].append(f'\"{tbl}\".\"{col}\"')
+                pbar2.set_description("Processing %s" % col)
+                pbar2.update(1)
+        tblnum+=1
+  
+    return collist
+
 #---COMMON FUNCTIONS SPECIFIC TO VIEW CREATION
 def sqlregexfilters(inputStr):
     last=0

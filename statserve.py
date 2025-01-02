@@ -16,7 +16,6 @@ import json
 from utils import *
 import sqlalchemy
 from sqlalchemy import text
-from google.cloud.sql.connector import Connector
 from google.cloud import storage
 import psycopg2
 import numpy as np
@@ -47,80 +46,6 @@ QAREGEX = sys.argv[10]
 #-----USAGE: 
 #target a specific column on a table and run AI regression on it after separating out Y from dataset
 #python3 ./stats.py -999 agdata-378419:northamerica-northeast1:agdatastore '_RootC_kgC/ha' .25 .50 "entropy" "postgres" no no 'dd1,Day:[0-9],[0-9]' '_RootC_kgC/ha'
-#---CONFIGURE DB---##############################################################################################
-#following https://cloud.google.com/sql/docs/postgres/connect-instance-auth-proxy?hl=en for the cloud SQL proxy
-connector=Connector()
-# function to return the database connection object
-def connection():
-    conn = connector.connect(
-        INSTANCE_CONNECTION_NAME,
-        "pg8000",
-        user=DB_USER,
-        password=DB_PASS,
-        db=DB_NAME
-    )
-    return conn
-
-def calculate_variance_entropy(engine, table_name, column_name):   
-    qry = sqlalchemy.text(f'SELECT \"{column_name}\" FROM \"{table_name}\" WHERE \"{column_name}\"::text ~ \'[0-9\.\-^a-z^A-Z]*\' ')
-    column_data=[]
-    with engine.connect() as conn:
-        resultset = conn.execute(qry) 
-        for item in resultset:
-            #need to handle garbage here carefully if DB is loaded with nans, nulls, or header artifacts from the merges
-            #test to see if its a pure string and ignore if so
-            match = re.search(r"[a-zA-Z]+[^0-9]",str(item[0]))
-            if (match is None):
-                if type(item[0]) is str:
-                    val = float(item[0].strip())
-                if isinstance(item[0], datetime.date):
-                    val = item[0]
-                else:
-                    val = float(item[0])
-                column_data.append(val)
-        conn.close()
-    try:
-        variance = np.var(column_data)
-        value_counts = np.bincount(column_data)
-        ent = entropy(value_counts)
-    except Exception as e:
-        variance = 0
-        ent=0
-        #print(e)
-    return variance, ent
-
-
-def fetchTableData(engine, table_name, column_name):   
-    qry = sqlalchemy.text(f'SELECT * FROM \"{table_name}\" WHERE \"{column_name}\"::text ~ \'[0-9\.\-^a-z^A-Z]*\' ')
-    column_data=[]
-    with engine.connect() as conn:
-        resultset = conn.execute(qry) 
-        df = pd.DataFrame(resultset.fetchall())
-    return df
-
-#CREATE custom function to look at variance, entropy, etc on each column and return a list of columns to pass into the final convergence join
-#that we will select from to do stats.
-def scanPredicateTables(tables,engine,th):
-    tblnum=1
-    collist={"col":[],"var":[],"ent":[],"sql":[]}
-    for tbl in tables:
-        headers = fetchHeaders(engine,tbl)
-        with tqdm(total=len(headers)) as pbar2:
-            for obj in headers:
-                col = obj['Column']
-                #variance, ent = calculate_variance_entropy(engine,tbl, col)
-                variance, ent = calculate_variance_entropy(engine,tbl, col)
-                #print(f"Table: {tbl},Col: {col},Variance: {variance}, Entropy: {ent}")
-                if ent > th:
-                    collist['col'].append(col)
-                    collist['var'].append(variance)
-                    collist['ent'].append(ent)
-                    collist['sql'].append(f'\"{tbl}\".\"{col}\"')
-                pbar2.set_description("Processing %s" % col)
-                pbar2.update(1)
-        tblnum+=1
-  
-    return collist
 
 def splitDataAndRunRf(X, y, test_size = 0.2, random_state = 1,DEBUG=True):
     from rf import randomforestAnalyze
@@ -201,7 +126,6 @@ X = dropColumnList(ftrain,excludeColumns)
 print(f"------  ANALYZING PREDICTORS OF {COL}")
 if VERBOSE: 
     print(X.loc[:,X.keys().to_list()].head())
-    #print(y.loc[:,y.keys().to_list()].head())
 
 if SAMPLE:
     from rf import sampleAcrossSeeds
