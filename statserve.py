@@ -22,6 +22,7 @@ import numpy as np
 from scipy.stats import entropy
 import datetime
 from pgsql import *
+from rf import *
 #USAGE PGSQL:   python3 ./stats.py -999 agdata-378419:northamerica-northeast1:agdatastore 'Crop 1.23_RootC' .25 .50 "day_fieldcrop_1_day_fieldmanage_1" "postgre"
 #USAGE CSV:     python3 ./stats.py "dndc_data/biogeodb.csv" -999 predicted='Crop 1.23_RootC' threshold1=.25 threshold2=.50 "dndc" -999
 #####PARAMS######################################################
@@ -41,35 +42,32 @@ BYPASS = sys.argv[8]
 SCAN = sys.argv[9]
 QAREGEX = sys.argv[10]
 #'_RootC_kgC/ha'
-
-#-----MAIN RUN LOGIC-----------------------------------------------------#
 #-----USAGE: 
 #target a specific column on a table and run AI regression on it after separating out Y from dataset
 #python3 ./stats.py -999 agdata-378419:northamerica-northeast1:agdatastore '_RootC_kgC/ha' .25 .50 "entropy" "postgres" no no 'dd1,Day:[0-9],[0-9]' '_RootC_kgC/ha'
 
-def splitDataAndRunRf(X, y, test_size = 0.2, random_state = 1,DEBUG=True):
-    from rf import randomforestAnalyze
-    ###APP1 - TRAIN ON A FIXED SEED AND CLASSIFY WITH RF
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 1)
-    print(f"------- FEATURE IMPORTANCE USING {TH1} qUANTILE THRESHOLD")
-    feats, accuracy, r2, forest_importances, std = randomforestAnalyze(X_train,y_train,X_val,y_val,X.keys(),identifier=COL,thresholdQuant=TH1)
-    return feats, accuracy, r2, forest_importances, std, [X_train, X_val, y_train, y_val]
-#####SETUP######################################################
-#################################################################
-mode=-999
-# try:
+#following https://cloud.google.com/sql/docs/postgres/connect-instance-auth-proxy?hl=en for the cloud SQL proxy
+#####-----CONFIGURE DB---###############################
+connector=Connector()
+# function to return the database connection object
+def connection():
+    conn = connector.connect(
+        INSTANCE_CONNECTION_NAME,
+        "pg8000",
+        user=DB_USER,
+        password=DB_PASS,
+        db=DB_NAME
+    )
+    return conn
 engine = sqlalchemy.create_engine("postgresql+pg8000://",creator=connection)
-#testing. can be fed in via list or config file or txt file or as string list
-
-##########################################
-###PGSQL ENTROPY APP
-dailytables = ['day_fieldcrop_1_day_fieldmanage_1','day_soilc_1_day_soiln_1','day_soilclimate_1_day_soilmicrobe_1','Day_CO2_1']
-testtbl = ['Day_CO2_1']
-enttable = ['entropy']
+###Primary Decision Fork################################
+########################################################
+########################################################
 if INSTANCE_CONNECTION_NAME != -999:
     threshold=.1
     #MAIN ROUTE FOR PRODUCING STATS
     if (BYPASS=='no'):
+        #####-----01----------SQL High Entropy/Variance Column Scan
         if (SCAN=='yes'):
             interestingcolumns = scanPredicateTables([DATASOURCE],engine,threshold)
             df = pd.DataFrame(interestingcolumns)
@@ -78,20 +76,24 @@ if INSTANCE_CONNECTION_NAME != -999:
             dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
             print("SQL Table.Col References: ")
             print(interestingcolumns['sql'])
+        #####-----02----------SQL Random Forest Classification APP
         else:
             targetdf = fetchTableData(engine, 'entropy', "dd1") 
         
-    #BYPASS DISCOVERY ROUTE
+    #####-----03----------SQL View Creation Based on Target Columns 
     else:
         entropyBasedViewSQL(QAREGEX)
         exit(0) 
     mode=0
        
-###########################################    
-#####CSV Random Forest Classification APP
+######################################################## 
+#####-----04----------CSV Random Forest Classification APP
 else: 
     targetdf = pd.read_csv(datafile)
-    mode=1
+########################################################
+########################################################
+
+
 
 print(targetdf.columns)
 #ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
@@ -135,7 +137,7 @@ if SAMPLE:
 ###SERVC0 - Feature Selection: TRAIN AND CLASSIFY WITH RF RETURN FEAT IMPRTNC BY QUANTILE RANK ################
 #############################################################################################################
 
-feats, accuracy, r2, forest_importances, std, trainingsplits = splitDataAndRunRf(X, y, test_size = 0.2, random_state = 1,DEBUG=True)
+feats, accuracy, r2, forest_importances, std, trainingsplits = splitDataAndRunRf(X, y, TH1,test_size = 0.2, random_state = 1,DEBUG=True)
 X_train =  trainingsplits[0]
 X_val =  trainingsplits[1]
 y_train=  trainingsplits[2]
@@ -143,7 +145,7 @@ y_val = trainingsplits[3]
 #attempt to reduce the amount of features. 
 if (r2>.95):
     X = ftrain[feats.keys()]
-    feats, accuracy, r2, forest_importances, std,trainingsplits = splitDataAndRunRf(X, y, test_size = 0.2, random_state = 1,DEBUG=True)
+    feats, accuracy, r2, forest_importances, std,trainingsplits = splitDataAndRunRf(X, y,TH1 test_size = 0.2, random_state = 1,DEBUG=True)
     X_train =  trainingsplits[0]
     X_val =  trainingsplits[1]
     y_train=  trainingsplits[2]

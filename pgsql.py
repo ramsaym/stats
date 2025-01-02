@@ -32,23 +32,7 @@ DB_USER = "postgres"
 DB_NAME = "postgres"
 #-----MAIN RUN LOGIC-----------------------------------------------------#
 #-----USAGE: python3 ./createView6.py agdata-378419:northamerica-northeast1:agdatastore postgres createView-Day_SoilC_1 Day_SoilN_1 '_Day,_Crop:[0-9],[0-9]' 'x1,x2,y1,y2,_Year,Year,_Day,Day'
-#---CONFIGURE DB---##############################################################################################
-#following https://cloud.google.com/sql/docs/postgres/connect-instance-auth-proxy?hl=en for the cloud SQL proxy
-connector=Connector()
-# function to return the database connection object
-def connection():
-    conn = connector.connect(
-        INSTANCE_CONNECTION_NAME,
-        "pg8000",
-        user=DB_USER,
-        password=DB_PASS,
-        db=DB_NAME
-    )
-    return conn
-engine = sqlalchemy.create_engine(
-    "postgresql+pg8000://",
-    creator=connection
-)
+
 
 def fetchTableData(engine, table_name, column_name):   
     qry = sqlalchemy.text(f'SELECT * FROM \"{table_name}\" WHERE \"{column_name}\"::text ~ \'[0-9\.\-^a-z^A-Z]*\' ')
