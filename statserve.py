@@ -92,9 +92,10 @@ else:
 ########################################################
 
 #####-----Initialize X and Y Dataframes#################
+#####-----Assume: Data is formatted and sorted in a SQL view or table as numeric, text, and date types appropriately
+#####-----View 'entropy' currently has a mixed bag. To fix an A-Z error on a view, use tbl.col::numeric
 ########################################################
-ftrain = targetdf.loc[targetdf[COL].str.contains('[0-9]'), :]
-print(ftrain.loc[ftrain[COL].astype("float64") > 0,:])
+ftrain = targetdf.loc[targetdf[COL], :]
 cfg = f'{DATASOURCE}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
