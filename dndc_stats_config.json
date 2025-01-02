@@ -2,5 +2,6 @@
 "setting1": [],
 "setting2": [],
 "meta-keyword": "dndc-database config",
-"columnsToExclude":[],
+"columnsToExclude":["timestamp"]
+}
 
