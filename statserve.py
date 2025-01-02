@@ -41,6 +41,7 @@ DB_PASS = sys.argv[7]
 BYPASS = sys.argv[8]
 SCAN = sys.argv[9]
 QAREGEX = sys.argv[10]
+MINYVAL = sys.argv[11]
 #'_RootC_kgC/ha'
 #-----USAGE: 
 #target a specific column on a table and run AI regression on it after separating out Y from dataset
@@ -95,7 +96,7 @@ else:
 #####-----Assume: Data is formatted and sorted in a SQL view or table as numeric, text, and date types appropriately
 #####-----View 'entropy' currently has a mixed bag. To fix an A-Z error on a view, use tbl.col::numeric
 ########################################################
-ftrain = targetdf.loc[targetdf[COL], :]
+ftrain = targetdf.loc[targetdf[COL]>MINYVAL, :]
 cfg = f'{DATASOURCE}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
