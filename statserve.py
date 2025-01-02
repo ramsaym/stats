@@ -67,7 +67,7 @@ if INSTANCE_CONNECTION_NAME != -999:
     threshold=.1
     #MAIN ROUTE FOR PRODUCING STATS
     if (BYPASS=='no'):
-        #####-----01----------SQL High Entropy/Variance Column Scan
+        #####-----01--SQL High Entropy/Variance Column Scan
         if (SCAN=='yes'):
             interestingcolumns = scanPredicateTables([DATASOURCE],engine,threshold)
             df = pd.DataFrame(interestingcolumns)
@@ -76,16 +76,14 @@ if INSTANCE_CONNECTION_NAME != -999:
             dfToCsvCloud(df,"gs://agiot/stats",VERBOSE=True)
             print("SQL Table.Col References: ")
             print(interestingcolumns['sql'])
-        #####-----02----------SQL Random Forest Classification APP
+        #####-----02--SQL Random Forest Classification APP
         else:
             targetdf = fetchTableData(engine, 'entropy', "dd1") 
         
-    #####-----03----------SQL View Creation Based on Target Columns 
+    #####---------03--SQL View Creation Based on Target Columns 
     else:
         entropyBasedViewSQL(QAREGEX)
         exit(0) 
-    mode=0
-       
 ######################################################## 
 #####-----04----------CSV Random Forest Classification APP
 else: 
@@ -93,12 +91,10 @@ else:
 ########################################################
 ########################################################
 
-
-
-#print(targetdf.columns)
-#ftrain = train_all[train_all['Crop 1.23_RootC'] > 0]
+#####-----Initialize X and Y Dataframes#################
+########################################################
 ftrain = targetdf.loc[targetdf[COL].str.contains('[0-9]'), :]
-print(ftrain)
+print(ftrain[COL])
 cfg = f'{DATASOURCE}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
@@ -109,11 +105,6 @@ except:
         configData = None
         excludeColumns = []
 print(f"--      FOUND {len(ftrain.columns.to_list())} COLUMNS TOTAL")
-# except Exception as e:
-#     print(f"!!---ERROR, MISSING PARAMS OR NO CONFIG")
-#     print(e)
-#     sys.exit(0)
-
 print(f"---     SETTING UP - HANDLING CALL FOR {datafile} and column={COL}")
 sampling_rows = 200
 VERBOSE=True
@@ -124,8 +115,8 @@ print(f"----    SETTING UP - DROPPING {COL} FROM X DATASET")
 y = ftrain[COL]
 X = dropColumnList(ftrain,excludeColumns)
 #.str.strip().astype('float64')
-####PROCESS#####################################################
-#################################################################
+####PROCESS#############################################
+########################################################
 print(f"------  ANALYZING PREDICTORS OF {COL}")
 if VERBOSE: 
     print(X.loc[:,X.keys().to_list()].head())
