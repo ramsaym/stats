@@ -22,16 +22,47 @@ import psycopg2
 import gcsfs
 from google.cloud import storage
 from tqdm import tqdm
+from scipy.stats import entropy
+from sklearn.model_selection import train_test_split
 #---PROJECT MODULES
 from utils import *
 from pgutils import *
 from cols import highentropycolumns
+
 
 ###CREDS
 DB_USER = "postgres"
 DB_NAME = "postgres"
 #-----MAIN RUN LOGIC-----------------------------------------------------#
 #-----USAGE: python3 ./createView6.py agdata-378419:northamerica-northeast1:agdatastore postgres createView-Day_SoilC_1 Day_SoilN_1 '_Day,_Crop:[0-9],[0-9]' 'x1,x2,y1,y2,_Year,Year,_Day,Day'
+
+def calculate_variance_entropy(engine, table_name, column_name):   
+    qry = sqlalchemy.text(f'SELECT \"{column_name}\" FROM \"{table_name}\" WHERE \"{column_name}\"::text ~ \'[0-9\.\-^a-z^A-Z]*\' ')
+    column_data=[]
+    with engine.connect() as conn:
+        resultset = conn.execute(qry) 
+        for item in resultset:
+            #need to handle garbage here carefully if DB is loaded with nans, nulls, or header artifacts from the merges
+            #test to see if its a pure string and ignore if so
+            match = re.search(r"[a-zA-Z]+[^0-9]",str(item[0]))
+            if (match is None):
+                if type(item[0]) is str:
+                    val = float(item[0].strip())
+                if isinstance(item[0], datetime.date):
+                    val = item[0]
+                else:
+                    val = float(item[0])
+                column_data.append(val)
+        conn.close()
+    try:
+        variance = np.var(column_data)
+        value_counts = np.bincount(column_data)
+        ent = entropy(value_counts)
+    except Exception as e:
+        variance = 0
+        ent=0
+        #print(e)
+    return variance, ent
 
 
 def fetchTableData(engine, table_name, column_name):   
