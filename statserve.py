@@ -94,7 +94,7 @@ else:
 #####-----Initialize X and Y Dataframes#################
 ########################################################
 ftrain = targetdf.loc[targetdf[COL].str.contains('[0-9]'), :]
-print(ftrain.loc[ftrain[COL > 0],:])
+print(ftrain.loc[ftrain[COL].astype("float64") > 0,:])
 cfg = f'{DATASOURCE}_stats_config.json'
 print(f"-       LOOKING FOR CONFIG FILE {cfg}")
 try:
