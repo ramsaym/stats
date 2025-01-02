@@ -39,7 +39,7 @@ def rfClassify(X_train, y_train,X_test,keys,randseed):
     # fit function is used to train the model using the training sets as parameters
     print(X_train)
     print(y_train)
-    rf.fit(X_train, y_train)
+    rf.fit(X_train, y_train.values)
     # performing predictions on the test dataset
     y_predictions = rf.predict(X_test)
     importances = rf.feature_importances_
